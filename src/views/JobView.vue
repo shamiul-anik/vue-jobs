@@ -89,12 +89,24 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
+import { useSEO } from '../composables/useSEO'
 
 const route = useRoute()
 const router = useRouter()
 const job = ref({})
 const loading = ref(true)
 const error = ref(null)
+
+// SEO state
+const seoData = ref({
+  title: 'Job Details | Vue Jobs',
+  description: 'View job details and apply for Vue.js developer positions',
+  keywords: 'Vue.js job, developer position, job details',
+  canonical: window.location.href,
+  image: window.location.origin + '/images/logo.png'
+})
+
+const { updateMetaTags } = useSEO(seoData)
 
 // Modal state
 const showModal = ref(false)

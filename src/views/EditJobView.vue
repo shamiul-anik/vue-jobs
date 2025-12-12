@@ -8,7 +8,7 @@
         
         <div v-else-if="error" class="text-center">
           <p class="text-xl text-red-500">{{ error }}</p>
-          <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block">
+          <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block" aria-label="Return to all jobs">
             Back to Jobs
           </RouterLink>
         </div>

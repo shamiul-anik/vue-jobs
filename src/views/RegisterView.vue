@@ -101,9 +101,9 @@
             />
             <label for="terms" class="ml-2 block text-sm text-gray-700">
               I agree to the 
-              <a href="#" class="font-medium text-green-600 hover:text-green-500">Terms and Conditions</a>
+              <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our terms and conditions">Terms and Conditions</a>
               and 
-              <a href="#" class="font-medium text-green-600 hover:text-green-500">Privacy Policy</a>
+              <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our privacy policy">Privacy Policy</a>
             </label>
           </div>
 
@@ -130,7 +130,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Already have an account?
-            <RouterLink to="/login" class="font-medium text-green-600 hover:text-green-500">
+            <RouterLink to="/login" class="font-medium text-green-600 hover:text-green-500" aria-label="Sign in to your existing account">
               Sign in here
             </RouterLink>
           </p>

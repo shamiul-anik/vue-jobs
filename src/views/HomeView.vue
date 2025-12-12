@@ -26,6 +26,7 @@
             <RouterLink
               to="/jobs"
               class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
+              aria-label="Browse all available Vue.js jobs"
             >
               Browse Jobs
             </RouterLink>
@@ -38,6 +39,7 @@
             <RouterLink
               to="/add-job"
               class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
+              aria-label="Post a new job listing"
             >
               Add Job
             </RouterLink>
@@ -71,6 +73,7 @@
       <RouterLink
         to="/jobs"
         class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+        aria-label="View all available jobs"
       >
         View All Jobs
       </RouterLink>

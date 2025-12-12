@@ -69,7 +69,7 @@
             </div>
 
             <div class="text-sm">
-              <a href="#" class="font-medium text-green-600 hover:text-green-500">
+              <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Reset your password">
                 Forgot password?
               </a>
             </div>
@@ -128,7 +128,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
             Don't have an account?
-            <RouterLink to="/register" class="font-medium text-green-600 hover:text-green-500">
+            <RouterLink to="/register" class="font-medium text-green-600 hover:text-green-500" aria-label="Create a new account">
               Sign up now
             </RouterLink>
           </p>
