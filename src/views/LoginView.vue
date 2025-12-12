@@ -47,7 +47,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800"
               >
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
