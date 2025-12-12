@@ -5,9 +5,10 @@
       <div class="container mx-auto px-4">
         <div class="relative">
           <input
+            name="searchJob"
             v-model="searchQuery"
             type="text"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+            class="w-full p-3 border bg-white border-green-500 rounded-lg focus:outline-green-500"
             placeholder="Filter jobs by title, location, or company..."
           />
         </div>
