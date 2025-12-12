@@ -2,53 +2,55 @@
   <nav class="bg-green-700 border-b border-green-500" role="navigation" aria-label="Main navigation">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between">
-        <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
+        <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-between">
           <!-- Logo -->
-          <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/" aria-label="Vue Jobs Home">
+          <RouterLink class="flex shrink-0 items-center mr-4" to="/" aria-label="Vue Jobs Home">
             <img class="h-10 w-auto" src="/images/logo.png" alt="Vue Jobs Logo" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
           </RouterLink>
           
-          <div class="md:ml-auto">
-            <div class="flex space-x-2">
-              <RouterLink
-                to="/"
-                class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-                :class="{ 'bg-green-900': $route.path === '/' }"
-                aria-label="Home page"
-              >
-                <i class="fas fa-home mr-1"></i>
-                Home
-              </RouterLink>
-              <RouterLink
-                to="/jobs"
-                class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-                :class="{ 'bg-green-900': $route.path === '/jobs' }"
-                aria-label="Browse all jobs"
-              >
-                <i class="fas fa-briefcase mr-1"></i>
-                Jobs
-              </RouterLink>
-              <RouterLink
-                to="/add-job"
-                class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-                :class="{ 'bg-green-900': $route.path === '/add-job' }"
-                aria-label="Post a new job"
-              >
-                <i class="fas fa-plus-circle mr-1"></i>
-                Add Job
-              </RouterLink>
-              <RouterLink
-                to="/login"
-                class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
-                :class="{ 'bg-green-900': $route.path === '/login' }"
-                aria-label="Sign in to your account"
-              >
-                <i class="fas fa-sign-in-alt mr-1"></i>
-                Login
-              </RouterLink>
-            </div>
+          <div class="flex space-x-2 px-2">
+            <RouterLink
+              to="/"
+              class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
+              :class="{ 'bg-green-900': $route.path === '/' }"
+              aria-label="Home page"
+            >
+              <i class="fas fa-home mr-1"></i>
+              Home
+            </RouterLink>
+            <RouterLink
+              to="/jobs"
+              class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
+              :class="{ 'bg-green-900': $route.path === '/jobs' }"
+              aria-label="Browse all jobs"
+            >
+              <i class="fas fa-briefcase mr-1"></i>
+              Jobs
+            </RouterLink>
+            <RouterLink
+              to="/add-job"
+              class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
+              :class="{ 'bg-green-900': $route.path === '/add-job' }"
+              aria-label="Post a new job"
+            >
+              <i class="fas fa-plus-circle mr-1"></i>
+              Add Job
+            </RouterLink>              
           </div>
+
+          <!-- <div> -->
+            <RouterLink
+              to="/login"
+              class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
+              :class="{ 'bg-green-900': $route.path === '/login' }"
+              aria-label="Sign in to your account"
+            >
+              <i class="fas fa-sign-in-alt mr-1"></i>
+              Login
+            </RouterLink>
+          <!-- </div> -->
+
         </div>
       </div>
     </div>
