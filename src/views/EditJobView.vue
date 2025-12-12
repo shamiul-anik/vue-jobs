@@ -140,7 +140,14 @@
               />
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex justify-end gap-4">
+              
+              <RouterLink
+                :to="`/jobs/${route.params.id}`"
+                class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full text-center"
+              >
+                Cancel
+              </RouterLink>
               <button
                 type="submit"
                 :disabled="submitting"
@@ -148,12 +155,6 @@
               >
                 {{ submitting ? 'Updating...' : 'Update Job' }}
               </button>
-              <RouterLink
-                :to="`/jobs/${route.params.id}`"
-                class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full text-center"
-              >
-                Cancel
-              </RouterLink>
             </div>
           </form>
         </div>

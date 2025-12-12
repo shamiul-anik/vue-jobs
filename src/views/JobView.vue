@@ -49,7 +49,7 @@
               <p v-if="job.contact_phone"><strong>Phone:</strong> {{ job.contact_phone }}</p>
             </div>
 
-            <div class="flex gap-4">
+            <div class="flex justify-end gap-4">
               <RouterLink
                 :to="`/edit-job/${job.id}`"
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"

@@ -15,11 +15,13 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "body-parser": "^2.2.1",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
