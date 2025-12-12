@@ -3,7 +3,13 @@
     <div class="max-w-md w-full">
       <!-- Logo and Title -->
       <div class="text-center mb-8">
-        <img class="mx-auto h-16 w-auto" src="/images/logo.png" alt="Vue Jobs Logo" />
+        <svg class="mx-auto h-16 w-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" fill="#16A34A" opacity="0.1"/>
+          <circle cx="28" cy="24" r="8" fill="#16A34A"/>
+          <path d="M16 48C16 40.268 21.373 34 28 34C34.627 34 40 40.268 40 48" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="46" cy="20" r="10" fill="white" stroke="#16A34A" stroke-width="2"/>
+          <path d="M46 16V24M42 20H50" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
           Create Your Account
         </h2>
