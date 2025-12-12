@@ -3,14 +3,17 @@
     <!-- Filter Jobs -->
     <section class="bg-green-50 py-4">
       <div class="container mx-auto px-4">
-        <div class="relative">
+        <div class="text-center">
+          <span class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           <input
             name="searchJob"
             v-model="searchQuery"
             type="text"
-            class="w-full p-3 border bg-white border-green-500 rounded-lg focus:outline-green-500"
+            class="w-full md:w-3xl p-3 pl-10 border bg-white border-green-500 rounded-lg focus:outline-green-500"
             placeholder="Filter jobs by title, location, or company..."
           />
+          </span>
         </div>
       </div>
     </section>
