@@ -16,12 +16,12 @@
         <div v-else>
           <RouterLink
             to="/jobs"
-            class="text-green-500 hover:underline flex items-center mb-6"
+            class="bg-slate-600 hover:bg-slate-700 text-white mb-6 px-4 py-2 rounded-lg"
           >
-            <i class="fas fa-arrow-left mr-2"></i> Back to Job Listings
+            <i class="fas fa-arrow-left mr-1"></i> Back to Job Listings
           </RouterLink>
 
-          <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="bg-white p-6 rounded-lg shadow-md mt-6">
             <div class="text-gray-500 mb-4">{{ job.type }}</div>
             <h1 class="text-3xl font-bold mb-4">{{ job.title }}</h1>
             

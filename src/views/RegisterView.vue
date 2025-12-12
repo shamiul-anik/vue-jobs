@@ -126,8 +126,11 @@
               :disabled="loading"
               class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
-              {{ loading ? 'Creating account...' : 'Create Account' }}
+              <span class="flex items-center">
+                <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
+                <i v-else class="fas fa-user-plus mr-2"></i>
+                {{ loading ? 'Creating account...' : 'Create Account' }}
+              </span>
             </button>
           </div>
         </form>

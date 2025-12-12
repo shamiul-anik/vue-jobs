@@ -146,6 +146,7 @@
                 :to="`/jobs/${route.params.id}`"
                 class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full text-center"
               >
+                <i class="fas fa-times mr-1"></i>
                 Cancel
               </RouterLink>
               <button
@@ -153,6 +154,7 @@
                 :disabled="submitting"
                 class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline disabled:opacity-50"
               >
+                <i class="fas fa-edit mr-1"></i>
                 {{ submitting ? 'Updating...' : 'Update Job' }}
               </button>
             </div>

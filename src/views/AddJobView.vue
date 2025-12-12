@@ -138,6 +138,7 @@
                 :disabled="submitting"
                 class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50"
               >
+                <i class="fas fa-plus-circle mr-1"></i>
                 {{ submitting ? 'Adding Job...' : 'Add Job' }}
               </button>
             </div>
