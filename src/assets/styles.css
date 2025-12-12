@@ -1295,3 +1295,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+
+.focus\:outline-green-500:focus { outline-color: rgb(34 197 94); outline-width: 2px; outline-style: solid; }
+.outline-green-500 { outline-color: rgb(34 197 94); }
