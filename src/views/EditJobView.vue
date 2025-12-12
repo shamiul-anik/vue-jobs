@@ -13,7 +13,7 @@
           </RouterLink>
         </div>
         
-        <div v-else class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
+        <div v-else class="bg-white px-6 py-8 mb-4 border-2 border-gray-200 shadow-lg rounded-lg m-4 md:m-0">
           <form @submit.prevent="handleSubmit">
             <h2 class="text-3xl text-center font-semibold mb-6">Edit Job</h2>
 

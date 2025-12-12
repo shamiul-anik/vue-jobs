@@ -5,16 +5,28 @@
       <div class="text-center mb-8">
         <img class="mx-auto h-16 w-auto" src="/images/logo.png" alt="Vue Jobs Logo" />
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
-          Sign in to Your Account
+          Create Your Account
         </h2>
-        <!-- <p class="mt-2 text-sm text-gray-600">
-          Access your Vue Jobs dashboard
-        </p> -->
       </div>
 
-      <!-- Login Form -->
+      <!-- Sign Up Form -->
       <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
-        <form @submit.prevent="handleLogin" class="space-y-6">
+        <form @submit.prevent="handleRegister" class="space-y-6">
+          <!-- Full Name Input -->
+          <div>
+            <label for="name" class="block text-gray-700 font-bold mb-2">
+              Full Name
+            </label>
+            <input
+              id="name"
+              v-model="formData.name"
+              type="text"
+              required
+              class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+              placeholder="John Doe"
+            />
+          </div>
+
           <!-- Email Input -->
           <div>
             <label for="email" class="block text-gray-700 font-bold mb-2">
@@ -42,7 +54,7 @@
                 :type="showPassword ? 'text' : 'password'"
                 required
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-                placeholder="Enter your password"
+                placeholder="Create a password"
               />
               <button
                 type="button"
@@ -54,25 +66,45 @@
             </div>
           </div>
 
-          <!-- Remember Me & Forgot Password -->
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
+          <!-- Confirm Password Input -->
+          <div>
+            <label for="confirmPassword" class="block text-gray-700 font-bold mb-2">
+              Confirm Password
+            </label>
+            <div class="relative">
               <input
-                id="remember-me"
-                v-model="formData.rememberMe"
-                type="checkbox"
-                class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                id="confirmPassword"
+                v-model="formData.confirmPassword"
+                :type="showConfirmPassword ? 'text' : 'password'"
+                required
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                placeholder="Confirm your password"
               />
-              <label for="remember-me" class="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
+              <button
+                type="button"
+                @click="showConfirmPassword = !showConfirmPassword"
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+              >
+                <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              </button>
             </div>
+          </div>
 
-            <div class="text-sm">
-              <a href="#" class="font-medium text-green-600 hover:text-green-500">
-                Forgot password?
-              </a>
-            </div>
+          <!-- Terms & Conditions -->
+          <div class="flex items-start">
+            <input
+              id="terms"
+              v-model="formData.agreeToTerms"
+              type="checkbox"
+              required
+              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1"
+            />
+            <label for="terms" class="ml-2 block text-sm text-gray-700">
+              I agree to the 
+              <a href="#" class="font-medium text-green-600 hover:text-green-500">Terms and Conditions</a>
+              and 
+              <a href="#" class="font-medium text-green-600 hover:text-green-500">Privacy Policy</a>
+            </label>
           </div>
 
           <!-- Error Message -->
@@ -89,47 +121,17 @@
               class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
-              {{ loading ? 'Signing in...' : 'Sign In' }}
+              {{ loading ? 'Creating account...' : 'Create Account' }}
             </button>
           </div>
         </form>
 
-        <!-- Divider -->
-        <!-- <div class="mt-6">
-          <div class="relative">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">Or continue with</span>
-            </div>
-          </div> -->
-
-          <!-- Social Login Buttons -->
-          <!-- <div class="mt-6 grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              <i class="fab fa-google text-red-500 mr-2"></i>
-              Google
-            </button>
-            <button
-              type="button"
-              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              <i class="fab fa-github mr-2"></i>
-              GitHub
-            </button>
-          </div>
-        </div> -->
-
-        <!-- Sign Up Link -->
+        <!-- Sign In Link -->
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-600">
-            Don't have an account?
-            <RouterLink to="/register" class="font-medium text-green-600 hover:text-green-500">
-              Sign up now
+            Already have an account?
+            <RouterLink to="/login" class="font-medium text-green-600 hover:text-green-500">
+              Sign in here
             </RouterLink>
           </p>
         </div>
@@ -156,6 +158,7 @@ import Modal from '../components/Modal.vue'
 const router = useRouter()
 const loading = ref(false)
 const showPassword = ref(false)
+const showConfirmPassword = ref(false)
 const errorMessage = ref('')
 
 // Modal state
@@ -168,30 +171,41 @@ const modalConfig = ref({
 })
 
 const formData = ref({
+  name: '',
   email: '',
   password: '',
-  rememberMe: false
+  confirmPassword: '',
+  agreeToTerms: false
 })
 
-const handleLogin = async () => {
+const handleRegister = async () => {
   errorMessage.value = ''
+
+  // Validate passwords match
+  if (formData.value.password !== formData.value.confirmPassword) {
+    errorMessage.value = 'Passwords do not match'
+    return
+  }
+
+  // Validate password length
+  if (formData.value.password.length < 6) {
+    errorMessage.value = 'Password must be at least 6 characters long'
+    return
+  }
+
   loading.value = true
 
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // For demo purposes - accept any email/password
-    if (formData.value.email && formData.value.password) {
-      showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
-        router.push('/')
-      })
-    } else {
-      errorMessage.value = 'Please enter both email and password'
-    }
+    // For demo purposes - accept any valid input
+    showModalAlert('Success!', 'Account created successfully! Redirecting to login...', 'success', () => {
+      router.push('/login')
+    })
   } catch (err) {
-    errorMessage.value = 'Login failed. Please check your credentials and try again.'
-    console.error('Login error:', err)
+    errorMessage.value = 'Registration failed. Please try again.'
+    console.error('Registration error:', err)
   } finally {
     loading.value = false
   }
