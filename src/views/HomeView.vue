@@ -28,6 +28,7 @@
               class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
               aria-label="Browse all available Vue.js jobs"
             >
+              <i class="fas fa-briefcase mr-1"></i>
               Browse Jobs
             </RouterLink>
           </div>
@@ -41,6 +42,7 @@
               class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
               aria-label="Post a new job listing"
             >
+              <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
           </div>
@@ -72,9 +74,10 @@
     <section class="m-auto max-w-lg my-10 px-6">
       <RouterLink
         to="/jobs"
-        class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+        class="block bg-green-600 text-white text-center py-4 px-6 rounded-xl hover:bg-green-700"
         aria-label="View all available jobs"
       >
+        <i class="fas fa-arrow-right mr-1"></i>
         View All Jobs
       </RouterLink>
     </section>

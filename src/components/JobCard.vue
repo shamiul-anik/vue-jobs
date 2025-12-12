@@ -25,6 +25,7 @@
           :aria-label="`View details for ${job.title} position in ${job.location}`"
         >
           Read More
+          <i class="fas fa-arrow-right ml-1"></i>
         </RouterLink>
       </div>
     </div>

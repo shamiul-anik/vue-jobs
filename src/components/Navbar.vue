@@ -17,6 +17,7 @@
                 :class="{ 'bg-green-900': $route.path === '/' }"
                 aria-label="Home page"
               >
+                <i class="fas fa-home mr-1"></i>
                 Home
               </RouterLink>
               <RouterLink
@@ -25,6 +26,7 @@
                 :class="{ 'bg-green-900': $route.path === '/jobs' }"
                 aria-label="Browse all jobs"
               >
+                <i class="fas fa-briefcase mr-1"></i>
                 Jobs
               </RouterLink>
               <RouterLink
@@ -33,6 +35,7 @@
                 :class="{ 'bg-green-900': $route.path === '/add-job' }"
                 aria-label="Post a new job"
               >
+                <i class="fas fa-plus-circle mr-1"></i>
                 Add Job
               </RouterLink>
               <RouterLink
@@ -41,6 +44,7 @@
                 :class="{ 'bg-green-900': $route.path === '/login' }"
                 aria-label="Sign in to your account"
               >
+                <i class="fas fa-sign-in-alt mr-1"></i>
                 Login
               </RouterLink>
             </div>
