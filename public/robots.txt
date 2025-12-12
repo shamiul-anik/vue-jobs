@@ -1,0 +1,11 @@
+# robots.txt for Vue Jobs
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://vuejobs.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

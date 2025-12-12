@@ -1,20 +1,22 @@
 <template>
-  <nav class="bg-green-700 border-b border-green-500">
+  <nav class="bg-green-700 border-b border-green-500" role="navigation" aria-label="Main navigation">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between">
         <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
           <!-- Logo -->
-          <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
-            <img class="h-10 w-auto" src="/images/logo.png" alt="Vue Jobs" />
+          <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/" aria-label="Vue Jobs Home">
+            <img class="h-10 w-auto" src="/images/logo.png" alt="Vue Jobs Logo" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
           </RouterLink>
           
           <div class="md:ml-auto">
-            <div class="flex space-x-2">
+            <div class="flex space-x-2" role="menubar">
               <RouterLink
                 to="/"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/' }"
+                role="menuitem"
+                aria-label="Home page"
               >
                 Home
               </RouterLink>
@@ -22,6 +24,8 @@
                 to="/jobs"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/jobs' }"
+                role="menuitem"
+                aria-label="Browse all jobs"
               >
                 Jobs
               </RouterLink>
@@ -29,6 +33,8 @@
                 to="/add-job"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/add-job' }"
+                role="menuitem"
+                aria-label="Post a new job"
               >
                 Add Job
               </RouterLink>
