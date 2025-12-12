@@ -25,7 +25,7 @@
             <div class="text-gray-500 mb-4">{{ job.type }}</div>
             <h1 class="text-3xl font-bold mb-4">{{ job.title }}</h1>
             
-            <div class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
+            <div class="text-gray-500 mb-4 flex align-middle">
               <i class="fa-solid fa-location-dot text-lg text-orange-700 mr-2"></i>
               <p class="text-orange-700">{{ job.location }}</p>
             </div>
@@ -68,18 +68,45 @@
       </div>
     </section>
   </div>
+
+  <!-- Modal -->
+  <Modal
+    :show="showModal"
+    :type="modalConfig.type"
+    :variant="modalConfig.variant"
+    :title="modalConfig.title"
+    :message="modalConfig.message"
+    :confirm-text="modalConfig.confirmText"
+    :cancel-text="modalConfig.cancelText"
+    @confirm="handleModalConfirm"
+    @cancel="handleModalCancel"
+    @close="handleModalClose"
+  />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
+import Modal from '../components/Modal.vue'
 
 const route = useRoute()
 const router = useRouter()
 const job = ref({})
 const loading = ref(true)
 const error = ref(null)
+
+// Modal state
+const showModal = ref(false)
+const modalConfig = ref({
+  type: 'alert',
+  variant: 'success',
+  title: '',
+  message: '',
+  confirmText: 'OK',
+  cancelText: 'Cancel'
+})
+let deleteConfirmed = false
 
 onMounted(async () => {
   try {
@@ -93,15 +120,59 @@ onMounted(async () => {
 })
 
 const handleDelete = async () => {
-  if (confirm('Are you sure you want to delete this job?')) {
+  showModalConfirm(
+    'Delete Job',
+    'Are you sure you want to delete this job? This action cannot be undone.',
+    'warning'
+  )
+}
+
+const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+  modalConfig.value = {
+    type: 'alert',
+    variant,
+    title,
+    message,
+    confirmText: 'OK',
+    onConfirm
+  }
+  showModal.value = true
+}
+
+const showModalConfirm = (title, message, variant = 'info') => {
+  modalConfig.value = {
+    type: 'confirm',
+    variant,
+    title,
+    message,
+    confirmText: 'Delete',
+    cancelText: 'Cancel'
+  }
+  showModal.value = true
+}
+
+const handleModalConfirm = async () => {
+  if (modalConfig.value.type === 'confirm') {
     try {
       await jobsAPI.deleteJob(job.value.id)
-      alert('Job deleted successfully!')
-      router.push('/jobs')
+      showModalAlert('Success!', 'Job deleted successfully!', 'success', () => {
+        router.push('/jobs')
+      })
     } catch (err) {
-      alert('Failed to delete job. Please try again.')
+      showModalAlert('Error', 'Failed to delete job. Please try again.', 'error')
       console.error('Error deleting job:', err)
     }
+  }
+}
+
+const handleModalCancel = () => {
+  showModal.value = false
+}
+
+const handleModalClose = () => {
+  showModal.value = false
+  if (modalConfig.value.onConfirm) {
+    modalConfig.value.onConfirm()
   }
 }
 </script>

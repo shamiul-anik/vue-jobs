@@ -142,6 +142,16 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal -->
+    <Modal
+      :show="showModal"
+      :type="modalConfig.type"
+      :variant="modalConfig.variant"
+      :title="modalConfig.title"
+      :message="modalConfig.message"
+      @close="handleModalClose"
+    />
   </div>
 </template>
 
@@ -149,9 +159,19 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jobsAPI } from '../services/api'
+import Modal from '../components/Modal.vue'
 
 const router = useRouter()
 const submitting = ref(false)
+
+// Modal state
+const showModal = ref(false)
+const modalConfig = ref({
+  type: 'alert',
+  variant: 'success',
+  title: '',
+  message: ''
+})
 
 const formData = ref({
   type: 'Full-Time',
@@ -169,13 +189,32 @@ const handleSubmit = async () => {
   submitting.value = true
   try {
     const result = await jobsAPI.createJob(formData.value)
-    alert('Job added successfully!')
-    router.push(`/jobs/${result.id}`)
+    showModalAlert('Success!', 'Job added successfully!', 'success', () => {
+      router.push(`/jobs/${result.id}`)
+    })
   } catch (err) {
-    alert('Failed to add job. Please try again.')
+    showModalAlert('Error', 'Failed to add job. Please try again.', 'error')
     console.error('Error creating job:', err)
   } finally {
     submitting.value = false
+  }
+}
+
+const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+  modalConfig.value = {
+    type: 'alert',
+    variant,
+    title,
+    message,
+    onConfirm
+  }
+  showModal.value = true
+}
+
+const handleModalClose = () => {
+  showModal.value = false
+  if (modalConfig.value.onConfirm) {
+    modalConfig.value.onConfirm()
   }
 }
 </script>
