@@ -13,6 +13,13 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
 - Full CRUD operations (Create, Read, Update, Delete)
 - Job search and filtering
 - Responsive design
+- **SEO Optimized**:
+  - Dynamic meta tags for all pages
+  - Open Graph & Twitter Card support
+  - Schema.org structured data (JobPosting, WebSite)
+  - Semantic HTML with ARIA labels
+  - robots.txt and XML sitemap
+  - Google Jobs integration ready
 
 ## 📋 Prerequisites
 

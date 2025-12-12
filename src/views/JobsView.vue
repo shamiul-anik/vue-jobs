@@ -45,6 +45,7 @@
 import { ref, onMounted, computed } from 'vue'
 import JobCard from '../components/JobCard.vue'
 import { jobsAPI } from '../services/api'
+import { useSEO } from '../composables/useSEO'
 
 const jobs = ref([])
 const loading = ref(true)
@@ -61,6 +62,15 @@ const filteredJobs = computed(() => {
     (job.company_name && job.company_name.toLowerCase().includes(query)) ||
     job.type.toLowerCase().includes(query)
   )
+})
+
+// SEO Configuration
+useSEO({
+  title: 'Browse All Vue.js Jobs | Vue Developer Opportunities',
+  description: 'Browse all available Vue.js developer jobs. Filter by location, job type, and company. Find full-time, part-time, and remote Vue.js positions.',
+  keywords: 'Vue.js jobs, browse Vue jobs, Vue developer positions, frontend jobs, JavaScript developer jobs',
+  canonical: window.location.origin + '/jobs',
+  image: window.location.origin + '/images/logo.png'
 })
 
 onMounted(async () => {

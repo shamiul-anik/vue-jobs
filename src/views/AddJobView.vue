@@ -149,9 +149,19 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jobsAPI } from '../services/api'
+import { useSEO } from '../composables/useSEO'
 
 const router = useRouter()
 const submitting = ref(false)
+
+// SEO Configuration
+useSEO({
+  title: 'Post a Vue.js Job | Vue Jobs',
+  description: 'Post your Vue.js developer job listing and connect with talented Vue developers. Reach thousands of qualified candidates looking for Vue.js opportunities.',
+  keywords: 'post Vue job, hire Vue developer, Vue.js job posting, recruit Vue developers',
+  canonical: window.location.origin + '/add-job',
+  image: window.location.origin + '/images/logo.png'
+})
 
 const formData = ref({
   type: 'Full-Time',

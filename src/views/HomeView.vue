@@ -83,12 +83,34 @@ import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import JobCard from '../components/JobCard.vue'
 import { jobsAPI } from '../services/api'
+import { useSEO } from '../composables/useSEO'
 
 const jobs = ref([])
 const loading = ref(true)
 const error = ref(null)
 
 const recentJobs = computed(() => jobs.value.slice(0, 3))
+
+// SEO Configuration
+useSEO({
+  title: 'Vue Jobs | Find Vue.js Developer Jobs & Opportunities',
+  description: 'Discover the best Vue.js developer jobs and career opportunities. Browse full-time, part-time, and remote positions. Post your Vue job listings and connect with talented developers.',
+  keywords: 'Vue.js jobs, Vue developer jobs, frontend developer, JavaScript jobs, remote Vue jobs, Vue.js careers',
+  canonical: window.location.origin + '/',
+  image: window.location.origin + '/images/logo.png',
+  structuredData: {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': 'Vue Jobs',
+    'url': window.location.origin,
+    'description': 'Find Vue.js developer jobs and career opportunities',
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': window.location.origin + '/jobs?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  }
+})
 
 onMounted(async () => {
   try {

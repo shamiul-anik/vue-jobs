@@ -71,15 +71,27 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
+import { useSEO } from '../composables/useSEO'
 
 const route = useRoute()
 const router = useRouter()
 const job = ref({})
 const loading = ref(true)
 const error = ref(null)
+
+// SEO - will be updated when job data loads
+const seoData = ref({
+  title: 'Job Details | Vue Jobs',
+  description: 'View job details and apply for this Vue.js developer position.',
+  keywords: 'Vue.js job details, Vue developer position',
+  canonical: window.location.href,
+  image: window.location.origin + '/images/logo.png'
+})
+
+const { updateMetaTags } = useSEO(seoData)
 
 onMounted(async () => {
   try {
@@ -89,6 +101,49 @@ onMounted(async () => {
     console.error('Error fetching job:', err)
   } finally {
     loading.value = false
+  }
+})
+
+// Update SEO when job data is loaded
+watch(job, (newJob) => {
+  if (newJob.title) {
+    seoData.value = {
+      title: `${newJob.title} - ${newJob.location} | Vue Jobs`,
+      description: `${newJob.title} position at ${newJob.company_name || 'a great company'} in ${newJob.location}. ${newJob.description?.substring(0, 150)}...`,
+      keywords: `${newJob.title}, Vue.js job, ${newJob.location}, ${newJob.type}, ${newJob.company_name}`,
+      canonical: window.location.origin + '/jobs/' + newJob.id,
+      image: window.location.origin + '/images/logo.png',
+      structuredData: {
+        '@context': 'https://schema.org',
+        '@type': 'JobPosting',
+        'title': newJob.title,
+        'description': newJob.description,
+        'datePosted': newJob.created_at,
+        'employmentType': newJob.type,
+        'hiringOrganization': {
+          '@type': 'Organization',
+          'name': newJob.company_name || 'Vue Jobs',
+          'description': newJob.company_description
+        },
+        'jobLocation': {
+          '@type': 'Place',
+          'address': {
+            '@type': 'PostalAddress',
+            'addressLocality': newJob.location
+          }
+        },
+        'baseSalary': {
+          '@type': 'MonetaryAmount',
+          'currency': 'USD',
+          'value': {
+            '@type': 'QuantitativeValue',
+            'value': newJob.salary,
+            'unitText': 'YEAR'
+          }
+        }
+      }
+    }
+    updateMetaTags()
   }
 })
 
