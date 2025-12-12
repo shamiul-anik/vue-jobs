@@ -10,12 +10,11 @@
           </RouterLink>
           
           <div class="md:ml-auto">
-            <div class="flex space-x-2" role="menubar">
+            <div class="flex space-x-2">
               <RouterLink
                 to="/"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/' }"
-                role="menuitem"
                 aria-label="Home page"
               >
                 Home
@@ -24,7 +23,6 @@
                 to="/jobs"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/jobs' }"
-                role="menuitem"
                 aria-label="Browse all jobs"
               >
                 Jobs
@@ -33,7 +31,6 @@
                 to="/add-job"
                 class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
                 :class="{ 'bg-green-900': $route.path === '/add-job' }"
-                role="menuitem"
                 aria-label="Post a new job"
               >
                 Add Job
@@ -42,6 +39,7 @@
                 to="/login"
                 class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
                 :class="{ 'bg-green-900': $route.path === '/login' }"
+                aria-label="Sign in to your account"
               >
                 Login
               </RouterLink>
