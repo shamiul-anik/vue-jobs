@@ -35,6 +35,11 @@ const router = createRouter({
       component: EditJobView,
     },
     {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "not-found",
       component: NotFoundView,

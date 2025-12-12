@@ -8,7 +8,7 @@
       </p>
       <RouterLink
         to="/"
-        class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg"
+        class="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg"
       >
         Go Back Home
       </RouterLink>

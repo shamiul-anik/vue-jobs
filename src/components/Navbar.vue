@@ -32,6 +32,13 @@
               >
                 Add Job
               </RouterLink>
+              <RouterLink
+                to="/login"
+                class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
+                :class="{ 'bg-green-900': $route.path === '/login' }"
+              >
+                Login
+              </RouterLink>
             </div>
           </div>
         </div>

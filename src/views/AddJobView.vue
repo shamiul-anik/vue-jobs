@@ -11,7 +11,7 @@
               <select
                 v-model="formData.type"
                 id="type"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 required
               >
                 <option value="Full-Time">Full-Time</option>
@@ -26,7 +26,7 @@
               <input
                 v-model="formData.title"
                 type="text"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
                 placeholder="e.g. Senior Vue Developer"
                 required
               />
@@ -37,7 +37,7 @@
               <textarea
                 v-model="formData.description"
                 id="description"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 rows="4"
                 placeholder="Add any job duties, expectations, requirements, etc"
               ></textarea>
@@ -48,7 +48,7 @@
               <select
                 v-model="formData.salary"
                 id="salary"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 required
               >
                 <option value="Under $50K">Under $50K</option>
@@ -70,7 +70,7 @@
               <input
                 v-model="formData.location"
                 type="text"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
                 placeholder="Company Location"
                 required
               />
@@ -84,7 +84,7 @@
                 v-model="formData.company_name"
                 type="text"
                 id="company"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 placeholder="Company Name"
               />
             </div>
@@ -96,7 +96,7 @@
               <textarea
                 v-model="formData.company_description"
                 id="company_description"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 rows="4"
                 placeholder="What does your company do?"
               ></textarea>
@@ -110,7 +110,7 @@
                 v-model="formData.contact_email"
                 type="email"
                 id="contact_email"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 placeholder="Email address for applicants"
                 required
               />
@@ -124,7 +124,7 @@
                 v-model="formData.contact_phone"
                 type="tel"
                 id="contact_phone"
-                class="border bg-white border-gray-600 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 placeholder="Optional phone for applicants"
               />
             </div>
