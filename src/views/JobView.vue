@@ -49,7 +49,7 @@
               <p v-if="job.contact_phone"><strong>Phone:</strong> {{ job.contact_phone }}</p>
             </div>
 
-            <div class="flex justify-end gap-4">
+            <div v-if="isAdmin" class="flex justify-end gap-4">
               <RouterLink
                 :to="`/edit-job/${job.id}`"
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
@@ -85,17 +85,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 import { useSEO } from '../composables/useSEO'
+import { useAuth } from '../composables/useAuth'
 
 const route = useRoute()
 const router = useRouter()
+const { user } = useAuth()
 const job = ref({})
 const loading = ref(true)
 const error = ref(null)
+
+const isAdmin = computed(() => {
+  return user.value && user.value.role === 'admin'
+})
 
 // SEO state
 const seoData = ref({

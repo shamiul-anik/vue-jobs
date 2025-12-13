@@ -65,6 +65,7 @@ function initializeDatabase() {
         } else {
           console.log("Users table ready");
           insertAdminUser();
+          insertTestUser();
         }
       }
     );
@@ -107,6 +108,34 @@ function insertAdminUser() {
             console.error("Error creating admin user:", err.message);
           } else {
             console.log("Admin user created successfully");
+          }
+        }
+      );
+    }
+  });
+}
+
+function insertTestUser() {
+  const testEmail = "test@mail.com";
+  db.get("SELECT id FROM users WHERE email = ?", [testEmail], (err, row) => {
+    if (err) {
+      console.error("Error checking test user:", err.message);
+      return;
+    }
+
+    if (!row) {
+      const password = "testuser";
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+
+      db.run(
+        "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+        ["Test User", testEmail, hash, "user"],
+        (err) => {
+          if (err) {
+            console.error("Error creating test user:", err.message);
+          } else {
+            console.log("Test user created successfully");
           }
         }
       );

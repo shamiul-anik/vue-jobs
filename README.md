@@ -103,6 +103,11 @@ On the first run, the system automatically creates an Admin user:
 - **Email**: `admin@mail.com`
 - **Password**: `admin`
 
+### 👤 Test User Credentials (Auto-Generated)
+
+- **Email**: `test@mail.com`
+- **Password**: `testuser`
+
 You can use these credentials to log in immediately.
 
 ### Testing CRUD Operations
