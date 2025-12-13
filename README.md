@@ -174,7 +174,7 @@ Feel free to fork this project and customize it for your needs!
 
 ## 📄 License
 
-ISC
+MIT
 
 ---
 

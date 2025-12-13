@@ -80,6 +80,38 @@ db.serialize(() => {
 });
 ```
 
+### 1. Raw Database Benchmark (Internal Speed)
+
+Use the following script to test how fast SQLite can write and read directly. 
+Run it with this command:
+
+```bash
+npm run db:benchmark
+```
+
+It will insert 10,000 records and perform 1,000 random reads, giving you "Ops/sec".
+
+### 2. API Load Testing (Real-world Performance) - Recommended
+
+To see how the application handles traffic (which includes DB + Server overhead), I have used a tool called **autocannon**.
+
+It can be run without installing it permanently:
+
+**Test Read Speed (GET /api/jobs):**
+
+```bash
+npx autocannon -c 100 -d 10 http://localhost:3000/api/jobs
+```
+
+_(Simulates 100 concurrent users for 10 seconds)_
+
+**Test Write Speed (POST /api/jobs):**
+_Note: This might hit your new rate limits!_
+
+```bash
+npx autocannon -c 10 -d 10 -m POST -H "Content-Type: application/json" -b '{"type":"Remote","title":"Test Job","description":"A test job description","location":"Test","contact_email":"test@test.com"}' http://localhost:3000/api/jobs
+```
+
 ## 2. Benchmark Results Interpretation
 
 ### A. Raw Database Speed (Internal)
