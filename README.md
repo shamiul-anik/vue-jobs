@@ -39,7 +39,7 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
 
 ## 📋 Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v22 or higher)
 - npm or yarn
 
 ## 🛠️ Installation
