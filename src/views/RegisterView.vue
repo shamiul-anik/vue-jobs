@@ -205,15 +205,34 @@ const handleRegister = async () => {
   loading.value = true
 
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const response = await fetch("/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.value.name,
+        email: formData.value.email,
+        password: formData.value.password,
+      }),
+    });
 
-    // For demo purposes - accept any valid input
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (data.errors) {
+        // Show validation errors
+        throw new Error(data.errors.map(e => e.msg).join(", "));
+      } else {
+        throw new Error(data.error || "Registration failed");
+      }
+    }
+
     showModalAlert('Success!', 'Account created successfully! Redirecting to login...', 'success', () => {
       router.push('/login')
     })
   } catch (err) {
-    errorMessage.value = 'Registration failed. Please try again.'
+    errorMessage.value = err.message || 'Registration failed. Please try again.'
     console.error('Registration error:', err)
   } finally {
     loading.value = false
