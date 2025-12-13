@@ -20,6 +20,12 @@
       <!-- Login Form -->
       <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
         <form @submit.prevent="handleLogin" class="space-y-6">
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{ errorMessage }}
+          </div>
+          
           <!-- Email Input -->
           <div>
             <label for="email" class="block text-gray-700 font-bold mb-2">
@@ -78,12 +84,6 @@
                 Forgot password?
               </a>
             </div>
-          </div>
-
-          <!-- Error Message -->
-          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            {{ errorMessage }}
           </div>
 
           <!-- Submit Button -->

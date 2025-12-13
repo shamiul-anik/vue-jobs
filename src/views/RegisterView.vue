@@ -18,6 +18,12 @@
       <!-- Sign Up Form -->
       <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
         <form @submit.prevent="handleRegister" class="space-y-6">
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-2">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{ errorMessage }}
+          </div>
+
           <!-- Full Name Input -->
           <div>
             <label for="name" class="block text-gray-700 font-bold mb-2">
@@ -112,13 +118,7 @@
               <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our privacy policy">Privacy Policy</a>
             </label>
           </div>
-
-          <!-- Error Message -->
-          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            {{ errorMessage }}
-          </div>
-
+   
           <!-- Submit Button -->
           <div>
             <button
