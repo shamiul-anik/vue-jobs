@@ -13,6 +13,18 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
 - Full CRUD operations (Create, Read, Update, Delete)
 - Job search and filtering
 - Responsive design
+- **Security Enhanced**:
+  - **Helmet.js** for secure HTTP headers
+  - **Rate Limiting** to prevent abuse (100 req/15min)
+  - **Input Validation** & Sanitization (express-validator)
+  - **CORS** configured for safety
+- **Enhanced UI/UX**:
+  - **Font Awesome** icons for visual cues
+  - Custom SVG illustrations for Auth pages
+  - **Accessibility** (ARIA labels, semantic HTML)
+- **Frontend Validation**:
+  - Real-time error feedback for forms
+  - User-friendly validation alerts
 - **SEO Optimized**:
   - Dynamic meta tags for all pages
   - Open Graph & Twitter Card support
@@ -31,7 +43,7 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
 1. **Clone or navigate to the project directory:**
 
    ```bash
-   cd c:\www\testing-vue
+   cd \testing-vue
    ```
 
 2. **Install dependencies:**
@@ -162,4 +174,4 @@ ISC
 
 ---
 
-**Built with ❤️ using Vue.js 3 and SQLite3**
+**Built with ❤️ using Vue.js 3 and SQLite3 by Shamiul**
