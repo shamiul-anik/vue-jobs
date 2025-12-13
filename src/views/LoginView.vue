@@ -186,19 +186,37 @@ const handleLogin = async () => {
   loading.value = true
 
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // For demo purposes - accept any email/password
-    if (formData.value.email && formData.value.password) {
-      showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
-        router.push('/')
-      })
-    } else {
-      errorMessage.value = 'Please enter both email and password'
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.value.email,
+        password: formData.value.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (data.errors) {
+        throw new Error(data.errors.map(e => e.msg).join(", "));
+      } else {
+        throw new Error(data.error || "Login failed");
+      }
     }
+
+    // Store token and user info
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
+      router.push('/')
+    })
   } catch (err) {
-    errorMessage.value = 'Login failed. Please check your credentials and try again.'
+    errorMessage.value = err.message || 'Login failed. Please check your credentials and try again.'
     console.error('Login error:', err)
   } finally {
     loading.value = false
