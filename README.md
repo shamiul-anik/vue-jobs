@@ -13,11 +13,18 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
 - Full CRUD operations (Create, Read, Update, Delete)
 - Job search and filtering
 - Responsive design
+- **User Authentication**:
+  - **Register & Login** functionality
+  - **JWT (JSON Web Token)** for secure session management
+  - **Password Hashing** with bcryptjs
+  - **Global Auth State** (Vue Composition API)
+  - **Dynamic Navbar** (Login/Logout/Greeting)
 - **Security Enhanced**:
   - **Helmet.js** for secure HTTP headers
   - **Rate Limiting** to prevent abuse (100 req/15min)
   - **Input Validation** & Sanitization (express-validator)
   - **CORS** configured for safety
+  - **Protected Routes** (Frontend checks)
 - **Database Optimizations**:
   - **WAL Mode** enabled for better concurrency
   - **Synchronous NORMAL** for faster writes
@@ -54,6 +61,12 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
    ```bash
    npm install
    ```
+3. **Environment Variables:**
+   Create a `.env` file (optional for local, required for JWT secret in production):
+   ```env
+   JWT_SECRET=your_super_secret_key
+   PORT=3000
+   ```
 
 ## 🏃 Running the Application
 
@@ -83,6 +96,14 @@ npm run dev
 
 The Vue app will be available at `http://localhost:5173`
 
+### 🔑 Admin Credentials (Auto-Generated)
+
+On the first run, the system automatically creates an Admin user:
+
+- **Email**: `admin@mail.com`
+- **Password**: `admin`
+
+You can use these credentials to log in immediately.
 
 ### Testing CRUD Operations
 
@@ -94,7 +115,6 @@ The Vue app will be available at `http://localhost:5173`
 
 **Delete**: Click "Delete Job" on job details page (with confirmation)
 
-
 ## 📁 Project Structure
 
 ```
@@ -103,19 +123,25 @@ testing-vue/
 │   ├── database.js          # Database connection and initialization
 │   └── database.db          # SQLite database file (auto-generated)
 ├── routes/
-│   └── jobs.js              # API routes for jobs
+│   ├── jobs.js              # API routes for jobs
+│   └── users.js             # API routes for authentication (Login/Register)
 ├── src/
 │   ├── assets/
 │   │   └── styles.css       # Tailwind CSS styles
 │   ├── components/
 │   │   ├── Navbar.vue       # Navigation component
-│   │   └── JobCard.vue      # Job card component
+│   │   ├── JobCard.vue      # Job card component
+│   │   └── Modal.vue        # Reusable modal component
+│   ├── composites/
+│   │   └── useAuth.js       # Authentication state management
 │   ├── views/
 │   │   ├── HomeView.vue     # Home page
 │   │   ├── JobsView.vue     # All jobs listing
 │   │   ├── JobView.vue      # Single job details
 │   │   ├── AddJobView.vue   # Add new job form
 │   │   ├── EditJobView.vue  # Edit job form
+│   │   ├── LoginView.vue    # Login page
+│   │   ├── RegisterView.vue # Registration page
 │   │   └── NotFoundView.vue # 404 page
 │   ├── router/
 │   │   └── index.js         # Vue Router configuration
@@ -136,8 +162,10 @@ testing-vue/
 | Frontend Framework | Vue.js 3 (Composition API) |
 | Build Tool         | Vite                       |
 | Routing            | Vue Router 4               |
+| State Management   | Reactivity API (useAuth)   |
 | Styling            | Tailwind CSS               |
 | Backend            | Node.js + Express          |
+| Authentication     | JWT + bcryptjs             |
 | Database           | SQLite3                    |
 | HTTP Client        | Fetch API                  |
 
@@ -202,7 +230,7 @@ This script (`scripts/benchmark-db.js`) was used to test the raw performance of 
 
 ### 1. Raw Database Benchmark (Internal Speed)
 
-Use the following script to test how fast SQLite can write and read directly. 
+Use the following script to test how fast SQLite can write and read directly.
 Run it with this command:
 
 ```bash
@@ -274,7 +302,6 @@ The application demonstrates:
 1.  **High internal performance** (20k-27k ops/sec).
 2.  **Effective security** (Rate limiting and input validation are active and working).
 3.  **Low latency** (~27ms average response time).
-
 
 ## 🤝 Contributing
 
