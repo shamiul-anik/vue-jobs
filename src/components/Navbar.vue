@@ -9,6 +9,7 @@
             <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
           </RouterLink>
           
+          <!-- Navigation Menu -->
           <div class="flex space-x-2 px-2">
             <RouterLink
               to="/"
@@ -38,18 +39,28 @@
               Add Job
             </RouterLink>              
           </div>
-
-          <!-- <div> -->
+          
+          <!-- Login/Logout -->
+          <div class="flex items-center space-x-2 px-2">
             <RouterLink
-              to="/login"
-              class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
-              :class="{ 'bg-green-900': $route.path === '/login' }"
-              aria-label="Sign in to your account"
+            to="/login"
+            class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
+            :class="{ 'bg-green-900': $route.path === '/login' }"
+            aria-label="Sign in to your account"
             >
               <i class="fas fa-sign-in-alt mr-1"></i>
               Login
             </RouterLink>
-          <!-- </div> -->
+            <RouterLink
+              to="/logout"
+              class="bg-white text-red-800 hover:bg-red-900 hover:text-white rounded-lg px-4 py-2"
+              :class="{ 'bg-red-900': $route.path === '/logout' }"
+              aria-label="Sign in to your account"
+            >
+              <i class="fas fa-sign-out-alt mr-1"></i>
+              Logout
+            </RouterLink>
+          </div>
 
         </div>
       </div>
