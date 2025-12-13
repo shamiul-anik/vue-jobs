@@ -6,6 +6,17 @@
           Add Job
         </h2>
         <div class="bg-white px-6 py-8 mb-4 shadow-lg rounded-lg border-2 border-gray-200 m-4 md:m-0">
+          
+          <!-- Validation Errors Alert -->
+          <div v-if="validationErrors.length > 0" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+            <p class="font-bold">Please correct the following errors:</p>
+            <ul class="list-disc ml-5 mt-2">
+              <li v-for="(error, index) in validationErrors" :key="index">
+                {{ error.msg }}
+              </li>
+            </ul>
+          </div>
+
           <form @submit.prevent="handleSubmit">
             <!-- <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2> -->
 
@@ -167,6 +178,7 @@ import Modal from '../components/Modal.vue'
 
 const router = useRouter()
 const submitting = ref(false)
+const validationErrors = ref([])
 
 // Modal state
 const showModal = ref(false)
@@ -191,14 +203,24 @@ const formData = ref({
 
 const handleSubmit = async () => {
   submitting.value = true
+  validationErrors.value = [] // Clear previous errors
+
   try {
     const result = await jobsAPI.createJob(formData.value)
     showModalAlert('Success!', 'Job added successfully!', 'success', () => {
       router.push(`/jobs/${result.id}`)
     })
   } catch (err) {
-    showModalAlert('Error', 'Failed to add job. Please try again.', 'error')
-    console.error('Error creating job:', err)
+    if (err.data && err.data.errors) {
+      // Handle validation errors from backend
+      validationErrors.value = err.data.errors
+      // Scroll to top to see errors
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // Generic error
+      showModalAlert('Error', 'Failed to add job. Please try again.', 'error')
+      console.error('Error creating job:', err)
+    }
   } finally {
     submitting.value = false
   }

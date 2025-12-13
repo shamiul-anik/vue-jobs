@@ -33,8 +33,62 @@ router.get("/:id", (req, res) => {
   });
 });
 
+const { body, param, validationResult } = require("express-validator");
+
+// Validation Rules
+const jobValidationRules = [
+  body("type")
+    .trim()
+    .isIn(["Full-Time", "Part-Time", "Remote", "Internship", "Contract"])
+    .withMessage("Invalid job type"),
+  body("title")
+    .trim()
+    .isLength({ min: 3, max: 100 })
+    .withMessage("Title must be between 3 and 100 characters")
+    .escape(),
+  body("description")
+    .trim()
+    .isLength({ min: 10 })
+    .withMessage("Description must be at least 10 characters long")
+    .escape(),
+  body("salary")
+    .trim()
+    .isLength({ max: 50 })
+    .withMessage("Salary must be less than 50 characters")
+    .escape(),
+  body("location")
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Location must be between 2 and 100 characters")
+    .escape(),
+  body("company_name")
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Company name must be between 2 and 100 characters")
+    .escape(),
+  body("contact_email")
+    .trim()
+    .isEmail()
+    .withMessage("Invalid email address")
+    .normalizeEmail(),
+  body("contact_phone")
+    .optional({ checkFalsy: true })
+    .trim()
+    .matches(/^[\d\s\-\+\(\)]+$/)
+    .withMessage("Invalid phone number format"),
+];
+
+// Validation Middleware
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+};
+
 // POST create new job
-router.post("/", (req, res) => {
+router.post("/", jobValidationRules, validate, (req, res) => {
   const {
     type,
     title,
@@ -46,16 +100,6 @@ router.post("/", (req, res) => {
     contact_email,
     contact_phone,
   } = req.body;
-
-  // Validation
-  if (!type || !title || !location || !contact_email) {
-    res
-      .status(400)
-      .json({
-        error: "Missing required fields: type, title, location, contact_email",
-      });
-    return;
-  }
 
   const query = `
     INSERT INTO jobs (type, title, description, salary, location, company_name, company_description, contact_email, contact_phone)
@@ -88,7 +132,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT update job
-router.put("/:id", (req, res) => {
+router.put("/:id", jobValidationRules, validate, (req, res) => {
   const { id } = req.params;
   const {
     type,

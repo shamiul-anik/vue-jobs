@@ -24,7 +24,12 @@ export const jobsAPI = {
       },
       body: JSON.stringify(jobData),
     });
-    if (!response.ok) throw new Error("Failed to create job");
+    if (!response.ok) {
+      const errorData = await response.json();
+      const error = new Error("Failed to create job");
+      error.data = errorData;
+      throw error;
+    }
     return response.json();
   },
 
@@ -37,7 +42,12 @@ export const jobsAPI = {
       },
       body: JSON.stringify(jobData),
     });
-    if (!response.ok) throw new Error("Failed to update job");
+    if (!response.ok) {
+      const errorData = await response.json();
+      const error = new Error("Failed to update job");
+      error.data = errorData;
+      throw error;
+    }
     return response.json();
   },
 

@@ -14,6 +14,17 @@
         </div>
         
         <div v-else class="bg-white px-6 py-8 mb-4 border-2 border-gray-200 shadow-lg rounded-lg m-4 md:m-0">
+          
+          <!-- Validation Errors Alert -->
+          <div v-if="validationErrors.length > 0" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+            <p class="font-bold">Please correct the following errors:</p>
+            <ul class="list-disc ml-5 mt-2">
+              <li v-for="(error, index) in validationErrors" :key="index">
+                {{ error.msg }}
+              </li>
+            </ul>
+          </div>
+
           <form @submit.prevent="handleSubmit">
             <h2 class="text-3xl text-center font-semibold mb-6">Edit Job</h2>
 
@@ -186,6 +197,7 @@ const router = useRouter()
 const loading = ref(true)
 const error = ref(null)
 const submitting = ref(false)
+const validationErrors = ref([])
 
 // Modal state
 const showModal = ref(false)
@@ -222,14 +234,24 @@ onMounted(async () => {
 
 const handleSubmit = async () => {
   submitting.value = true
+  validationErrors.value = [] // Clear previous errors
+
   try {
     await jobsAPI.updateJob(route.params.id, formData.value)
     showModalAlert('Success!', 'Job updated successfully!', 'success', () => {
       router.push(`/jobs/${route.params.id}`)
     })
   } catch (err) {
-    showModalAlert('Error', 'Failed to update job. Please try again.', 'error')
-    console.error('Error updating job:', err)
+    if (err.data && err.data.errors) {
+      // Handle validation errors from backend
+      validationErrors.value = err.data.errors
+      // Scroll to top to see errors
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // Generic error
+      showModalAlert('Error', 'Failed to update job. Please try again.', 'error')
+      console.error('Error updating job:', err)
+    }
   } finally {
     submitting.value = false
   }

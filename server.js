@@ -3,9 +3,35 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const jobsRouter = require("./routes/jobs");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Security Middleware
+app.use(helmet());
+
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again later.",
+});
+app.use("/api/", limiter);
+
+// Stricter Rate Limiting for Writes
+const writeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  message: "Too many write requests from this IP",
+});
+app.use("/api/jobs", (req, res, next) => {
+  if (["POST", "PUT", "DELETE"].includes(req.method)) {
+    return writeLimiter(req, res, next);
+  }
+  next();
+});
 
 // Middleware
 app.use(cors());
