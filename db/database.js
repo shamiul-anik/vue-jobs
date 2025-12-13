@@ -87,7 +87,7 @@ function initializeDatabase() {
 const bcrypt = require("bcryptjs");
 
 function insertAdminUser() {
-  const adminEmail = "shamiul@gmail.com";
+  const adminEmail = "admin@mail.com";
   db.get("SELECT id FROM users WHERE email = ?", [adminEmail], (err, row) => {
     if (err) {
       console.error("Error checking admin user:", err.message);
@@ -101,7 +101,7 @@ function insertAdminUser() {
 
       db.run(
         "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-        ["Shamiul", adminEmail, hash, "admin"],
+        ["Admin", adminEmail, hash, "admin"],
         (err) => {
           if (err) {
             console.error("Error creating admin user:", err.message);

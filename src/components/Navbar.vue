@@ -30,6 +30,7 @@
               Jobs
             </RouterLink>
             <RouterLink
+              v-if="isAuthenticated"
               to="/add-job"
               class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
               :class="{ 'bg-green-900': $route.path === '/add-job' }"
