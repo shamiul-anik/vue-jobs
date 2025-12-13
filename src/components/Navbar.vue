@@ -42,24 +42,30 @@
           
           <!-- Login/Logout -->
           <div class="flex items-center space-x-2 px-2">
-            <RouterLink
-            to="/login"
-            class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
-            :class="{ 'bg-green-900': $route.path === '/login' }"
-            aria-label="Sign in to your account"
-            >
-              <i class="fas fa-sign-in-alt mr-1"></i>
-              Login
-            </RouterLink>
-            <RouterLink
-              to="/logout"
-              class="bg-white text-red-800 hover:bg-red-900 hover:text-white rounded-lg px-4 py-2"
-              :class="{ 'bg-red-900': $route.path === '/logout' }"
-              aria-label="Sign in to your account"
-            >
-              <i class="fas fa-sign-out-alt mr-1"></i>
-              Logout
-            </RouterLink>
+            <template v-if="!isAuthenticated">
+              <RouterLink
+                to="/login"
+                class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
+                :class="{ 'bg-green-900': $route.path === '/login' }"
+                aria-label="Sign in to your account"
+              >
+                <i class="fas fa-sign-in-alt mr-1"></i>
+                Login
+              </RouterLink>
+            </template>
+            <template v-else>
+              <span class="text-white font-medium mr-2 hidden md:inline-block">
+                Hello, {{ user ? user.name : 'User' }}
+              </span>
+              <button
+                @click="handleLogout"
+                class="bg-white text-red-800 hover:bg-red-700 hover:text-white rounded-lg px-4 py-2 cursor-pointer transition-colors"
+                aria-label="Sign out of your account"
+              >
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                Logout
+              </button>
+            </template>
           </div>
 
         </div>
@@ -69,5 +75,14 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth'
+
+const { isAuthenticated, user, logout } = useAuth()
+const router = useRouter()
+
+const handleLogout = () => {
+    logout()
+    router.push('/login')
+}
 </script>

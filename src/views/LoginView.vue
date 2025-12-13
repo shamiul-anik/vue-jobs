@@ -160,8 +160,10 @@
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
+import { useAuth } from '../composables/useAuth'
 
 const router = useRouter()
+const { login } = useAuth()
 const loading = ref(false)
 const showPassword = ref(false)
 const errorMessage = ref('')
@@ -208,9 +210,8 @@ const handleLogin = async () => {
       }
     }
 
-    // Store token and user info
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    // Store token and user info using auth composable
+    login(data.user, data.token);
 
     showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
       router.push('/')
