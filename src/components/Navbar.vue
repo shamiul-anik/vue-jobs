@@ -9,6 +9,7 @@
             <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
           </RouterLink>
           
+          <!-- Navigation Menu -->
           <div class="flex space-x-2 px-2">
             <RouterLink
               to="/"
@@ -29,6 +30,7 @@
               Jobs
             </RouterLink>
             <RouterLink
+              v-if="isAuthenticated"
               to="/add-job"
               class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
               :class="{ 'bg-green-900': $route.path === '/add-job' }"
@@ -38,18 +40,34 @@
               Add Job
             </RouterLink>              
           </div>
-
-          <!-- <div> -->
-            <RouterLink
-              to="/login"
-              class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
-              :class="{ 'bg-green-900': $route.path === '/login' }"
-              aria-label="Sign in to your account"
-            >
-              <i class="fas fa-sign-in-alt mr-1"></i>
-              Login
-            </RouterLink>
-          <!-- </div> -->
+          
+          <!-- Login/Logout -->
+          <div class="flex items-center space-x-2 px-2">
+            <template v-if="!isAuthenticated">
+              <RouterLink
+                to="/login"
+                class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
+                :class="{ 'bg-green-900': $route.path === '/login' }"
+                aria-label="Sign in to your account"
+              >
+                <i class="fas fa-sign-in-alt mr-1"></i>
+                Login
+              </RouterLink>
+            </template>
+            <template v-else>
+              <span class="text-white font-medium mr-2 hidden md:inline-block">
+                Hello, {{ user ? user.name : 'User' }}
+              </span>
+              <button
+                @click="handleLogout"
+                class="bg-white text-red-800 hover:bg-red-700 hover:text-white rounded-lg px-4 py-2 cursor-pointer transition-colors"
+                aria-label="Sign out of your account"
+              >
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                Logout
+              </button>
+            </template>
+          </div>
 
         </div>
       </div>
@@ -58,5 +76,14 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+import { useAuth } from '../composables/useAuth'
+
+const { isAuthenticated, user, logout } = useAuth()
+const router = useRouter()
+
+const handleLogout = () => {
+    logout()
+    router.push('/login')
+}
 </script>

@@ -20,6 +20,12 @@
       <!-- Login Form -->
       <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
         <form @submit.prevent="handleLogin" class="space-y-6">
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{ errorMessage }}
+          </div>
+          
           <!-- Email Input -->
           <div>
             <label for="email" class="block text-gray-700 font-bold mb-2">
@@ -78,12 +84,6 @@
                 Forgot password?
               </a>
             </div>
-          </div>
-
-          <!-- Error Message -->
-          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            {{ errorMessage }}
           </div>
 
           <!-- Submit Button -->
@@ -160,8 +160,10 @@
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
+import { useAuth } from '../composables/useAuth'
 
 const router = useRouter()
+const { login } = useAuth()
 const loading = ref(false)
 const showPassword = ref(false)
 const errorMessage = ref('')
@@ -186,19 +188,36 @@ const handleLogin = async () => {
   loading.value = true
 
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // For demo purposes - accept any email/password
-    if (formData.value.email && formData.value.password) {
-      showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
-        router.push('/')
-      })
-    } else {
-      errorMessage.value = 'Please enter both email and password'
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.value.email,
+        password: formData.value.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (data.errors) {
+        throw new Error(data.errors.map(e => e.msg).join(", "));
+      } else {
+        throw new Error(data.error || "Login failed");
+      }
     }
+
+    // Store token and user info using auth composable
+    login(data.user, data.token);
+
+    showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
+      router.push('/')
+    })
   } catch (err) {
-    errorMessage.value = 'Login failed. Please check your credentials and try again.'
+    errorMessage.value = err.message || 'Login failed. Please check your credentials and try again.'
     console.error('Login error:', err)
   } finally {
     loading.value = false

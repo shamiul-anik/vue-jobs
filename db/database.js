@@ -40,9 +40,32 @@ function initializeDatabase() {
     `,
       (err) => {
         if (err) {
-          console.error("Error creating table:", err.message);
+          console.error("Error creating jobs table:", err.message);
         } else {
           console.log("Jobs table ready");
+        }
+      }
+    );
+
+    // Create Users Table
+    db.run(
+      `
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        role TEXT DEFAULT 'user',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `,
+      (err) => {
+        if (err) {
+          console.error("Error creating users table:", err.message);
+        } else {
+          console.log("Users table ready");
+          insertAdminUser();
+          insertTestUser();
         }
       }
     );
@@ -59,6 +82,64 @@ function initializeDatabase() {
         }
       }
     );
+  });
+}
+
+const bcrypt = require("bcryptjs");
+
+function insertAdminUser() {
+  const adminEmail = "admin@mail.com";
+  db.get("SELECT id FROM users WHERE email = ?", [adminEmail], (err, row) => {
+    if (err) {
+      console.error("Error checking admin user:", err.message);
+      return;
+    }
+
+    if (!row) {
+      const password = "admin";
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+
+      db.run(
+        "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+        ["Admin", adminEmail, hash, "admin"],
+        (err) => {
+          if (err) {
+            console.error("Error creating admin user:", err.message);
+          } else {
+            console.log("Admin user created successfully");
+          }
+        }
+      );
+    }
+  });
+}
+
+function insertTestUser() {
+  const testEmail = "test@mail.com";
+  db.get("SELECT id FROM users WHERE email = ?", [testEmail], (err, row) => {
+    if (err) {
+      console.error("Error checking test user:", err.message);
+      return;
+    }
+
+    if (!row) {
+      const password = "testuser";
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password, salt);
+
+      db.run(
+        "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+        ["Test User", testEmail, hash, "user"],
+        (err) => {
+          if (err) {
+            console.error("Error creating test user:", err.message);
+          } else {
+            console.log("Test user created successfully");
+          }
+        }
+      );
+    }
   });
 }
 

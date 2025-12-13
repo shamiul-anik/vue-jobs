@@ -38,8 +38,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const usersRouter = require("./routes/users");
+
 // API Routes
 app.use("/api/jobs", jobsRouter);
+app.use("/api/users", usersRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

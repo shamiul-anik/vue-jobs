@@ -18,6 +18,12 @@
       <!-- Sign Up Form -->
       <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
         <form @submit.prevent="handleRegister" class="space-y-6">
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-2">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            {{ errorMessage }}
+          </div>
+
           <!-- Full Name Input -->
           <div>
             <label for="name" class="block text-gray-700 font-bold mb-2">
@@ -112,13 +118,7 @@
               <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our privacy policy">Privacy Policy</a>
             </label>
           </div>
-
-          <!-- Error Message -->
-          <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            {{ errorMessage }}
-          </div>
-
+   
           <!-- Submit Button -->
           <div>
             <button
@@ -205,15 +205,34 @@ const handleRegister = async () => {
   loading.value = true
 
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const response = await fetch("/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.value.name,
+        email: formData.value.email,
+        password: formData.value.password,
+      }),
+    });
 
-    // For demo purposes - accept any valid input
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (data.errors) {
+        // Show validation errors
+        throw new Error(data.errors.map(e => e.msg).join(", "));
+      } else {
+        throw new Error(data.error || "Registration failed");
+      }
+    }
+
     showModalAlert('Success!', 'Account created successfully! Redirecting to login...', 'success', () => {
       router.push('/login')
     })
   } catch (err) {
-    errorMessage.value = 'Registration failed. Please try again.'
+    errorMessage.value = err.message || 'Registration failed. Please try again.'
     console.error('Registration error:', err)
   } finally {
     loading.value = false
