@@ -9,37 +9,57 @@ const db = new sqlite3.Database(dbPath, (err) => {
     console.error("Error opening database:", err.message);
   } else {
     console.log("Connected to SQLite database");
+
+    // Performance Optimizations
+    db.run("PRAGMA journal_mode = WAL;"); // Enable Write-Ahead Logging for concurrency
+    db.run("PRAGMA synchronous = NORMAL;"); // Reduce fsyncs for better write performance
+
     initializeDatabase();
   }
 });
 
 // Initialize database schema
 function initializeDatabase() {
-  db.run(
-    `
-    CREATE TABLE IF NOT EXISTS jobs (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      type TEXT NOT NULL,
-      title TEXT NOT NULL,
-      description TEXT,
-      salary TEXT,
-      location TEXT NOT NULL,
-      company_name TEXT,
-      company_description TEXT,
-      contact_email TEXT NOT NULL,
-      contact_phone TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `,
-    (err) => {
-      if (err) {
-        console.error("Error creating table:", err.message);
-      } else {
-        console.log("Jobs table ready");
-        insertSampleData();
+  db.serialize(() => {
+    // Create Jobs Table
+    db.run(
+      `
+      CREATE TABLE IF NOT EXISTS jobs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        salary TEXT,
+        location TEXT NOT NULL,
+        company_name TEXT,
+        company_description TEXT,
+        contact_email TEXT NOT NULL,
+        contact_phone TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `,
+      (err) => {
+        if (err) {
+          console.error("Error creating table:", err.message);
+        } else {
+          console.log("Jobs table ready");
+        }
       }
-    }
-  );
+    );
+
+    // Create Index on created_at for faster sorting (ORDER BY created_at DESC)
+    db.run(
+      `CREATE INDEX IF NOT EXISTS idx_jobs_created_at ON jobs(created_at)`,
+      (err) => {
+        if (err) {
+          console.error("Error creating index:", err.message);
+        } else {
+          console.log("Index on created_at ready");
+          insertSampleData();
+        }
+      }
+    );
+  });
 }
 
 // Insert sample data if table is empty
