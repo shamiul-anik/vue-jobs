@@ -68,4 +68,4 @@ We cannot host the SQLite database on Vercel or Netlify. We must:
 | **Performance**      | Good                    | Excellent (Edge caching)   |
 | **Data Persistence** | ✅ Yes (With Volume)    | ❌ No (Unless external DB) |
 
-**Recommendation**: For a portfolio project using SQLite, **Railway** is often the smoothest experience. If we want to master Vercel, try migrating the DB to **Turso** (LibSQL) which is compatible with SQLite code but runs in the cloud.
+**Recommendation**: For a portfolio project using SQLite, **Railway** is often the smoothest experience. For mastering Vercel, we can migrate the DB to **Turso** (LibSQL) which is compatible with SQLite code but runs in the cloud.
