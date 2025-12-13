@@ -83,6 +83,18 @@ npm run dev
 
 The Vue app will be available at `http://localhost:5173`
 
+
+### Testing CRUD Operations
+
+**Create**: Navigate to "Add Job" and fill out the form
+
+**Read**: View all jobs on Jobs page, click any job for details
+
+**Update**: Click "Edit Job" on job details page
+
+**Delete**: Click "Delete Job" on job details page (with confirmation)
+
+
 ## 📁 Project Structure
 
 ```
@@ -116,6 +128,20 @@ testing-vue/
 ├── package.json             # Dependencies and scripts
 └── index.html               # HTML entry point
 ```
+
+## 🎨 Technology Stack
+
+| Layer              | Technology                 |
+| ------------------ | -------------------------- |
+| Frontend Framework | Vue.js 3 (Composition API) |
+| Build Tool         | Vite                       |
+| Routing            | Vue Router 4               |
+| Styling            | Tailwind CSS               |
+| Backend            | Node.js + Express          |
+| Database           | SQLite3                    |
+| HTTP Client        | Fetch API                  |
+
+---
 
 ## 🔌 API Endpoints
 
