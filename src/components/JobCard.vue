@@ -6,7 +6,7 @@
         <h3 class="text-xl font-bold">{{ job.title }}</h3>
       </div>
 
-      <div class="mb-5">
+      <div class="mb-5 min-h-12">
         {{ truncateDescription(job.description) }}
       </div>
 
