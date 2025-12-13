@@ -18,6 +18,10 @@ A full-stack job board application built with **Vue.js 3** and **SQLite3**. This
   - **Rate Limiting** to prevent abuse (100 req/15min)
   - **Input Validation** & Sanitization (express-validator)
   - **CORS** configured for safety
+- **Database Optimizations**:
+  - **WAL Mode** enabled for better concurrency
+  - **Synchronous NORMAL** for faster writes
+  - **Indexes** for optimized query performance
 - **Enhanced UI/UX**:
   - **Font Awesome** icons for visual cues
   - Custom SVG illustrations for Auth pages
