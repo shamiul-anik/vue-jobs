@@ -155,11 +155,18 @@ You can use these credentials to log in immediately.
 ```
 vue-jobs/
 ├── db/
+│   ├── benchmark.db         # Database for benchmarking
 │   ├── database.js          # Database connection and initialization
 │   └── database.db          # SQLite database file (auto-generated)
+├── nginx/
+│   └── default.conf         # Nginx configuration
+├── public/
+│   └── images/              # Static images
 ├── routes/
 │   ├── jobs.js              # API routes for jobs
 │   └── users.js             # API routes for authentication (Login/Register)
+├── scripts/
+│   └── benchmark-db.js      # Database benchmarking script
 ├── src/
 │   ├── assets/
 │   │   └── styles.css       # Tailwind CSS styles
@@ -167,8 +174,9 @@ vue-jobs/
 │   │   ├── Navbar.vue       # Navigation component
 │   │   ├── JobCard.vue      # Job card component
 │   │   └── Modal.vue        # Reusable modal component
-│   ├── composites/
-│   │   └── useAuth.js       # Authentication state management
+│   ├── composables/
+│   │   ├── useAuth.js       # Authentication state management
+│   │   └── useSEO.js        # SEO meta tags management
 │   ├── views/
 │   │   ├── HomeView.vue     # Home page
 │   │   ├── JobsView.vue     # All jobs listing
@@ -184,6 +192,11 @@ vue-jobs/
 │   │   └── api.js           # API service layer
 │   ├── App.vue              # Root component
 │   └── main.js              # Vue app entry point
+├── .dockerignore            # Docker ignore file
+├── .env                     # Environment variables
+├── Dockerfile               # Backend Dockerfile
+├── Dockerfile.frontend      # Frontend Dockerfile
+├── docker-compose.yml       # Docker Compose configuration
 ├── server.js                # Express server
 ├── vite.config.js           # Vite configuration
 ├── package.json             # Dependencies and scripts
