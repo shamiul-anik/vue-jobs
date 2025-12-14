@@ -55,8 +55,8 @@
               </RouterLink>
             </template>
             <template v-else>
-              <span class="text-white font-medium mr-2 hidden md:inline-block">
-                Hello, {{ user ? user.name : 'User' }}
+              <span class="text-white font-medium mr-4 hidden md:inline-block">
+                Welcome, {{ user ? user.name : 'User' }}
               </span>
               <button
                 @click="handleLogout"
