@@ -259,7 +259,7 @@ npm run preview
 
 The database automatically populates with 6 sample job listings on first run. You can add, edit, or delete these as needed.
 
-# Database Performance Analysis
+# 📊 Database Performance Analysis
 
 ## 1. Benchmarking Script
 
