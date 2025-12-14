@@ -59,7 +59,7 @@ Designed with a focus on code quality, security, and performance, it includes ad
 ## 📁 Project Structure
 
 ```bash
-testing-vue/
+vue-jobs/
 ├── db/                  # Database layer
 │   ├── database.js      # Connection pooling & Schema init
 │   └── database.db      # SQLite file (auto-generated)
@@ -93,8 +93,8 @@ testing-vue/
 
 ```bash
 # Clone the repository
-git clone https://github.com/shamiul-anik/testing-vue.git
-cd testing-vue
+git clone https://github.com/shamiul-anik/vue-jobs.git
+cd vue-jobs
 
 # Install dependencies (Local Dev only)
 npm install

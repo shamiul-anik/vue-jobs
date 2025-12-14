@@ -65,7 +65,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 1. **Clone or navigate to the project directory:**
 
    ```bash
-   cd \testing-vue
+   cd \vue-jobs
    ```
 
 2. **Install dependencies:**
@@ -153,7 +153,7 @@ You can use these credentials to log in immediately.
 ## 📁 Project Structure
 
 ```
-testing-vue/
+vue-jobs/
 ├── db/
 │   ├── database.js          # Database connection and initialization
 │   └── database.db          # SQLite database file (auto-generated)

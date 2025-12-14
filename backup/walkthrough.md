@@ -2,27 +2,27 @@
 
 ## Project Overview
 
-Successfully created a full-stack job board application using **Vue.js 3** with **SQLite3** database, based on the testing-vue template. The application features a modern SPA architecture with complete CRUD functionality.
+Successfully created a full-stack job board application using **Vue.js 3** with **SQLite3** database, based on the vue-jobs template. The application features a modern SPA architecture with complete CRUD functionality.
 
 ## ✅ What Was Built
 
 ### Backend (Node.js + Express + SQLite3)
 
-#### 1. **Database Layer** - [db/database.js](file:///c:/www/testing-vue/db/database.js)
+#### 1. **Database Layer** - [db/database.js](file:///c:/www/vue-jobs/db/database.js)
 
 - SQLite3 database connection and initialization
 - Automatic schema creation with `jobs` table
 - Sample data insertion (6 job listings)
 - Database fields: id, type, title, description, salary, location, company info, contact details
 
-#### 2. **API Server** - [server.js](file:///c:/www/testing-vue/server.js)
+#### 2. **API Server** - [server.js](file:///c:/www/vue-jobs/server.js)
 
 - Express server running on port 3000
 - CORS enabled for cross-origin requests
 - Body parser middleware for JSON handling
 - Error handling middleware
 
-#### 3. **API Routes** - [routes/jobs.js](file:///c:/www/testing-vue/routes/jobs.js)
+#### 3. **API Routes** - [routes/jobs.js](file:///c:/www/vue-jobs/routes/jobs.js)
 
 - `GET /api/jobs` - Fetch all jobs
 - `GET /api/jobs/:id` - Fetch single job
@@ -36,37 +36,37 @@ Successfully created a full-stack job board application using **Vue.js 3** with 
 
 #### 1. **Project Configuration**
 
-- [vite.config.js](file:///c:/www/testing-vue/vite.config.js) - Vite setup with API proxy
-- [package.json](file:///c:/www/testing-vue/package.json) - Dependencies and npm scripts
-- [index.html](file:///c:/www/testing-vue/index.html) - Entry HTML file
+- [vite.config.js](file:///c:/www/vue-jobs/vite.config.js) - Vite setup with API proxy
+- [package.json](file:///c:/www/vue-jobs/package.json) - Dependencies and npm scripts
+- [index.html](file:///c:/www/vue-jobs/index.html) - Entry HTML file
 
 #### 2. **Core Application Files**
 
-- [src/main.js](file:///c:/www/testing-vue/src/main.js) - Vue app initialization
-- [src/App.vue](file:///c:/www/testing-vue/src/App.vue) - Root component with Navbar and RouterView
-- [src/router/index.js](file:///c:/www/testing-vue/src/router/index.js) - Vue Router configuration
+- [src/main.js](file:///c:/www/vue-jobs/src/main.js) - Vue app initialization
+- [src/App.vue](file:///c:/www/vue-jobs/src/App.vue) - Root component with Navbar and RouterView
+- [src/router/index.js](file:///c:/www/vue-jobs/src/router/index.js) - Vue Router configuration
 
 #### 3. **Components**
 
-- [src/components/Navbar.vue](file:///c:/www/testing-vue/src/components/Navbar.vue) - Navigation with active route highlighting
-- [src/components/JobCard.vue](file:///c:/www/testing-vue/src/components/JobCard.vue) - Reusable job listing card
+- [src/components/Navbar.vue](file:///c:/www/vue-jobs/src/components/Navbar.vue) - Navigation with active route highlighting
+- [src/components/JobCard.vue](file:///c:/www/vue-jobs/src/components/JobCard.vue) - Reusable job listing card
 
 #### 4. **Views (Pages)**
 
-- [src/views/HomeView.vue](file:///c:/www/testing-vue/src/views/HomeView.vue) - Home page with hero and featured jobs
-- [src/views/JobsView.vue](file:///c:/www/testing-vue/src/views/JobsView.vue) - All jobs with search/filter
-- [src/views/JobView.vue](file:///c:/www/testing-vue/src/views/JobView.vue) - Job details with edit/delete
-- [src/views/AddJobView.vue](file:///c:/www/testing-vue/src/views/AddJobView.vue) - Add new job form
-- [src/views/EditJobView.vue](file:///c:/www/testing-vue/src/views/EditJobView.vue) - Edit job form
-- [src/views/NotFoundView.vue](file:///c:/www/testing-vue/src/views/NotFoundView.vue) - 404 error page
+- [src/views/HomeView.vue](file:///c:/www/vue-jobs/src/views/HomeView.vue) - Home page with hero and featured jobs
+- [src/views/JobsView.vue](file:///c:/www/vue-jobs/src/views/JobsView.vue) - All jobs with search/filter
+- [src/views/JobView.vue](file:///c:/www/vue-jobs/src/views/JobView.vue) - Job details with edit/delete
+- [src/views/AddJobView.vue](file:///c:/www/vue-jobs/src/views/AddJobView.vue) - Add new job form
+- [src/views/EditJobView.vue](file:///c:/www/vue-jobs/src/views/EditJobView.vue) - Edit job form
+- [src/views/NotFoundView.vue](file:///c:/www/vue-jobs/src/views/NotFoundView.vue) - 404 error page
 
 #### 5. **Services**
 
-- [src/services/api.js](file:///c:/www/testing-vue/src/services/api.js) - API client with fetch wrapper functions
+- [src/services/api.js](file:///c:/www/vue-jobs/src/services/api.js) - API client with fetch wrapper functions
 
 #### 6. **Styling**
 
-- [src/assets/styles.css](file:///c:/www/testing-vue/src/assets/styles.css) - Tailwind CSS (migrated from template)
+- [src/assets/styles.css](file:///c:/www/vue-jobs/src/assets/styles.css) - Tailwind CSS (migrated from template)
 
 ---
 
@@ -158,7 +158,7 @@ All REST API endpoints are functional:
 ## 📦 Project Structure
 
 ```
-testing-vue/
+vue-jobs/
 ├── db/
 │   ├── database.js          # DB connection & initialization
 │   └── database.db          # SQLite database (auto-generated)

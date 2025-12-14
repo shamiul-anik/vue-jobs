@@ -1,6 +1,6 @@
 # Vue.js 3 + SQLite3 Sample Project Implementation Plan
 
-This plan outlines the creation of a full-stack job board application using Vue.js 3 with SQLite3 database integration, based on the existing testing-vue template.
+This plan outlines the creation of a full-stack job board application using Vue.js 3 with SQLite3 database integration, based on the existing vue-jobs template.
 
 ## Overview
 
@@ -15,20 +15,20 @@ We'll create a modern full-stack web application with:
 
 ### Backend Components
 
-#### [NEW] [package.json](file:///c:/www/testing-vue/package.json)
+#### [NEW] [package.json](file:///c:/www/vue-jobs/package.json)
 
 - Initialize Node.js project with dependencies:
   - **Backend**: `express`, `sqlite3`, `cors`, `body-parser`, `concurrently`
   - **Frontend**: `vue@latest`, `vue-router@latest`, `vite@latest`, `@vitejs/plugin-vue`
 
-#### [NEW] [server.js](file:///c:/www/testing-vue/server.js)
+#### [NEW] [server.js](file:///c:/www/vue-jobs/server.js)
 
 - Express server setup
 - API route definitions
 - Static file serving for HTML/CSS/JS
 - Error handling middleware
 
-#### [NEW] [db/init.js](file:///c:/www/testing-vue/db/init.js)
+#### [NEW] [db/init.js](file:///c:/www/vue-jobs/db/init.js)
 
 - Database initialization script
 - Create `jobs` table with schema:
@@ -45,13 +45,13 @@ We'll create a modern full-stack web application with:
   - created_at
 - Insert sample job data
 
-#### [NEW] [db/database.js](file:///c:/www/testing-vue/db/database.js)
+#### [NEW] [db/database.js](file:///c:/www/vue-jobs/db/database.js)
 
 - Database connection module
 - Helper functions for queries
 - Connection pooling
 
-#### [NEW] [routes/jobs.js](file:///c:/www/testing-vue/routes/jobs.js)
+#### [NEW] [routes/jobs.js](file:///c:/www/vue-jobs/routes/jobs.js)
 
 - Job API endpoints:
   - `GET /api/jobs` - List all jobs with optional filtering
@@ -64,25 +64,25 @@ We'll create a modern full-stack web application with:
 
 ### Frontend Components (Vue.js 3)
 
-#### [NEW] [vite.config.js](file:///c:/www/testing-vue/vite.config.js)
+#### [NEW] [vite.config.js](file:///c:/www/vue-jobs/vite.config.js)
 
 - Vite configuration for Vue 3
 - Proxy configuration for API calls to backend
 - Build optimization settings
 
-#### [NEW] [src/main.js](file:///c:/www/testing-vue/src/main.js)
+#### [NEW] [src/main.js](file:///c:/www/vue-jobs/src/main.js)
 
 - Vue 3 application entry point
 - Router and store initialization
 - Global component registration
 
-#### [NEW] [src/App.vue](file:///c:/www/testing-vue/src/App.vue)
+#### [NEW] [src/App.vue](file:///c:/www/vue-jobs/src/App.vue)
 
 - Root Vue component
 - Navigation bar integration
 - Router view for page components
 
-#### [NEW] [src/router/index.js](file:///c:/www/testing-vue/src/router/index.js)
+#### [NEW] [src/router/index.js](file:///c:/www/vue-jobs/src/router/index.js)
 
 - Vue Router configuration
 - Route definitions:
@@ -92,61 +92,61 @@ We'll create a modern full-stack web application with:
   - `/add-job` - Add new job form
   - `/edit-job/:id` - Edit job form
 
-#### [NEW] [src/components/Navbar.vue](file:///c:/www/testing-vue/src/components/Navbar.vue)
+#### [NEW] [src/components/Navbar.vue](file:///c:/www/vue-jobs/src/components/Navbar.vue)
 
 - Navigation component with logo and menu
 - Active route highlighting
 - Responsive design
 
-#### [NEW] [src/components/JobCard.vue](file:///c:/www/testing-vue/src/components/JobCard.vue)
+#### [NEW] [src/components/JobCard.vue](file:///c:/www/vue-jobs/src/components/JobCard.vue)
 
 - Reusable job card component
 - Display job type, title, description, salary, location
 - Link to job details
 
-#### [NEW] [src/views/HomeView.vue](file:///c:/www/testing-vue/src/views/HomeView.vue)
+#### [NEW] [src/views/HomeView.vue](file:///c:/www/vue-jobs/src/views/HomeView.vue)
 
 - Home page with hero section
 - Featured jobs (first 3)
 - Call-to-action sections
 
-#### [NEW] [src/views/JobsView.vue](file:///c:/www/testing-vue/src/views/JobsView.vue)
+#### [NEW] [src/views/JobsView.vue](file:///c:/www/vue-jobs/src/views/JobsView.vue)
 
 - All jobs listing page
 - Search/filter functionality
 - Grid layout with JobCard components
 
-#### [NEW] [src/views/JobView.vue](file:///c:/www/testing-vue/src/views/JobView.vue)
+#### [NEW] [src/views/JobView.vue](file:///c:/www/vue-jobs/src/views/JobView.vue)
 
 - Single job detail page
 - Full job information display
 - Edit and delete buttons
 - Company information
 
-#### [NEW] [src/views/AddJobView.vue](file:///c:/www/testing-vue/src/views/AddJobView.vue)
+#### [NEW] [src/views/AddJobView.vue](file:///c:/www/vue-jobs/src/views/AddJobView.vue)
 
 - Add new job form
 - Form validation
 - API integration for job creation
 
-#### [NEW] [src/views/EditJobView.vue](file:///c:/www/testing-vue/src/views/EditJobView.vue)
+#### [NEW] [src/views/EditJobView.vue](file:///c:/www/vue-jobs/src/views/EditJobView.vue)
 
 - Edit existing job form
 - Pre-populate form with job data
 - Update job via API
 
-#### [NEW] [src/services/api.js](file:///c:/www/testing-vue/src/services/api.js)
+#### [NEW] [src/services/api.js](file:///c:/www/vue-jobs/src/services/api.js)
 
 - API service layer using fetch/axios
 - CRUD operations for jobs
 - Error handling and response formatting
 
-#### [NEW] [src/assets/styles.css](file:///c:/www/testing-vue/src/assets/styles.css)
+#### [NEW] [src/assets/styles.css](file:///c:/www/vue-jobs/src/assets/styles.css)
 
 - Migrate existing Tailwind CSS from template
 - Additional Vue-specific styles
 
-#### [NEW] [index.html](file:///c:/www/testing-vue/index.html)
+#### [NEW] [index.html](file:///c:/www/vue-jobs/index.html)
 
 - Vite entry HTML file
 - Root div for Vue app
@@ -156,12 +156,12 @@ We'll create a modern full-stack web application with:
 
 ### Configuration & Documentation
 
-#### [NEW] [.gitignore](file:///c:/www/testing-vue/.gitignore)
+#### [NEW] [.gitignore](file:///c:/www/vue-jobs/.gitignore)
 
 - Ignore node_modules
 - Ignore database file (except initial schema)
 
-#### [NEW] [README.md](file:///c:/www/testing-vue/README.md)
+#### [NEW] [README.md](file:///c:/www/vue-jobs/README.md)
 
 - Project overview
 - Setup instructions
