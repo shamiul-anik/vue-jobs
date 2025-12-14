@@ -205,19 +205,19 @@ vue-jobs/
 
 ## 🎨 Technology Stack
 
-| Layer              | Technology                 |
-| ------------------ | -------------------------- |
-| Frontend Framework | Vue.js 3 (Composition API) |
-| Build Tool         | Vite                       |
-| Routing            | Vue Router 4               |
-| State Management   | Reactivity API (useAuth)   |
-| Styling            | Tailwind CSS               |
-| Backend            | Node.js + Express          |
-| Authentication     | JWT + bcryptjs             |
-| Database           | SQLite3                    |
-| HTTP Client        | Fetch API                  |
-| Deployment         | Docker + Docker Compose    |
-| Web Server         | Nginx                      |
+| Layer              | Technology                 | Version       |
+| ------------------ | -------------------------- | ------------- |
+| Frontend Framework | Vue.js 3 (Composition API) | v3.5          |
+| Build Tool         | Vite                       | v7.2          |
+| Routing            | Vue Router 4               | v4.6          |
+| State Management   | Reactivity API (useAuth)   | -             |
+| Styling            | Tailwind CSS               | v4.1          |
+| Backend            | Node.js + Express          | v22.20.0 / v5.2    |
+| Authentication     | JWT + bcryptjs             | v9.0 / v3.0   |
+| Database           | SQLite3                    | v5.1          |
+| HTTP Client        | Fetch API                  | Native        |
+| Deployment         | Docker + Docker Compose    | -             |
+| Web Server         | Nginx                      | Alpine Latest |
 
 ---
 
