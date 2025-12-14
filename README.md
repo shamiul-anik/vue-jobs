@@ -1,10 +1,11 @@
 # Vue Jobs - Full Stack Application
 
-A full-stack job board system using Vue.js 3 (Composition API) and Node.js / Express.js, following a clean RESTful architecture. 
-Designed and implemented secure authentication using JWT and bcrypt, ensuring safe session management and data protection. 
-Built and optimized a SQLite3 database with WAL mode, indexing, and normalized schema to improve reliability and concurrency. 
-Implemented full CRUD functionality, job search and filtering, and a responsive UI using Tailwind CSS. 
-Applied security best practices including Helmet.js, rate limiting, CORS, and input validation. 
+A full-stack job board system using Vue.js 3 (Composition API) and Node.js / Express.js, following a clean RESTful architecture.
+Designed and implemented secure authentication using JWT and bcrypt, ensuring safe session management and data protection.
+Built and optimized a SQLite3 database with WAL mode, indexing, and normalized schema to improve reliability and concurrency.
+Fully containerized with **Docker** and **Nginx** for consistent deployment across environments.
+Implemented full CRUD functionality, job search and filtering, and a responsive UI using Tailwind CSS.
+Applied security best practices including Helmet.js, rate limiting, CORS, and input validation.
 Focused on code readability, maintainability, and scalability, with SEO and accessibility considerations.
 
 ## 🚀 Features
@@ -48,6 +49,11 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - Semantic HTML with ARIA labels
   - robots.txt and XML sitemap
   - Google Jobs integration ready
+- **Deployment & DevOps**:
+  - **Docker** containerization for Backend & Frontend
+  - **Nginx** reverse proxy and static file serving
+  - **Docker Compose** orchestration
+  - **Multi-stage builds** for optimized images
 
 ## 📋 Prerequisites
 
@@ -105,12 +111,14 @@ The Vue app will be available at `http://localhost:5173`
 
 This will spin up the backend, frontend (Nginx), and database in containers.
 
-To build for the first time or after making changes 
+To build for the first time or after making changes
+
 ```bash
 docker-compose up --build
 ```
 
 To run without building
+
 ```bash
 docker-compose up
 ```
@@ -195,6 +203,8 @@ testing-vue/
 | Authentication     | JWT + bcryptjs             |
 | Database           | SQLite3                    |
 | HTTP Client        | Fetch API                  |
+| Deployment         | Docker + Docker Compose    |
+| Web Server         | Nginx                      |
 
 ---
 
