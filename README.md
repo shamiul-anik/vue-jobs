@@ -96,6 +96,17 @@ npm run dev
 
 The Vue app will be available at `http://localhost:5173`
 
+### Option 3: Run with Docker (Production-Ready)
+
+This will spin up the backend, frontend (Nginx), and database in containers.
+
+```bash
+docker-compose up --build
+```
+
+- **Frontend**: `http://localhost:80` (or just `http://localhost`)
+- **Backend API**: `http://localhost:3000`
+
 ### 🔑 Admin Credentials (Auto-Generated)
 
 On the first run, the system automatically creates an Admin user:
