@@ -1,10 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const path = require("path");
-const jobsRouter = require("./routes/jobs");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+import jobsRouter from "./routes/jobs.js";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,7 +42,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const usersRouter = require("./routes/users");
+import usersRouter from "./routes/users.js";
 
 // API Routes
 app.use("/api/jobs", jobsRouter);

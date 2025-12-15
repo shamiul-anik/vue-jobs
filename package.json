@@ -7,14 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "node server.js",
-    "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "db:benchmark": "node scripts/benchmark-db.js"
+    "server": "bun server.js",
+    "start": "concurrently \"bun run server\" \"bun run dev\"",
+    "db:benchmark": "bun scripts/benchmark-db.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "bcryptjs": "^3.0.3",
@@ -34,5 +34,8 @@
     "vite": "^7.2.7",
     "vue": "^3.5.25",
     "vue-router": "^4.6.4"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
   }
 }

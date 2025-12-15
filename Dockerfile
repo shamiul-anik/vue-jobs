@@ -1,10 +1,10 @@
-FROM node:22-alpine
+FROM oven/bun:latest
 
 WORKDIR /app
 
-# Install dependencies (only production if possible, but we need devDependencies for currently setup build scripts if any, though here we run server)
+# Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN bun install
 
 # Copy source code
 COPY . .
@@ -16,4 +16,4 @@ EXPOSE 3000
 RUN mkdir -p db
 
 # Start the server
-CMD ["npm", "run", "server"]
+CMD ["bun", "run", "server"]
