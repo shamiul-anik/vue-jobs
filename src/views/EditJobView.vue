@@ -249,7 +249,11 @@ const formData = ref<JobData>({
 onMounted(async () => {
   try {
     const job = await jobsAPI.getJob(route.params.id as string)
-    formData.value = { ...job }
+    formData.value = {
+      ...job,
+      company_description: job.company_description ?? '',
+      contact_phone: job.contact_phone ?? ''
+    }
   } catch (err) {
     error.value = 'Failed to load job data. The job may not exist.'
     console.error('Error fetching job:', err)

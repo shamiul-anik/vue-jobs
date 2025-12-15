@@ -13,7 +13,7 @@
           </RouterLink>
         </div>
         
-        <div v-else>
+        <div v-else-if="job">
           <RouterLink
             to="/jobs"
             class="bg-slate-600 hover:bg-slate-700 text-white mb-6 px-4 py-2 rounded-lg"
@@ -67,6 +67,13 @@
             </div>
           </div>
         </div>
+
+        <div v-else class="text-center">
+          <p class="text-xl text-red-500">Job not found.</p>
+          <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block">
+            <i class="fas fa-arrow-left mr-1"></i> Back to Jobs
+          </RouterLink>
+        </div>
       </div>
     </section>
   </div>
@@ -91,7 +98,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
-import { useSEO } from '../composables/useSEO'
+import { useSEO, type SEOData } from '../composables/useSEO'
 import { useAuth } from '../composables/useAuth'
 
 interface Job {
@@ -125,12 +132,10 @@ const job = ref<Job | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
 
-const isAdmin = computed(() => {
-  return user.value && user.value.role === 'admin'
-})
+const isAdmin = computed(() => user.value?.role === 'admin')
 
 // SEO state
-const seoData = ref({
+const seoData = ref<SEOData>({
   title: 'Job Details | Vue Jobs',
   description: 'View job details and apply for Vue.js developer positions',
   keywords: 'Vue.js job, developer position, job details',

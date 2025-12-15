@@ -1,4 +1,4 @@
-import { reactive, computed, Ref, ComputedRef } from "vue";
+import { reactive, computed } from "vue";
 
 interface User {
   id: number;

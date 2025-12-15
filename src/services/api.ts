@@ -1,15 +1,20 @@
 const API_BASE_URL = "/api/jobs";
 
-interface JobData {
+export interface JobInput {
   type: string;
   title: string;
   description: string;
-  salary?: string;
+  salary: string;
   location: string;
   company_name: string;
   company_description?: string;
   contact_email: string;
   contact_phone?: string;
+}
+
+export interface Job extends JobInput {
+  id: number;
+  created_at?: string;
 }
 
 interface APIError extends Error {
@@ -18,21 +23,21 @@ interface APIError extends Error {
 
 export const jobsAPI = {
   // Get all jobs
-  async getAllJobs(): Promise<JobData[]> {
+  async getAllJobs(): Promise<Job[]> {
     const response = await fetch(API_BASE_URL);
     if (!response.ok) throw new Error("Failed to fetch jobs");
     return response.json();
   },
 
   // Get single job by ID
-  async getJob(id: number | string): Promise<JobData> {
+  async getJob(id: number | string): Promise<Job> {
     const response = await fetch(`${API_BASE_URL}/${id}`);
     if (!response.ok) throw new Error("Failed to fetch job");
     return response.json();
   },
 
   // Create new job
-  async createJob(jobData: JobData): Promise<Record<string, any>> {
+  async createJob(jobData: JobInput): Promise<Record<string, any>> {
     const response = await fetch(API_BASE_URL, {
       method: "POST",
       headers: {
@@ -52,7 +57,7 @@ export const jobsAPI = {
   // Update job
   async updateJob(
     id: number | string,
-    jobData: Partial<JobData>
+    jobData: Partial<JobInput>
   ): Promise<Record<string, any>> {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: "PUT",
