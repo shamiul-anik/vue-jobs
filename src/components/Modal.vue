@@ -28,13 +28,13 @@
               <button
                 v-if="type === 'confirm'"
                 @click="handleCancel"
-                class="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors"
+                class="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors cursor-pointer"
               >
                 {{ cancelText }}
               </button>
               <button
                 @click="handleConfirm"
-                class="font-medium rounded-lg transition-colors bg-green-500 hover:bg-green-600 text-white"
+                class="font-medium rounded-lg transition-colors bg-green-500 hover:bg-green-600 text-white cursor-pointer"
                 :class="[
                   type === 'confirm' ? 'flex-1 px-4 py-2' : 'px-6 py-2',
                   confirmButtonClass,

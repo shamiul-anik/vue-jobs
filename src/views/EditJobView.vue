@@ -163,7 +163,7 @@
               <button
                 type="submit"
                 :disabled="submitting"
-                class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline disabled:opacity-50"
+                class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline disabled:opacity-50 cursor-pointer"
               >
                 <i class="fas fa-edit mr-1"></i>
                 {{ submitting ? 'Updating...' : 'Update Job' }}

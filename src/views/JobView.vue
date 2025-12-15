@@ -59,7 +59,7 @@
               </RouterLink>
               <button
                 @click="handleDelete"
-                class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg"
+                class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer"
               >
                 <i class="fas fa-trash-alt mr-1"></i>
                 Delete Job

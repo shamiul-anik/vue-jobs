@@ -58,7 +58,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
               >
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
@@ -91,7 +91,7 @@
             <button
               type="submit"
               :disabled="loading"
-              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <span class="flex items-center">
                 <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
@@ -117,14 +117,14 @@
           <!-- <div class="mt-6 grid grid-cols-2 gap-3">
             <button
               type="button"
-              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <i class="fab fa-google text-red-500 mr-2"></i>
               Google
             </button>
             <button
               type="button"
-              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <i class="fab fa-github mr-2"></i>
               GitHub
