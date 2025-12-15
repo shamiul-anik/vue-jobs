@@ -54,12 +54,14 @@
                 :to="`/edit-job/${job.id}`"
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
               >
+                <i class="fas fa-edit mr-1"></i>
                 Edit Job
               </RouterLink>
               <button
                 @click="handleDelete"
                 class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg"
               >
+                <i class="fas fa-trash-alt mr-1"></i>
                 Delete Job
               </button>
             </div>
