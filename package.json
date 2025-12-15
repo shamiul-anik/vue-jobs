@@ -1,38 +1,30 @@
 {
   "name": "vue-jobs",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Full-stack Job Board Application - Monorepo Structure",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "server": "node server.js",
-    "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "db:benchmark": "node scripts/benchmark-db.js"
+    "setup": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ..",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "server": "cd backend && npm start",
+    "frontend:dev": "cd frontend && npm run dev",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "db:benchmark": "cd backend && npm run db:benchmark"
   },
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "jobs",
+    "board",
+    "express",
+    "sqlite"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "bcryptjs": "^3.0.3",
-    "body-parser": "^2.2.1",
-    "concurrently": "^9.2.1",
-    "cors": "^2.8.5",
-    "express": "^5.2.1",
-    "express-rate-limit": "^8.2.1",
-    "express-validator": "^7.3.1",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.3",
-    "sqlite3": "^5.1.7",
-    "tailwindcss": "^4.1.18"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.3",
-    "vite": "^7.2.7",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.4"
+    "concurrently": "^9.2.1"
   }
 }
