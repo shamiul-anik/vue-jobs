@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
 import HomeView from "../views/HomeView.vue";
 import JobsView from "../views/JobsView.vue";
 import JobView from "../views/JobView.vue";
@@ -37,12 +39,12 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../views/LoginView.vue"),
+      component: LoginView,
     },
     {
       path: "/register",
       name: "register",
-      component: () => import("../views/RegisterView.vue"),
+      component: RegisterView,
     },
     {
       path: "/:pathMatch(.*)*",
