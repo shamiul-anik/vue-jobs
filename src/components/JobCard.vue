@@ -34,17 +34,28 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { RouterLink } from 'vue-router'
 
-const props = defineProps({
-  job: {
-    type: Object,
-    required: true
-  }
-})
+interface Job {
+  id: number
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company_name: string
+  company_description?: string
+  contact_email: string
+  contact_phone?: string
+  created_at?: string
+}
 
-const truncateDescription = (description) => {
+const props = defineProps<{
+  job: Job
+}>()
+
+const truncateDescription = (description: string): string => {
   if (!description) return ''
   return description.length > 90 ? description.substring(0, 90) + '...' : description
 }

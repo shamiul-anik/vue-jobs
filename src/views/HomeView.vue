@@ -84,16 +84,30 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import JobCard from '../components/JobCard.vue'
 import { jobsAPI } from '../services/api'
 import { useSEO } from '../composables/useSEO'
 
-const jobs = ref([])
+interface Job {
+  id: number
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company_name: string
+  company_description?: string
+  contact_email: string
+  contact_phone?: string
+  created_at?: string
+}
+
+const jobs = ref<Job[]>([])
 const loading = ref(true)
-const error = ref(null)
+const error = ref<string | null>(null)
 
 const recentJobs = computed(() => jobs.value.slice(0, 3))
 

@@ -159,10 +159,26 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
+
+interface FormData {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+  agreeToTerms: boolean
+}
+
+interface ModalConfig {
+  type: 'alert'
+  variant: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message: string
+  onConfirm?: () => void
+}
 
 const router = useRouter()
 const loading = ref(false)
@@ -172,14 +188,14 @@ const errorMessage = ref('')
 
 // Modal state
 const showModal = ref(false)
-const modalConfig = ref({
+const modalConfig = ref<ModalConfig>({
   type: 'alert',
   variant: 'success',
   title: '',
   message: ''
 })
 
-const formData = ref({
+const formData = ref<FormData>({
   name: '',
   email: '',
   password: '',
@@ -187,7 +203,7 @@ const formData = ref({
   agreeToTerms: false
 })
 
-const handleRegister = async () => {
+const handleRegister = async (): Promise<void> => {
   errorMessage.value = ''
 
   // Validate passwords match
@@ -222,7 +238,7 @@ const handleRegister = async () => {
     if (!response.ok) {
       if (data.errors) {
         // Show validation errors
-        throw new Error(data.errors.map(e => e.msg).join(", "));
+        throw new Error(data.errors.map((e: any) => e.msg).join(", "));
       } else {
         throw new Error(data.error || "Registration failed");
       }
@@ -231,7 +247,7 @@ const handleRegister = async () => {
     showModalAlert('Success!', 'Account created successfully! Redirecting to login...', 'success', () => {
       router.push('/login')
     })
-  } catch (err) {
+  } catch (err: any) {
     errorMessage.value = err.message || 'Registration failed. Please try again.'
     console.error('Registration error:', err)
   } finally {
@@ -239,7 +255,7 @@ const handleRegister = async () => {
   }
 }
 
-const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+const showModalAlert = (title: string, message: string, variant: 'success' | 'error' | 'warning' | 'info' = 'info', onConfirm?: () => void): void => {
   modalConfig.value = {
     type: 'alert',
     variant,
@@ -250,7 +266,7 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const handleModalClose = (): void => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()

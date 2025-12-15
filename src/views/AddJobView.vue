@@ -147,7 +147,7 @@
               <button
                 type="submit"
                 :disabled="submitting"
-                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50 cursor-pointer"
               >
                 <i class="fas fa-plus-circle mr-1"></i>
                 {{ submitting ? 'Adding Job...' : 'Add Job' }}
@@ -170,26 +170,51 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 
+interface JobData {
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company_name: string
+  company_description: string
+  contact_email: string
+  contact_phone: string
+}
+
+interface ValidationError {
+  path: string
+  msg: string
+}
+
+interface ModalConfig {
+  type: 'alert'
+  variant: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message: string
+  onConfirm?: () => void
+}
+
 const router = useRouter()
 const submitting = ref(false)
-const validationErrors = ref([])
+const validationErrors = ref<ValidationError[]>([])
 
 // Modal state
 const showModal = ref(false)
-const modalConfig = ref({
+const modalConfig = ref<ModalConfig>({
   type: 'alert',
   variant: 'success',
   title: '',
   message: ''
 })
 
-const formData = ref({
+const formData = ref<JobData>({
   type: 'Full-Time',
   title: '',
   description: '',
@@ -201,7 +226,7 @@ const formData = ref({
   contact_phone: ''
 })
 
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
   submitting.value = true
   validationErrors.value = [] // Clear previous errors
 
@@ -210,7 +235,7 @@ const handleSubmit = async () => {
     showModalAlert('Success!', 'Job added successfully!', 'success', () => {
       router.push(`/jobs/${result.id}`)
     })
-  } catch (err) {
+  } catch (err: any) {
     if (err.data && err.data.errors) {
       // Handle validation errors from backend
       validationErrors.value = err.data.errors
@@ -226,7 +251,7 @@ const handleSubmit = async () => {
   }
 }
 
-const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+const showModalAlert = (title: string, message: string, variant: 'success' | 'error' | 'warning' | 'info' = 'info', onConfirm?: () => void): void => {
   modalConfig.value = {
     type: 'alert',
     variant,
@@ -237,7 +262,7 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const handleModalClose = (): void => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()

@@ -51,45 +51,37 @@
   </Teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps({
-  show: {
-    type: Boolean,
-    default: false
-  },
-  type: {
-    type: String,
-    default: 'alert', // 'alert', 'confirm', 'success', 'error', 'warning'
-    validator: (value) => ['alert', 'confirm', 'success', 'error', 'warning'].includes(value)
-  },
-  title: {
-    type: String,
-    default: 'Notification'
-  },
-  message: {
-    type: String,
-    required: true
-  },
-  confirmText: {
-    type: String,
-    default: 'OK'
-  },
-  cancelText: {
-    type: String,
-    default: 'Cancel'
-  },
-  variant: {
-    type: String,
-    default: 'info' // 'info', 'success', 'error', 'warning'
-  }
+type ModalType = 'alert' | 'confirm' | 'success' | 'error' | 'warning'
+type ModalVariant = 'info' | 'success' | 'error' | 'warning' | 'confirm'
+
+const props = withDefaults(defineProps<{
+  show?: boolean
+  type?: ModalType
+  title?: string
+  message: string
+  confirmText?: string
+  cancelText?: string
+  variant?: ModalVariant
+}>(), {
+  show: false,
+  type: 'alert',
+  title: 'Notification',
+  confirmText: 'OK',
+  cancelText: 'Cancel',
+  variant: 'info'
 })
 
-const emit = defineEmits(['confirm', 'cancel', 'close'])
+const emit = defineEmits<{
+  confirm: []
+  cancel: []
+  close: []
+}>()
 
-const iconClass = computed(() => {
-  const icons = {
+const iconClass = computed((): string => {
+  const icons: Record<string, string> = {
     success: 'fas fa-check-circle text-green-600',
     error: 'fas fa-exclamation-circle text-red-600',
     warning: 'fas fa-exclamation-triangle text-yellow-600',
@@ -99,8 +91,8 @@ const iconClass = computed(() => {
   return icons[props.variant] || icons[props.type] || icons.info
 })
 
-const iconBgClass = computed(() => {
-  const bgClasses = {
+const iconBgClass = computed((): string => {
+  const bgClasses: Record<string, string> = {
     success: 'bg-green-100',
     error: 'bg-red-100',
     warning: 'bg-yellow-100',
@@ -110,11 +102,11 @@ const iconBgClass = computed(() => {
   return bgClasses[props.variant] || bgClasses[props.type] || bgClasses.info
 })
 
-const confirmButtonClass = computed(() => {
+const confirmButtonClass = computed((): string => {
   if (props.type === 'confirm') {
     return 'flex-1 bg-green-600 hover:bg-green-700 text-white'
   }
-  const classes = {
+  const classes: Record<string, string> = {
     success: 'bg-green-600 hover:bg-green-700 text-white',
     error: 'bg-red-600 hover:bg-red-700 text-white',
     warning: 'bg-yellow-600 hover:bg-yellow-700 text-white',
@@ -123,17 +115,17 @@ const confirmButtonClass = computed(() => {
   return classes[props.variant] || 'bg-blue-600 hover:bg-blue-700 text-white'
 })
 
-const handleConfirm = () => {
+const handleConfirm = (): void => {
   emit('confirm')
   emit('close')
 }
 
-const handleCancel = () => {
+const handleCancel = (): void => {
   emit('cancel')
   emit('close')
 }
 
-const handleBackdropClick = () => {
+const handleBackdropClick = (): void => {
   if (props.type !== 'confirm') {
     emit('close')
   }

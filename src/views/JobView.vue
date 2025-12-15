@@ -9,7 +9,7 @@
         <div v-else-if="error" class="text-center">
           <p class="text-xl text-red-500">{{ error }}</p>
           <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block">
-            Back to Jobs
+            <i class="fas fa-arrow-left mr-1"></i> Back to Jobs
           </RouterLink>
         </div>
         
@@ -54,12 +54,14 @@
                 :to="`/edit-job/${job.id}`"
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
               >
+                <i class="fas fa-edit mr-1"></i>
                 Edit Job
               </RouterLink>
               <button
                 @click="handleDelete"
-                class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg"
+                class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer"
               >
+                <i class="fas fa-trash mr-1"></i>
                 Delete Job
               </button>
             </div>
@@ -84,7 +86,7 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
@@ -92,12 +94,36 @@ import Modal from '../components/Modal.vue'
 import { useSEO } from '../composables/useSEO'
 import { useAuth } from '../composables/useAuth'
 
+interface Job {
+  id: number
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company_name: string
+  company_description?: string
+  contact_email: string
+  contact_phone?: string
+  created_at?: string
+}
+
+interface ModalConfig {
+  type: 'alert' | 'confirm'
+  variant: 'info' | 'success' | 'error' | 'warning'
+  title: string
+  message: string
+  confirmText: string
+  cancelText?: string
+  onConfirm?: () => void
+}
+
 const route = useRoute()
 const router = useRouter()
 const { user } = useAuth()
-const job = ref({})
+const job = ref<Job | null>(null)
 const loading = ref(true)
-const error = ref(null)
+const error = ref<string | null>(null)
 
 const isAdmin = computed(() => {
   return user.value && user.value.role === 'admin'
@@ -116,7 +142,7 @@ const { updateMetaTags } = useSEO(seoData)
 
 // Modal state
 const showModal = ref(false)
-const modalConfig = ref({
+const modalConfig = ref<ModalConfig>({
   type: 'alert',
   variant: 'success',
   title: '',
@@ -124,11 +150,10 @@ const modalConfig = ref({
   confirmText: 'OK',
   cancelText: 'Cancel'
 })
-let deleteConfirmed = false
 
 onMounted(async () => {
   try {
-    job.value = await jobsAPI.getJob(route.params.id)
+    job.value = await jobsAPI.getJob(route.params.id as string)
   } catch (err) {
     error.value = 'Failed to load job details. The job may not exist.'
     console.error('Error fetching job:', err)
@@ -139,7 +164,7 @@ onMounted(async () => {
 
 // Update SEO when job data is loaded
 watch(job, (newJob) => {
-  if (newJob.title) {
+  if (newJob?.title) {
     seoData.value = {
       title: `${newJob.title} - ${newJob.location} | Vue Jobs`,
       description: `${newJob.title} position at ${newJob.company_name || 'a great company'} in ${newJob.location}. ${newJob.description?.substring(0, 150)}...`,
@@ -180,7 +205,7 @@ watch(job, (newJob) => {
   }
 })
 
-const handleDelete = async () => {
+const handleDelete = async (): Promise<void> => {
   showModalConfirm(
     'Delete Job',
     'Are you sure you want to delete this job? This action cannot be undone.',
@@ -188,7 +213,7 @@ const handleDelete = async () => {
   )
 }
 
-const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+const showModalAlert = (title: string, message: string, variant: 'info' | 'success' | 'error' | 'warning' = 'info', onConfirm?: () => void): void => {
   modalConfig.value = {
     type: 'alert',
     variant,
@@ -200,7 +225,7 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const showModalConfirm = (title, message, variant = 'info') => {
+const showModalConfirm = (title: string, message: string, variant: 'info' | 'success' | 'error' | 'warning' = 'info'): void => {
   modalConfig.value = {
     type: 'confirm',
     variant,
@@ -212,8 +237,8 @@ const showModalConfirm = (title, message, variant = 'info') => {
   showModal.value = true
 }
 
-const handleModalConfirm = async () => {
-  if (modalConfig.value.type === 'confirm') {
+const handleModalConfirm = async (): Promise<void> => {
+  if (modalConfig.value.type === 'confirm' && job.value) {
     try {
       await jobsAPI.deleteJob(job.value.id)
       showModalAlert('Success!', 'Job deleted successfully!', 'success', () => {
@@ -226,11 +251,11 @@ const handleModalConfirm = async () => {
   }
 }
 
-const handleModalCancel = () => {
+const handleModalCancel = (): void => {
   showModal.value = false
 }
 
-const handleModalClose = () => {
+const handleModalClose = (): void => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()

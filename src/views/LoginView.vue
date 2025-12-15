@@ -156,11 +156,25 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
 import { useAuth } from '../composables/useAuth'
+
+interface FormData {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
+interface ModalConfig {
+  type: 'alert'
+  variant: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message: string
+  onConfirm?: () => void
+}
 
 const router = useRouter()
 const { login } = useAuth()
@@ -170,20 +184,20 @@ const errorMessage = ref('')
 
 // Modal state
 const showModal = ref(false)
-const modalConfig = ref({
+const modalConfig = ref<ModalConfig>({
   type: 'alert',
   variant: 'success',
   title: '',
   message: ''
 })
 
-const formData = ref({
+const formData = ref<FormData>({
   email: '',
   password: '',
   rememberMe: false
 })
 
-const handleLogin = async () => {
+const handleLogin = async (): Promise<void> => {
   errorMessage.value = ''
   loading.value = true
 
@@ -204,7 +218,7 @@ const handleLogin = async () => {
 
     if (!response.ok) {
       if (data.errors) {
-        throw new Error(data.errors.map(e => e.msg).join(", "));
+        throw new Error(data.errors.map((e: any) => e.msg).join(", "));
       } else {
         throw new Error(data.error || "Login failed");
       }
@@ -216,7 +230,7 @@ const handleLogin = async () => {
     showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
       router.push('/')
     })
-  } catch (err) {
+  } catch (err: any) {
     errorMessage.value = err.message || 'Login failed. Please check your credentials and try again.'
     console.error('Login error:', err)
   } finally {
@@ -224,7 +238,7 @@ const handleLogin = async () => {
   }
 }
 
-const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+const showModalAlert = (title: string, message: string, variant: 'success' | 'error' | 'warning' | 'info' = 'info', onConfirm?: () => void): void => {
   modalConfig.value = {
     type: 'alert',
     variant,
@@ -235,7 +249,7 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const handleModalClose = (): void => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()

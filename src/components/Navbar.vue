@@ -152,14 +152,14 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuth } from '../composables/useAuth'
 
 const { isAuthenticated, user, logout } = useAuth()
 const router = useRouter()
 
-const handleLogout = () => {
+const handleLogout = (): void => {
     logout()
     router.push('/login')
 }

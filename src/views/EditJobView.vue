@@ -186,29 +186,55 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 
+interface JobData {
+  id?: number
+  type: string
+  title: string
+  description: string
+  salary: string
+  location: string
+  company_name: string
+  company_description: string
+  contact_email: string
+  contact_phone: string
+}
+
+interface ValidationError {
+  path: string
+  msg: string
+}
+
+interface ModalConfig {
+  type: 'alert'
+  variant: 'success' | 'error' | 'warning' | 'info'
+  title: string
+  message: string
+  onConfirm?: () => void
+}
+
 const route = useRoute()
 const router = useRouter()
 const loading = ref(true)
-const error = ref(null)
+const error = ref<string | null>(null)
 const submitting = ref(false)
-const validationErrors = ref([])
+const validationErrors = ref<ValidationError[]>([])
 
 // Modal state
 const showModal = ref(false)
-const modalConfig = ref({
+const modalConfig = ref<ModalConfig>({
   type: 'alert',
   variant: 'success',
   title: '',
   message: ''
 })
 
-const formData = ref({
+const formData = ref<JobData>({
   type: '',
   title: '',
   description: '',
@@ -222,7 +248,7 @@ const formData = ref({
 
 onMounted(async () => {
   try {
-    const job = await jobsAPI.getJob(route.params.id)
+    const job = await jobsAPI.getJob(route.params.id as string)
     formData.value = { ...job }
   } catch (err) {
     error.value = 'Failed to load job data. The job may not exist.'
@@ -232,16 +258,16 @@ onMounted(async () => {
   }
 })
 
-const handleSubmit = async () => {
+const handleSubmit = async (): Promise<void> => {
   submitting.value = true
   validationErrors.value = [] // Clear previous errors
 
   try {
-    await jobsAPI.updateJob(route.params.id, formData.value)
+    await jobsAPI.updateJob(route.params.id as string, formData.value)
     showModalAlert('Success!', 'Job updated successfully!', 'success', () => {
       router.push(`/jobs/${route.params.id}`)
     })
-  } catch (err) {
+  } catch (err: any) {
     if (err.data && err.data.errors) {
       // Handle validation errors from backend
       validationErrors.value = err.data.errors
@@ -257,7 +283,7 @@ const handleSubmit = async () => {
   }
 }
 
-const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
+const showModalAlert = (title: string, message: string, variant: 'success' | 'error' | 'warning' | 'info' = 'info', onConfirm?: () => void): void => {
   modalConfig.value = {
     type: 'alert',
     variant,
@@ -268,7 +294,7 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const handleModalClose = (): void => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()
