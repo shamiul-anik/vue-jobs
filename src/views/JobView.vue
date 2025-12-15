@@ -25,7 +25,7 @@
             <div class="text-gray-500 mb-4">{{ job.type }}</div>
             <h1 class="text-3xl font-bold mb-4">{{ job.title }}</h1>
             
-            <div class="text-gray-500 mb-4 flex align-middle">
+            <div class="text-gray-500 mb-4 flex items-center">
               <i class="fa-solid fa-location-dot text-lg text-orange-700 mr-2"></i>
               <p class="text-orange-700">{{ job.location }}</p>
             </div>
