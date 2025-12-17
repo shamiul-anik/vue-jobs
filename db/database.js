@@ -13,6 +13,15 @@ const db = new sqlite3.Database(dbPath, (err) => {
     // Performance Optimizations
     db.run("PRAGMA journal_mode = WAL;"); // Enable Write-Ahead Logging for concurrency
     db.run("PRAGMA synchronous = NORMAL;"); // Reduce fsyncs for better write performance
+    db.run("PRAGMA busy_timeout = 5000;"); // Wait up to 5 seconds if the database is locked
+
+    // Docker / VPS best-practice config
+    // PRAGMA journal_mode = WAL;
+    // PRAGMA synchronous = NORMAL;
+    // PRAGMA temp_store = MEMORY;
+    // PRAGMA cache_size = -50000;   -- 50MB
+    // PRAGMA busy_timeout = 5000;
+    // PRAGMA foreign_keys = ON;
 
     initializeDatabase();
   }
