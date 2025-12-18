@@ -263,8 +263,6 @@ The `jobs` table includes:
 6. **Delete Job** - Remove job listings
 
 
----
-
 ## 🧪 Testing
 
 The project includes comprehensive test coverage using **Vitest**, a blazing-fast unit test framework optimized for Vite projects.
@@ -333,7 +331,6 @@ The project includes **164 tests** across **15 test files** covering:
 - **Patterns**: Consistent mock setup across all test suites
 - **Assertions**: Behavior-based testing (what users experience)
 
----
 
 ## ⚡ Performance Testing
 
