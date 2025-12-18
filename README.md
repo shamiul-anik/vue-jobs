@@ -207,17 +207,89 @@ vue-jobs/
 
 | Layer              | Technology                 | Version       |
 | ------------------ | -------------------------- | ------------- |
-| Frontend Framework | Vue.js 3 (Composition API) | v3.5          |
-| Build Tool         | Vite                       | v7.2          |
-| Routing            | Vue Router 4               | v4.6          |
+| Frontend Framework | Vue.js 3 (Composition API) | v3.5.25       |
+| Build Tool         | Vite                       | v7.2.7        |
+| Routing            | Vue Router 4               | v4.6.4        |
 | State Management   | Reactivity API (useAuth)   | -             |
-| Styling            | Tailwind CSS               | v4.1          |
-| Backend            | Node.js + Express          | v22.20.0 / v5.2    |
-| Authentication     | JWT + bcryptjs             | v9.0 / v3.0   |
-| Database           | SQLite3                    | v5.1          |
+| Styling            | Tailwind CSS               | v4.1.18       |
+| Testing Framework  | Vitest                     | v4.0.16       |
+| Test Utils         | @vue/test-utils            | v2.4.6        |
+| Backend            | Node.js + Express          | v22.20.0 / v5.2.1    |
+| Authentication     | JWT + bcryptjs             | v9.0.3 / v3.0 |
+| Database           | SQLite3                    | v5.1.7        |
 | HTTP Client        | Fetch API                  | Native        |
 | Deployment         | Docker + Docker Compose    | -             |
 | Web Server         | Nginx                      | Alpine Latest |
+
+---
+
+## 🧪 Testing
+
+The project includes comprehensive test coverage using **Vitest**, a blazing-fast unit test framework optimized for Vite projects.
+
+### Running Tests
+
+**Run all tests once:**
+```bash
+npm run test -- --run
+```
+
+**Run tests in watch mode (auto-rerun on file changes):**
+```bash
+npm test
+```
+
+**Run tests with UI dashboard:**
+```bash
+npm run test:ui
+```
+This opens an interactive dashboard where you can:
+- View all test files and their results
+- Filter and search specific tests
+- Re-run individual tests or suites
+- See code coverage visualization
+
+**Generate coverage report:**
+```bash
+npm run test:coverage
+```
+
+### Test Coverage
+
+The project includes **164 tests** across **15 test files** covering:
+
+**Frontend Views (92 tests):**
+- ✅ HomeView - Landing page rendering and navigation
+- ✅ JobsView - Job listing, search, and filtering
+- ✅ JobView - Individual job details display
+- ✅ AddJobView - Job creation form
+- ✅ EditJobView - Job editing form
+- ✅ RegisterView - User registration form
+- ✅ LoginView - User login form
+- ✅ NotFoundView - 404 error page
+
+**Components (11 tests):**
+- ✅ Navbar - Navigation component
+- ✅ JobCard - Job listing card
+- ✅ Modal - Reusable modal dialog
+
+**Services (10 tests):**
+- ✅ API Service - REST API integration and error handling
+
+**Composables (5 tests):**
+- ✅ useAuth - Authentication state management
+
+**Backend Routes (46 tests):**
+- ✅ Jobs Routes - CRUD operations and validation
+- ✅ Users Routes - Authentication endpoints
+
+### Test Architecture
+
+- **Framework**: Vitest with jsdom environment
+- **Component Testing**: @vue/test-utils for Vue component mounting
+- **API Mocking**: vi.mock() for isolating components and services
+- **Patterns**: Consistent mock setup across all test suites
+- **Assertions**: Behavior-based testing (what users experience)
 
 ---
 
