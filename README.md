@@ -226,6 +226,43 @@ vue-jobs/
 | Deployment         | Docker + Docker Compose    | -             |
 | Web Server         | Nginx                      | Alpine Latest |
 
+
+## 🔌 API Endpoints
+
+| Method | Endpoint      | Description          |
+| ------ | ------------- | -------------------- |
+| GET    | /api/jobs     | Get all jobs         |
+| GET    | /api/jobs/:id | Get single job by ID |
+| POST   | /api/jobs     | Create new job       |
+| PUT    | /api/jobs/:id | Update job           |
+| DELETE | /api/jobs/:id | Delete job           |
+
+## 💾 Database Schema
+
+The `jobs` table includes:
+
+- `id` - Primary key (auto-increment)
+- `type` - Job type (Full-Time, Part-Time, Remote, Internship)
+- `title` - Job title
+- `description` - Job description
+- `salary` - Salary range
+- `location` - Job location
+- `company_name` - Company name
+- `company_description` - Company description
+- `contact_email` - Contact email (required)
+- `contact_phone` - Contact phone (optional)
+- `created_at` - Timestamp
+
+## 🎨 Features Walkthrough
+
+1. **Home Page** - Hero section with featured jobs (first 3 jobs)
+2. **Jobs Page** - All jobs with search/filter functionality
+3. **Job Details** - View full job information with edit/delete options
+4. **Add Job** - Form to create new job listings
+5. **Edit Job** - Update existing job information
+6. **Delete Job** - Remove job listings
+
+
 ---
 
 ## 🧪 Testing
@@ -297,41 +334,6 @@ The project includes **164 tests** across **15 test files** covering:
 - **Assertions**: Behavior-based testing (what users experience)
 
 ---
-
-## 🔌 API Endpoints
-
-| Method | Endpoint      | Description          |
-| ------ | ------------- | -------------------- |
-| GET    | /api/jobs     | Get all jobs         |
-| GET    | /api/jobs/:id | Get single job by ID |
-| POST   | /api/jobs     | Create new job       |
-| PUT    | /api/jobs/:id | Update job           |
-| DELETE | /api/jobs/:id | Delete job           |
-
-## 💾 Database Schema
-
-The `jobs` table includes:
-
-- `id` - Primary key (auto-increment)
-- `type` - Job type (Full-Time, Part-Time, Remote, Internship)
-- `title` - Job title
-- `description` - Job description
-- `salary` - Salary range
-- `location` - Job location
-- `company_name` - Company name
-- `company_description` - Company description
-- `contact_email` - Contact email (required)
-- `contact_phone` - Contact phone (optional)
-- `created_at` - Timestamp
-
-## 🎨 Features Walkthrough
-
-1. **Home Page** - Hero section with featured jobs (first 3 jobs)
-2. **Jobs Page** - All jobs with search/filter functionality
-3. **Job Details** - View full job information with edit/delete options
-4. **Add Job** - Form to create new job listings
-5. **Edit Job** - Update existing job information
-6. **Delete Job** - Remove job listings
 
 ## ⚡ Performance Testing
 
@@ -410,13 +412,13 @@ Memory (100k items):      1.74MB       ✅ Low
 
 ### Key Features
 
-✅ **Production-Ready Tests** - All 15 tests passing
-✅ **Multiple Testing Approaches** - Unit, database, load testing
-✅ **Comprehensive Guides** - 6 documentation files (80 KB)
-✅ **Real-World Data** - Tests on 1000+ item datasets
-✅ **Easy Integration** - npm scripts for quick execution
-✅ **CI/CD Ready** - GitHub Actions templates included
-✅ **Extensible** - Copy-paste templates for custom tests
+- ✅ **Production-Ready Tests** - All 15 tests passing
+- ✅ **Multiple Testing Approaches** - Unit, database, load testing
+- ✅ **Comprehensive Guides** - 6 documentation files (80 KB)
+- ✅ **Real-World Data** - Tests on 1000+ item datasets
+- ✅ **Easy Integration** - npm scripts for quick execution
+- ✅ **CI/CD Ready** - GitHub Actions templates included
+- ✅ **Extensible** - Copy-paste templates for custom tests
 
 ### npm Scripts
 
