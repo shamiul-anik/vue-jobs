@@ -63,7 +63,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 ## 📋 Prerequisites
 
 - Node.js (v22 or higher)
-- npm or bun (for feature/bun branch)
+- npm or bun (checkout to 'feature/bun branch' to use bun)
 
 ## 🛠️ Installation
 
