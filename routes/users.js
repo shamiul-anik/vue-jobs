@@ -1,8 +1,18 @@
-const express = require("express");
+import express from "express";
+import db from "../db/database.js";
+import bcrypt from "bcryptjs";
+import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+
 const router = express.Router();
-const db = require("../db/database");
-const bcrypt = require("bcryptjs");
-const { body, validationResult } = require("express-validator");
+const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_123"; // Fallback for dev
+
+// const express = require("express");
+// const router = express.Router();
+// const db = require("../db/database");
+// const bcrypt = require("bcryptjs");
+// const { body, validationResult } = require("express-validator");
+// const jwt = require("jsonwebtoken");
 
 // Validation Rules for Registration
 const registerValidationRules = [
@@ -62,8 +72,6 @@ router.post("/register", registerValidationRules, validate, (req, res) => {
   });
 });
 
-const jwt = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_123"; // Fallback for dev
 
 // POST /login
 router.post(
@@ -109,4 +117,5 @@ router.post(
   }
 );
 
-module.exports = router;
+// module.exports = router;
+export default router;

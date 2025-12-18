@@ -1,6 +1,12 @@
-const express = require("express");
+import express from "express";
+// const { body, param, validationResult } = require("express-validator");
+import { body, param, validationResult } from "express-validator";
+import db from "../db/database.js";
+
 const router = express.Router();
-const db = require("../db/database");
+
+// const db = require("../db/database.js");
+
 
 // GET all jobs
 router.get("/", (req, res) => {
@@ -33,7 +39,6 @@ router.get("/:id", (req, res) => {
   });
 });
 
-const { body, param, validationResult } = require("express-validator");
 
 // Validation Rules
 const jobValidationRules = [
@@ -199,4 +204,5 @@ router.delete("/:id", (req, res) => {
   });
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

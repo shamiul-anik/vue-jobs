@@ -1,7 +1,17 @@
-const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
+import sqlite3 from "sqlite3";
+import path from "path";
+import { fileURLToPath } from "url";
+import bcrypt from "bcryptjs";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, "database.db");
+
+// const sqlite3 = require("sqlite3").verbose();
+// const bcrypt = require("bcryptjs");
+// const path = require("path");
+
+// const dbPath = path.join(__dirname, "database.db");
 
 // Create database connection
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -85,8 +95,7 @@ function initializeDatabase() {
   });
 }
 
-const bcrypt = require("bcryptjs");
-
+// Insert admin user if not exists
 function insertAdminUser() {
   const adminEmail = "admin@mail.com";
   db.get("SELECT id FROM users WHERE email = ?", [adminEmail], (err, row) => {
@@ -115,6 +124,7 @@ function insertAdminUser() {
   });
 }
 
+// Insert test user if not exists
 function insertTestUser() {
   const testEmail = "test@mail.com";
   db.get("SELECT id FROM users WHERE email = ?", [testEmail], (err, row) => {
@@ -259,4 +269,5 @@ function insertSampleData() {
   });
 }
 
-module.exports = db;
+// module.exports = db; 
+export default db;
