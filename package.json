@@ -12,7 +12,11 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "db:benchmark": "node scripts/benchmark-db.js"
+    "test:bench": "vitest --bench",
+    "test:bench:watch": "vitest --bench --watch",
+    "db:benchmark": "node scripts/benchmark-db.js",
+    "load-test": "node scripts/load-test.js",
+    "perf:all": "npm run test:bench && npm run load-test"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +40,7 @@
     "@vitejs/plugin-vue": "^6.0.3",
     "@vitest/ui": "^4.0.15",
     "@vue/test-utils": "^2.4.6",
+    "autocannon": "^7.15.0",
     "jsdom": "^27.3.0",
     "supertest": "^7.1.4",
     "vite": "^7.2.7",
