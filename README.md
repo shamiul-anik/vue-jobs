@@ -1,4 +1,10 @@
 # Vue Jobs - Full Stack Application
+![Vue](https://img.shields.io/badge/vue-3.x-42b883)
+![Vite](https://img.shields.io/badge/vite-7.x-646cff)
+![Node.js](https://img.shields.io/badge/node-%3E%3D22-brightgreen)
+![SQLite](https://img.shields.io/badge/database-sqlite3-blue)
+![CI](https://github.com/shamiul-anik/vue-jobs/actions/workflows/ci.yml/badge.svg)
+![Docker](https://img.shields.io/badge/docker-ready-2496ed)
 
 A full-stack job board system using Vue.js 3 (Composition API) and Node.js / Express.js, following a clean RESTful architecture.
 Designed and implemented secure authentication using JWT and bcrypt, ensuring safe session management and data protection.
@@ -406,11 +412,17 @@ Memory (100k items):      1.74MB       ✅ Low
 ### Key Features
 
 ✅ **Production-Ready Tests** - All 15 tests passing
+
 ✅ **Multiple Testing Approaches** - Unit, database, load testing
+
 ✅ **Comprehensive Guides** - 6 documentation files (80 KB)
+
 ✅ **Real-World Data** - Tests on 1000+ item datasets
+
 ✅ **Easy Integration** - npm scripts for quick execution
+
 ✅ **CI/CD Ready** - GitHub Actions templates included
+
 ✅ **Extensible** - Copy-paste templates for custom tests
 
 ### npm Scripts
