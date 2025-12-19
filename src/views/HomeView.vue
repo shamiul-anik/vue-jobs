@@ -10,6 +10,13 @@
           <p class="my-4 text-xl text-white">
             Find the Vue job that fits your skills and needs
           </p>
+          <!-- Temporary PostHog Test Button -->
+          <!-- <button 
+            @click="triggerError"
+            class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
+          >
+            Trigger Test Error
+          </button> -->
         </div>
       </div>
     </section>
@@ -128,4 +135,9 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+// PostHog Test Function to Track Error
+const triggerError = () => {
+  throw new Error('PostHog Test Error!')
+}
 </script>
