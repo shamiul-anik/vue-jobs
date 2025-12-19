@@ -21,16 +21,21 @@
             <i class="fas fa-arrow-left mr-1"></i> Back to Job Listings
           </RouterLink>
 
-          <div class="bg-white p-6 rounded-lg shadow-md mt-6">
-            <div class="text-gray-500 mb-4">{{ job.type }}</div>
+          <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-md relative hover:shadow-xl transition-shadow cursor-pointer p-8 mt-6">
+          <div class="mb-4">
+            <div class="inline-block bg-green-200 px-3 py-1 rounded-xl text-md text-gray-600">
+              <i :class="[typeIcon, 'text-md px-0.5']"></i>
+              {{ job.type }}
+            </div>
+          </div>
             <h1 class="text-3xl font-bold mb-4">{{ job.title }}</h1>
             
-            <div class="text-gray-500 mb-4 flex items-center">
-              <i class="fa-solid fa-location-dot text-lg text-orange-700 mr-2"></i>
-              <p class="text-orange-700">{{ job.location }}</p>
+            <div class="text-red-600 mb-4 flex items-center">
+              <i class="fa-solid fa-location-dot mr-1"></i>
+              <p class="text-red-600">{{ job.location }}</p>
             </div>
 
-            <h3 class="text-green-500 text-lg font-bold mb-6">{{ job.salary }}</h3>
+            <h3 class="text-green-500 text-lg font-bold mb-6">Salary: {{ job.salary }} / Year</h3>
 
             <div class="mb-6">
               <h3 class="text-xl font-bold mb-2">Job Description</h3>
@@ -38,9 +43,9 @@
             </div>
 
             <div v-if="job.company_name" class="mb-6">
-              <h3 class="text-xl font-bold mb-2">Company</h3>
+              <h3 class="text-xl font-bold mb-2">Company Information</h3>
               <p class="font-semibold">{{ job.company_name }}</p>
-              <p class="mt-2 whitespace-pre-line">{{ job.company_description }}</p>
+              <p class="mt-1 whitespace-pre-line">{{ job.company_description }}</p>
             </div>
 
             <div class="mb-6">
@@ -103,6 +108,21 @@ const error = ref(null)
 
 const isAdmin = computed(() => {
   return user.value && user.value.role === 'admin'
+})
+
+const typeIcon = computed(() => {
+  switch (job.value.type) {
+    case 'Full-Time':
+      return 'fa-solid fa-briefcase'
+    case 'Part-Time':
+      return 'fa-solid fa-clock'
+    case 'Remote':
+      return 'fa-solid fa-house-laptop'
+    case 'Internship':
+      return 'fa-solid fa-graduation-cap'
+    default:
+      return 'fa-solid fa-briefcase'
+  }
 })
 
 // SEO state
