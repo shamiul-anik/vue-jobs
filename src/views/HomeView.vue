@@ -129,8 +129,6 @@ useSEO({
 })
 
 onMounted(async () => {
-  // Temporary delay to test skeletons
-  // await new Promise(resolve => setTimeout(resolve, 3000))
   try {
     jobs.value = await jobsAPI.getAllJobs()
   } catch (err) {
