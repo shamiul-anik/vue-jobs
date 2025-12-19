@@ -16,7 +16,7 @@
 
       <div class="border border-gray-100 mb-5"></div>
 
-      <div class="flex flex-col lg:flex-row justify-between items-center mb-4">
+      <div class="flex justify-between items-center mb-4">
         <div class="text-orange-700">
           <i class="fa-solid fa-location-dot text-lg mr-1"></i>
           {{ job.location }}
