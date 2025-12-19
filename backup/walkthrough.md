@@ -317,7 +317,7 @@ npm run db:import db_migration/database.db
 ## 4. Layout Shift & Scrollbar Optimization
 
 - **JobSkeleton.vue**: Implemented skeleton loaders to replace generic loading text, reserving space for content and preventing layout jumps.
-- **Scrollbar Stability**: Applied `scrollbar-gutter: stable` in `styles.css` to prevent content shifting when the vertical scrollbar appears.
+- **Scrollbar Stability & Esthetics**: Applied `scrollbar-gutter: stable` in `styles.css` to prevent content shifting, and customized the scrollbar with a **green theme** (`#16a34a`) to match the project's branding.
 
 ## Conclusion
 
