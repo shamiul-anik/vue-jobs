@@ -175,6 +175,11 @@ The application uses **[PostHog](https://us.posthog.com/)** for real-time error 
 1.  Added credentials to `.env` for this project.
 2.  Errors are automatically captured by the global Vue error handler and sent to the PostHog dashboard.
 
+**Check Behavior:**
+
+- **Error Tracking**: View real-time errors and exceptions in the **Project > Behavior > Error tracking** tab.
+- **Session Replay**: Watch user interactions leading up to an error in the **Project > Behavior > Session replay** tab.
+
 ### Testing CRUD Operations
 
 **Create**: Navigate to "Add Job" and fill out the form
