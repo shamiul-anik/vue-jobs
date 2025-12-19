@@ -60,6 +60,12 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Nginx** reverse proxy and static file serving
   - **Docker Compose** orchestration
   - **Multi-stage builds** for optimized images
+- **Database Migration**:
+  - Production-ready script to import data from external SQLite files
+  - Transaction-safe with automatic rollbacks
+- **Error Monitoring & Analytics**:
+  - **PostHog** integration for real-time error tracking
+  - **Session Recording** to replay user behavior leading to errors
 
 ## 📋 Prerequisites
 
@@ -146,6 +152,29 @@ On the first run, the system automatically creates an Admin user:
 
 You can use these credentials to log in immediately.
 
+### 💾 Database Migration
+
+Import data from an external `.db` file into your project database:
+
+```bash
+npm run db:import path/name.db
+```
+
+This script:
+
+- Transfers **Users** and **Jobs**.
+- Skips duplicates automatically.
+- Ensures data integrity using database transactions.
+
+### 📊 Error Monitoring ([PostHog](https://us.posthog.com/))
+
+The application uses **[PostHog](https://us.posthog.com/)** for real-time error monitoring and session replays.
+
+**Setup:**
+
+1.  Added credentials to `.env` for this project.
+2.  Errors are automatically captured by the global Vue error handler and sent to the PostHog dashboard.
+
 ### Testing CRUD Operations
 
 **Create**: Navigate to "Add Job" and fill out the form
@@ -172,7 +201,9 @@ vue-jobs/
 │   ├── jobs.js              # API routes for jobs
 │   └── users.js             # API routes for authentication (Login/Register)
 ├── scripts/
-│   └── benchmark-db.js      # Database benchmarking script
+│   ├── benchmark-db.js      # Database benchmarking script
+│   ├── load-test.js         # API load testing script
+│   └── migrate-from-db.js   # Production-level migration utility
 ├── src/
 │   ├── assets/
 │   │   └── styles.css       # Tailwind CSS styles
@@ -226,6 +257,7 @@ vue-jobs/
 | HTTP Client        | Fetch API                  | Native            |
 | Deployment         | Docker + Docker Compose    | -                 |
 | Web Server         | Nginx                      | Alpine Latest     |
+| Monitoring         | PostHog                    | v1.200.0 (JS SDK) |
 
 ## 🔌 API Endpoints
 
