@@ -1,4 +1,5 @@
 # Vue Jobs - Full Stack Application
+
 ![Vue](https://img.shields.io/badge/vue-3.x-42b883)
 ![Vite](https://img.shields.io/badge/vite-7.x-646cff)
 ![Node.js](https://img.shields.io/badge/node-%3E%3D22-brightgreen)
@@ -210,22 +211,21 @@ vue-jobs/
 
 ## 🎨 Technology Stack
 
-| Layer              | Technology                 | Version       |
-| ------------------ | -------------------------- | ------------- |
-| Frontend Framework | Vue.js 3 (Composition API) | v3.5.25       |
-| Build Tool         | Vite                       | v7.2.7        |
-| Routing            | Vue Router 4               | v4.6.4        |
-| State Management   | Reactivity API (useAuth)   | -             |
-| Styling            | Tailwind CSS               | v4.1.18       |
-| Testing Framework  | Vitest                     | v4.0.16       |
-| Test Utils         | @vue/test-utils            | v2.4.6        |
-| Backend            | Node.js + Express          | v22.20.0 / v5.2.1    |
-| Authentication     | JWT + bcryptjs             | v9.0.3 / v3.0 |
-| Database           | SQLite3                    | v5.1.7        |
-| HTTP Client        | Fetch API                  | Native        |
-| Deployment         | Docker + Docker Compose    | -             |
-| Web Server         | Nginx                      | Alpine Latest |
-
+| Layer              | Technology                 | Version           |
+| ------------------ | -------------------------- | ----------------- |
+| Frontend Framework | Vue.js 3 (Composition API) | v3.5.25           |
+| Build Tool         | Vite                       | v7.2.7            |
+| Routing            | Vue Router 4               | v4.6.4            |
+| State Management   | Reactivity API (useAuth)   | -                 |
+| Styling            | Tailwind CSS               | v4.1.18           |
+| Testing Framework  | Vitest                     | v4.0.16           |
+| Test Utils         | @vue/test-utils            | v2.4.6            |
+| Backend            | Node.js + Express          | v22.20.0 / v5.2.1 |
+| Authentication     | JWT + bcryptjs             | v9.0.3 / v3.0     |
+| Database           | SQLite3                    | v5.1.7            |
+| HTTP Client        | Fetch API                  | Native            |
+| Deployment         | Docker + Docker Compose    | -                 |
+| Web Server         | Nginx                      | Alpine Latest     |
 
 ## 🔌 API Endpoints
 
@@ -262,7 +262,6 @@ The `jobs` table includes:
 5. **Edit Job** - Update existing job information
 6. **Delete Job** - Remove job listings
 
-
 ## 🧪 Testing
 
 The project includes comprehensive test coverage using **Vitest**, a blazing-fast unit test framework optimized for Vite projects.
@@ -270,26 +269,32 @@ The project includes comprehensive test coverage using **Vitest**, a blazing-fas
 ### Running Tests
 
 **Run all tests once:**
+
 ```bash
 npm run test -- --run
 ```
 
 **Run tests in watch mode (auto-rerun on file changes):**
+
 ```bash
 npm test
 ```
 
 **Run tests with UI dashboard:**
+
 ```bash
 npm run test:ui
 ```
+
 This opens an interactive dashboard where you can:
+
 - View all test files and their results
 - Filter and search specific tests
 - Re-run individual tests or suites
 - See code coverage visualization
 
 **Generate coverage report:**
+
 ```bash
 npm run test:coverage
 ```
@@ -299,6 +304,7 @@ npm run test:coverage
 The project includes **164 tests** across **15 test files** covering:
 
 **Frontend Views (92 tests):**
+
 - ✅ HomeView - Landing page rendering and navigation
 - ✅ JobsView - Job listing, search, and filtering
 - ✅ JobView - Individual job details display
@@ -309,17 +315,21 @@ The project includes **164 tests** across **15 test files** covering:
 - ✅ NotFoundView - 404 error page
 
 **Components (11 tests):**
+
 - ✅ Navbar - Navigation component
 - ✅ JobCard - Job listing card
 - ✅ Modal - Reusable modal dialog
 
 **Services (10 tests):**
+
 - ✅ API Service - REST API integration and error handling
 
 **Composables (5 tests):**
+
 - ✅ useAuth - Authentication state management
 
 **Backend Routes (46 tests):**
+
 - ✅ Jobs Routes - CRUD operations and validation
 - ✅ Users Routes - Authentication endpoints
 
@@ -330,7 +340,6 @@ The project includes **164 tests** across **15 test files** covering:
 - **API Mocking**: vi.mock() for isolating components and services
 - **Patterns**: Consistent mock setup across all test suites
 - **Assertions**: Behavior-based testing (what users experience)
-
 
 ## ⚡ Performance Testing
 
@@ -353,17 +362,18 @@ npm run load-test
 
 **Choose your entry point:**
 
-| Document | Purpose | Time | Best For |
-|----------|---------|------|----------|
-| [**PERFORMANCE_START_HERE.md**](./PERFORMANCE_START_HERE.md) | Complete overview & quick start | 5 min | Everyone - start here! |
-| [**PERFORMANCE_QUICK_START.md**](./PERFORMANCE_QUICK_START.md) | Commands & performance targets | 5 min | Quick reference |
-| [**PERFORMANCE_TESTING_GUIDE.md**](./PERFORMANCE_TESTING_GUIDE.md) | Comprehensive 5-part guide | 30 min | Deep understanding |
-| [**PERFORMANCE_IMPLEMENTATION_GUIDE.md**](./PERFORMANCE_IMPLEMENTATION_GUIDE.md) | Code examples & templates | 25 min | Creating custom tests |
-| [**PERFORMANCE_TESTING_SUMMARY.md**](./PERFORMANCE_TESTING_SUMMARY.md) | Implementation details | 15 min | What's included |
+| Document                                                                                     | Purpose                         | Time   | Best For               |
+| -------------------------------------------------------------------------------------------- | ------------------------------- | ------ | ---------------------- |
+| [**PERFORMANCE_START_HERE.md**](./performance/PERFORMANCE_START_HERE.md)                     | Complete overview & quick start | 5 min  | Everyone - start here! |
+| [**PERFORMANCE_QUICK_START.md**](./performance/PERFORMANCE_QUICK_START.md)                   | Commands & performance targets  | 5 min  | Quick reference        |
+| [**PERFORMANCE_TESTING_GUIDE.md**](./performance/PERFORMANCE_TESTING_GUIDE.md)               | Comprehensive 5-part guide      | 30 min | Deep understanding     |
+| [**PERFORMANCE_IMPLEMENTATION_GUIDE.md**](./performance/PERFORMANCE_IMPLEMENTATION_GUIDE.md) | Code examples & templates       | 25 min | Creating custom tests  |
+| [**PERFORMANCE_TESTING_SUMMARY.md**](./performance/PERFORMANCE_TESTING_SUMMARY.md)           | Implementation details          | 15 min | What's included        |
 
 ### Test Coverage
 
 ✅ **15 Performance Tests** - API data processing
+
 - Filter operations (0.1-0.4ms)
 - Sort operations (2.9-19.1ms)
 - Pagination (0.03ms)
@@ -372,11 +382,13 @@ npm run load-test
 - Throughput measurement
 
 ✅ **Database Benchmarking** - SQLite optimization
+
 - 10,000 insert operations
 - 1,000 random read operations
 - Query performance analysis
 
 ✅ **Load Testing** - API endpoints
+
 - 6 realistic scenarios
 - 10-200 concurrent connections
 - Throughput & latency measurement
@@ -384,6 +396,7 @@ npm run load-test
 ### Current Performance Metrics
 
 **API Operations (1000 items):**
+
 ```
 Filter by title:          0.424ms      ✅ Excellent
 Filter by type:           0.146ms      ✅ Excellent
@@ -398,14 +411,14 @@ Memory (100k items):      1.74MB       ✅ Low
 
 ### Performance Targets
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| Filter | <1ms | ✅ PASS (0.4ms) |
-| Sort | <20ms | ✅ PASS (19.1ms) |
-| Pagination | <1ms | ✅ PASS (0.03ms) |
-| API Response | <100ms | ✅ PASS |
-| Component Render | <5ms | ✅ PASS |
-| Memory | <2MB | ✅ PASS (1.74MB) |
+| Metric           | Target | Status           |
+| ---------------- | ------ | ---------------- |
+| Filter           | <1ms   | ✅ PASS (0.4ms)  |
+| Sort             | <20ms  | ✅ PASS (19.1ms) |
+| Pagination       | <1ms   | ✅ PASS (0.03ms) |
+| API Response     | <100ms | ✅ PASS          |
+| Component Render | <5ms   | ✅ PASS          |
+| Memory           | <2MB   | ✅ PASS (1.74MB) |
 
 ### Key Features
 
@@ -428,7 +441,7 @@ Memory (100k items):      1.74MB       ✅ Low
 }
 ```
 
-**📚 Learn More:** See [PERFORMANCE_START_HERE.md](./PERFORMANCE_START_HERE.md) for comprehensive guide
+**📚 Learn More:** See [PERFORMANCE_START_HERE.md](./performance/PERFORMANCE_START_HERE.md) for comprehensive guide
 
 ## 🔧 Build for Production
 
