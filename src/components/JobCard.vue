@@ -1,17 +1,18 @@
 <template>
   <div class="bg-white rounded-xl shadow-md relative">
     <div class="p-4">
-      <div class="mb-6">
-        <div class="text-gray-600 my-2">{{ job.type }}</div>
-        <h3 class="text-xl font-bold">{{ job.title }}</h3>
+      <div class="mb-2">
+        <div class="inline-block bg-green-200 px-2 py-1 rounded-xl text-md text-gray-600">{{ job.type }}</div>
+        <h3 class="text-xl font-bold mt-2">{{ job.title }}</h3>
+        <div class="border border-gray-100 mt-3"></div>
       </div>
 
       <div class="mb-5 min-h-12">
         {{ truncateDescription(job.description) }}
       </div>
 
-      <h3 class="text-green-500 mb-2">
-        {{ job.salary }}
+      <h3 class="text-green-600 mb-2">
+        Salary: {{ job.salary }}
       </h3>
 
       <div class="border border-gray-100 mb-5"></div>
