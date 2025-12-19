@@ -177,8 +177,8 @@ The application uses **[PostHog](https://us.posthog.com/)** for real-time error 
 
 **Check Behavior:**
 
-- **Error Tracking**: View real-time errors and exceptions in the **Project > Behavior > Error tracking** tab.
-- **Session Replay**: Watch user interactions leading up to an error in the **Project > Behavior > Session replay** tab.
+- **Error Tracking**: View real-time errors and exceptions in the **Project > Behavior > Error tracking** tab from the PostHog dashboard.
+- **Session Replay**: Watch user interactions leading up to an error in the **Project > Behavior > Session replay** tab from the PostHog dashboard.
 
 ### Testing CRUD Operations
 
