@@ -75,8 +75,6 @@ function initializeDatabase() {
           console.error("Error creating users table:", err.message);
         } else {
           console.log("Users table ready");
-          insertAdminUser();
-          insertTestUser();
         }
       }
     );
@@ -89,13 +87,11 @@ function initializeDatabase() {
           console.error("Error creating index:", err.message);
         } else {
           console.log("Index on created_at ready");
-          insertSampleData();
         }
       }
     );
   });
 }
-
 
 function insertAdminUser() {
   const adminEmail = "admin@mail.com";
