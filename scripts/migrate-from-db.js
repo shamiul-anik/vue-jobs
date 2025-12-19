@@ -6,79 +6,133 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sourcePath = process.argv[2];
-const destPath = path.join(__dirname, "..", "db", "database.db");
+/**
+ * Promisified SQLite Database Wrapper
+ */
+class AsyncDatabase {
+  constructor(dbPath) {
+    this.db = new sqlite3.Database(dbPath);
+  }
 
-if (!sourcePath) {
-  console.error("Usage: npm run db:import <path-to-source-db>");
-  process.exit(1);
+  run(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, function (err) {
+        if (err) reject(err);
+        else resolve({ lastID: this.lastID, changes: this.changes });
+      });
+    });
+  }
+
+  all(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, params, (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      });
+    });
+  }
+
+  close() {
+    return new Promise((resolve, reject) => {
+      this.db.close((err) => {
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+  }
 }
 
-const absoluteSourcePath = path.isAbsolute(sourcePath)
-  ? sourcePath
-  : path.resolve(process.cwd(), sourcePath);
+async function migrate() {
+  const sourcePathArg = process.argv[2];
+  const destPath = path.join(__dirname, "..", "db", "database.db");
 
-if (!fs.existsSync(absoluteSourcePath)) {
-  console.error(`Error: Source database not found at ${absoluteSourcePath}`);
-  process.exit(1);
-}
+  if (!sourcePathArg) {
+    console.error("Usage: npm run db:import <path-to-source-db>");
+    process.exit(1);
+  }
 
-console.log(`🚀 Starting migration:`);
-console.log(`Source: ${absoluteSourcePath}`);
-console.log(`Destination: ${destPath}`);
+  const absoluteSourcePath = path.isAbsolute(sourcePathArg)
+    ? sourcePathArg
+    : path.resolve(process.cwd(), sourcePathArg);
 
-const sourceDb = new sqlite3.Database(absoluteSourcePath);
-const destDb = new sqlite3.Database(destPath);
+  if (!fs.existsSync(absoluteSourcePath)) {
+    console.error(`Error: Source database not found at ${absoluteSourcePath}`);
+    process.exit(1);
+  }
 
-const tables = ["users", "jobs"];
+  console.log(`🚀 Starting production-level migration:`);
+  console.log(`Source: ${absoluteSourcePath}`);
+  console.log(`Destination: ${destPath}\n`);
 
-destDb.serialize(() => {
-  tables.forEach((table) => {
-    sourceDb.all(`SELECT * FROM ${table}`, [], (err, rows) => {
-      if (err) {
+  const sourceDb = new AsyncDatabase(absoluteSourcePath);
+  const destDb = new AsyncDatabase(destPath);
+
+  const tables = ["users", "jobs"];
+
+  try {
+    for (const table of tables) {
+      console.log(`⏳ Processing table: '${table}'...`);
+
+      const rows = await sourceDb.all(`SELECT * FROM ${table}`).catch((err) => {
         if (err.message.includes("no such table")) {
           console.warn(`⚠️  Skipping table '${table}': Not found in source.`);
-        } else {
-          console.error(`❌ Error reading from ${table}:`, err.message);
+          return null;
         }
-        return;
-      }
+        throw err;
+      });
+
+      if (!rows) continue;
 
       if (rows.length === 0) {
         console.log(`ℹ️  Table '${table}' is empty in source.`);
-        return;
+        continue;
       }
 
       console.log(
         `📦 Found ${rows.length} records in '${table}'. Migrating...`
       );
 
-      rows.forEach((row) => {
-        const columns = Object.keys(row).join(", ");
-        const placeholders = Object.keys(row)
-          .map(() => "?")
-          .join(", ");
-        const values = Object.values(row);
+      let importedCount = 0;
+      let skippedCount = 0;
 
-        // Usage of IGNORE to skip duplicates based on UNIQUE constraints (like email) or Primary Keys
-        const query = `INSERT OR IGNORE INTO ${table} (${columns}) VALUES (${placeholders})`;
+      // Use a transaction for each table to ensure atomicity
+      await destDb.run("BEGIN TRANSACTION");
 
-        destDb.run(query, values, (err) => {
-          if (err) {
-            console.error(`❌ Error inserting into ${table}:`, err.message);
+      try {
+        for (const row of rows) {
+          const keys = Object.keys(row);
+          const columns = keys.join(", ");
+          const placeholders = keys.map(() => "?").join(", ");
+          const values = Object.values(row);
+
+          const query = `INSERT OR IGNORE INTO ${table} (${columns}) VALUES (${placeholders})`;
+          const result = await destDb.run(query, values);
+
+          if (result.changes > 0) {
+            importedCount++;
+          } else {
+            skippedCount++;
           }
-        });
-      });
+        }
+        await destDb.run("COMMIT");
+        console.log(
+          `✅ Table '${table}' complete: ${importedCount} imported, ${skippedCount} skipped (duplicates).\n`
+        );
+      } catch (err) {
+        await destDb.run("ROLLBACK");
+        console.error(`❌ Failed to migrate table '${table}':`, err.message);
+        throw err;
+      }
+    }
 
-      console.log(`✅ Finished processing '${table}'.`);
-    });
-  });
-});
+    console.log("✨ Migration process finished successfully.");
+  } catch (error) {
+    console.error("\n❌ Global migration error:", error.message);
+    process.exit(1);
+  } finally {
+    await sourceDb.close();
+    await destDb.close();
+  }
+}
 
-// Close connections after a short delay to allow async operations to finish
-// In a production script we'd use promises/async-await for better control
-setTimeout(() => {
-  sourceDb.close();
-  destDb.close();
-  console.log("\n✨ Migration process complete.");
-}, 2000);
+migrate();
