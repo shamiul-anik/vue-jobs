@@ -317,7 +317,13 @@ npm run db:import db_migration/database.db
 ## 4. Layout Shift & Scrollbar Optimization
 
 - **JobSkeleton.vue**: Implemented skeleton loaders to replace generic loading text, reserving space for content and preventing layout jumps.
-- **Scrollbar Stability & Esthetics**: Applied `scrollbar-gutter: stable` in `styles.css` to prevent content shifting, and customized the scrollbar with a **green theme** (`#16a34a`) to match the project's branding.
+- **Scrollbar Stability & Esthetics**: Applied `scrollbar-gutter: stable` in `styles.css` to prevent content shifting, and customized the scrollbar with a **green theme** (`#16a34a`).
+
+## 5. Modern Job Pagination
+
+- **[Pagination.vue](vue-jobs/src/components/Pagination.vue)**: Created a modern, responsive pagination component with "Previous/Next" buttons, dynamic page numbering, and ellipses for large page counts.
+- **Jobs Listing Logic**: Updated `JobsView.vue` to show **6 jobs per page** and ensure the **latest jobs** appear at the top.
+- **Smooth Navigation**: Added automatic scroll-to-top behavior when changing pages and search-aware page resets.
 
 ## Conclusion
 

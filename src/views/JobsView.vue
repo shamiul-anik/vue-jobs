@@ -38,17 +38,26 @@
         </div>
         
         <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <JobCard v-for="job in filteredJobs" :key="job.id" :job="job" />
+          <JobCard v-for="job in paginatedJobs" :key="job.id" :job="job" />
         </div>
+
+        <!-- Pagination -->
+        <Pagination
+          v-if="filteredJobs.length > itemsPerPage"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @change-page="handlePageChange"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import JobCard from '../components/JobCard.vue'
 import JobSkeleton from '../components/JobSkeleton.vue'
+import Pagination from '../components/Pagination.vue'
 import { jobsAPI } from '../services/api'
 import { useSEO } from '../composables/useSEO'
 
@@ -57,16 +66,44 @@ const loading = ref(true)
 const error = ref(null)
 const searchQuery = ref('')
 
+// Pagination state
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+const sortedJobs = computed(() => {
+  // Show latest jobs first (assuming higher ID means later, or use created_at)
+  return [...jobs.value].sort((a, b) => b.id - a.id)
+})
+
 const filteredJobs = computed(() => {
-  if (!searchQuery.value) return jobs.value
+  if (!searchQuery.value) return sortedJobs.value
   
   const query = searchQuery.value.toLowerCase()
-  return jobs.value.filter(job => 
+  return sortedJobs.value.filter(job => 
     job.title.toLowerCase().includes(query) ||
     job.location.toLowerCase().includes(query) ||
     (job.company_name && job.company_name.toLowerCase().includes(query)) ||
     job.type.toLowerCase().includes(query)
   )
+})
+
+const totalPages = computed(() => Math.ceil(filteredJobs.value.length / itemsPerPage))
+
+const paginatedJobs = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredJobs.value.slice(start, end)
+})
+
+const handlePageChange = (page) => {
+  currentPage.value = page
+  // Scroll to top of listings when page changes
+  window.scrollTo({ top: 300, behavior: 'smooth' })
+}
+
+// Reset to page 1 when search query changes
+watch(searchQuery, () => {
+  currentPage.value = 1
 })
 
 // SEO Configuration
