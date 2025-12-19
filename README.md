@@ -262,7 +262,7 @@ vue-jobs/
 | HTTP Client        | Fetch API                  | Native            |
 | Deployment         | Docker + Docker Compose    | -                 |
 | Web Server         | Nginx                      | Alpine Latest     |
-| Monitoring         | PostHog                    | v1.200.0 (JS SDK) |
+| Monitoring         | PostHog                    | v1.309.1 (JS SDK) |
 
 ## 🔌 API Endpoints
 
