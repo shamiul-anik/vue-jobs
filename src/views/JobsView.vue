@@ -25,8 +25,8 @@
           Browse Jobs
         </h2>
         
-        <div v-if="loading" class="text-center">
-          <p class="text-xl">Loading jobs...</p>
+        <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <JobSkeleton v-for="i in 6" :key="i" />
         </div>
         
         <div v-else-if="error" class="text-center">
@@ -48,6 +48,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import JobCard from '../components/JobCard.vue'
+import JobSkeleton from '../components/JobSkeleton.vue'
 import { jobsAPI } from '../services/api'
 import { useSEO } from '../composables/useSEO'
 
@@ -78,6 +79,8 @@ useSEO({
 })
 
 onMounted(async () => {
+  // Temporary delay to test skeletons
+  await new Promise(resolve => setTimeout(resolve, 1000))
   try {
     jobs.value = await jobsAPI.getAllJobs()
   } catch (err) {
