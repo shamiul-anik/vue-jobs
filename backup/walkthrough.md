@@ -276,3 +276,49 @@ This project demonstrates:
 ---
 
 **Project Status**: ✅ Complete and fully functional
+
+---
+
+# Advanced Features & Optimizations
+
+## 1. Documentation Reorganization
+
+- Moved all `PERFORMANCE_*` files into a dedicated `performance/` directory.
+- Updated `README.md` and all internal document links.
+- The project root is now cleaner and better organized.
+
+## 2. Production-Level Migration Script
+
+The `scripts/migrate-from-db.js` tool has been upgraded to use **modern asynchronous patterns**:
+
+- **Async/Await & Promises**: Replaced the callback-based `sqlite3` driver with a clean `AsyncDatabase` wrapper.
+- **Transactional Support**: Used `BEGIN TRANSACTION` and `COMMIT` to ensure that data is only migrated if every row in a table is processed successfully.
+- **Improved Logging**: Added clear tracking for how many records were imported versus skipped as duplicates.
+- **Error Resilience**: Implemented robust error handling with automatic `ROLLBACK` on failure.
+
+### Verified Test Run:
+
+```bash
+npm run db:import db_migration/database.db
+```
+
+**Output:**
+
+- ✅ Table 'users' complete: 0 imported, 2 skipped (duplicates).
+- ✅ Table 'jobs' complete: 0 imported, 8 skipped (duplicates).
+- ✨ Migration process finished successfully.
+
+## 3. PostHog Integration & Error Monitoring
+
+- **Integrated PostHog**: Set up real-time error tracking and session recordings.
+- **Global Error Handler**: Vue errors are now automatically captured and sent to the PostHog dashboard.
+- **Documentation**: Added setup and usage instructions to `README.md`.
+
+## 4. Layout Shift & Scrollbar Optimization
+
+- **JobSkeleton.vue**: Implemented skeleton loaders to replace generic loading text, reserving space for content and preventing layout jumps.
+- **Scrollbar Stability**: Applied `scrollbar-gutter: stable` in `styles.css` to prevent content shifting when the vertical scrollbar appears.
+
+## Conclusion
+
+The codebase is now significantly more maintainable, with a professional migration utility, a cleaner directory structure, robust error monitoring, and a polished, stable loading experience.
