@@ -41,7 +41,12 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **WAL Mode** enabled for better concurrency
   - **Synchronous NORMAL** for faster writes
   - **Indexes** for optimized query performance
-- **Enhanced UI/UX**:
+- **Modern UI/UX Features**:
+  - **Loading Skeletons**: Visual placeholders for better perceived performance
+  - **Job Filtering**: Real-time search and filtering across multiple fields
+  - **Responsive Pagination**: Efficiently handle large datasets with a professional UI
+  - **Layout Stability**: Optimized to prevent content shifts (CLS)
+  - **Custom Scrollbar**: Branded green theme for a premium feel
   - **Font Awesome** icons for visual cues
   - Custom SVG illustrations for Auth pages
   - **Accessibility** (ARIA labels, semantic HTML)

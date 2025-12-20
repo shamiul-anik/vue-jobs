@@ -289,12 +289,13 @@ This project demonstrates:
 
 ## 2. Production-Level Migration Script
 
-The `scripts/migrate-from-db.js` tool has been upgraded to use **modern asynchronous patterns**:
+The `scripts/migrate-from-db.js` tool has been upgraded to a **production-ready utility**:
 
-- **Async/Await & Promises**: Replaced the callback-based `sqlite3` driver with a clean `AsyncDatabase` wrapper.
-- **Transactional Support**: Used `BEGIN TRANSACTION` and `COMMIT` to ensure that data is only migrated if every row in a table is processed successfully.
-- **Improved Logging**: Added clear tracking for how many records were imported versus skipped as duplicates.
-- **Error Resilience**: Implemented robust error handling with automatic `ROLLBACK` on failure.
+- **Command**: `npm run db:import <path-to-db-file>` (e.g., `npm run db:import db_migration/database.db`).
+- **Async/Await & Promises**: Replaced callback-based logic with modern asynchronous patterns.
+- **Transactional Support**: Uses `BEGIN TRANSACTION` and `COMMIT` for atomic operations.
+- **Improved Logging**: Clear tracking of imported vs. skipped duplicate records.
+- **Error Resilience**: Automatic `ROLLBACK` on failure.
 
 ### Verified Test Run:
 
