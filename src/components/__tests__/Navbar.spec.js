@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { mount } from '@vue/test-utils';
-import Navbar from '../Navbar.vue';
-import { createTestRouter, resetMocks } from '../../../vitest.setup.js';
+import { describe, it, expect, beforeEach } from "vitest";
+import { mount } from "@vue/test-utils";
+import Navbar from "../Navbar.vue";
+import { createTestRouter, resetMocks } from "../../../vitest.setup.js";
 
-describe('Navbar.vue', () => {
+describe("Navbar.vue", () => {
   let router;
 
   beforeEach(() => {
@@ -11,13 +11,12 @@ describe('Navbar.vue', () => {
     router = createTestRouter();
   });
 
-  it('renders the navbar component', async () => {
+  it("renders the navbar component", async () => {
     const wrapper = mount(Navbar, {
       global: {
         plugins: [router],
         stubs: {
           RouterLink: true,
-          'i': true,
         },
       },
     });
@@ -25,18 +24,16 @@ describe('Navbar.vue', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('renders navigation links', async () => {
+  it("renders navigation links", async () => {
     const wrapper = mount(Navbar, {
       global: {
         plugins: [router],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
     await router.isReady();
     const html = wrapper.html();
-    expect(html).toContain('Home');
-    expect(html).toContain('Jobs');
+    expect(html).toContain("Home");
+    expect(html).toContain("Jobs");
   });
 });

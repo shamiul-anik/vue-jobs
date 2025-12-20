@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { mount, flushPromises } from '@vue/test-utils';
-import LoginView from '../LoginView.vue';
-import { createRouter, createMemoryHistory } from 'vue-router';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { mount, flushPromises } from "@vue/test-utils";
+import LoginView from "../LoginView.vue";
+import { createRouter, createMemoryHistory } from "vue-router";
 
 // Mock the useAuth composable
-vi.mock('../../composables/useAuth.js', () => ({
+vi.mock("../../composables/useAuth.js", () => ({
   useAuth: () => ({
     login: vi.fn(),
     logout: vi.fn(),
@@ -16,13 +16,13 @@ vi.mock('../../composables/useAuth.js', () => ({
 // Mock fetch
 global.fetch = vi.fn();
 
-describe('LoginView.vue', () => {
+describe("LoginView.vue", () => {
   const createTestRouter = () => {
     return createRouter({
       history: createMemoryHistory(),
       routes: [
-        { path: '/', component: { template: '<div>Home</div>' } },
-        { path: '/register', component: { template: '<div>Register</div>' } },
+        { path: "/", component: { template: "<div>Home</div>" } },
+        { path: "/register", component: { template: "<div>Register</div>" } },
       ],
     });
   };
@@ -32,106 +32,92 @@ describe('LoginView.vue', () => {
     vi.clearAllMocks();
   });
 
-  it('renders login form', async () => {
+  it("renders login form", async () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    expect(wrapper.text()).toContain('Sign in to Your Account');
+    expect(wrapper.text()).toContain("Sign in to Your Account");
     expect(wrapper.find('input[type="email"]').exists()).toBe(true);
     expect(wrapper.find('input[type="password"]').exists()).toBe(true);
   });
 
-  it('has email input with correct attributes', () => {
+  it("has email input with correct attributes", () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const emailInput = wrapper.find('input[type="email"]');
     expect(emailInput.exists()).toBe(true);
-    expect(emailInput.attributes('placeholder')).toContain('example.com');
-    expect(emailInput.attributes('required')).toBeDefined();
+    expect(emailInput.attributes("placeholder")).toContain("example.com");
+    expect(emailInput.attributes("required")).toBeDefined();
   });
 
-  it('has password input field', () => {
+  it("has password input field", () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const passwordInput = wrapper.find('input[type="password"]');
     expect(passwordInput.exists()).toBe(true);
-    expect(passwordInput.attributes('required')).toBeDefined();
+    expect(passwordInput.attributes("required")).toBeDefined();
   });
 
-  it('has sign in button', () => {
+  it("has sign in button", () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const button = wrapper.find('button[type="submit"]');
     expect(button.exists()).toBe(true);
-    expect(button.text().toLowerCase()).toContain('sign in');
+    expect(button.text().toLowerCase()).toContain("sign in");
   });
 
-  it('updates email input value', async () => {
+  it("updates email input value", async () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const emailInput = wrapper.find('input[type="email"]');
-    await emailInput.setValue('test@example.com');
+    await emailInput.setValue("test@example.com");
 
-    expect(emailInput.element.value).toBe('test@example.com');
+    expect(emailInput.element.value).toBe("test@example.com");
   });
 
-  it('updates password input value', async () => {
+  it("updates password input value", async () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const passwordInput = wrapper.find('input[type="password"]');
-    await passwordInput.setValue('password123');
+    await passwordInput.setValue("password123");
 
-    expect(passwordInput.element.value).toBe('password123');
+    expect(passwordInput.element.value).toBe("password123");
   });
 
-  it('has password visibility toggle button', () => {
+  it("has password visibility toggle button", () => {
     const wrapper = mount(LoginView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 

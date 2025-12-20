@@ -152,6 +152,8 @@ const typeIcon = computed(() => {
 const formattedCreatedAt = computed(() => {
   // Force UTC by appending "Z"
   const raw = job.value.created_at
+  if (!raw) return 'Unknown date'
+  
   const d = new Date(raw.endsWith("Z") ? raw : raw + "Z")
 
   const datePart = d.toLocaleDateString("en-US", {

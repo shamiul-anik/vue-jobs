@@ -1,207 +1,216 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { mount } from '@vue/test-utils';
-import RegisterView from '../RegisterView.vue';
-import { createRouter, createMemoryHistory } from 'vue-router';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { mount } from "@vue/test-utils";
+import RegisterView from "../RegisterView.vue";
+import { createRouter, createMemoryHistory } from "vue-router";
 
 // Mock the API
-vi.mock('../../services/api.js', () => ({
+vi.mock("../../services/api.js", () => ({
   usersAPI: {
-    register: vi.fn(() => Promise.resolve({ message: 'User registered successfully' })),
+    register: vi.fn(() =>
+      Promise.resolve({ message: "User registered successfully" })
+    ),
   },
 }));
 
 // Mock useSEO composable
-vi.mock('../../composables/useSEO.js', () => ({
+vi.mock("../../composables/useSEO.js", () => ({
   useSEO: vi.fn(() => ({ updateMetaTags: vi.fn() })),
 }));
 
-describe('RegisterView.vue', () => {
+describe("RegisterView.vue", () => {
   const createTestRouter = () => {
     return createRouter({
       history: createMemoryHistory(),
       routes: [
-        { path: '/register', component: { template: '<div>Register</div>' } },
-        { path: '/login', component: { template: '<div>Login</div>' } },
-        { path: '/', component: { template: '<div>Home</div>' } },
+        { path: "/register", component: { template: "<div>Register</div>" } },
+        { path: "/login", component: { template: "<div>Login</div>" } },
+        { path: "/", component: { template: "<div>Home</div>" } },
       ],
     });
   };
 
-  it('renders the register form', () => {
+  it("renders the register form", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('has name input field', () => {
+  it("has name input field", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const nameInput = wrapper.find('input[name="name"]') || wrapper.find('input[type="text"]');
-    expect(nameInput.exists() || wrapper.text().toLowerCase().includes('name')).toBe(true);
+    const nameInput =
+      wrapper.find('input[name="name"]') || wrapper.find('input[type="text"]');
+    expect(
+      nameInput.exists() || wrapper.text().toLowerCase().includes("name")
+    ).toBe(true);
   });
 
-  it('has email input field', () => {
+  it("has email input field", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const emailInput = wrapper.find('input[name="email"]') || wrapper.find('input[type="email"]');
-    expect(emailInput.exists() || wrapper.text().toLowerCase().includes('email')).toBe(true);
+    const emailInput =
+      wrapper.find('input[name="email"]') ||
+      wrapper.find('input[type="email"]');
+    expect(
+      emailInput.exists() || wrapper.text().toLowerCase().includes("email")
+    ).toBe(true);
   });
 
-  it('has password input field', () => {
+  it("has password input field", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const passwordInput = wrapper.find('input[name="password"]') || wrapper.find('input[type="password"]');
-    expect(passwordInput.exists() || wrapper.text().toLowerCase().includes('password')).toBe(true);
+    const passwordInput =
+      wrapper.find('input[name="password"]') ||
+      wrapper.find('input[type="password"]');
+    expect(
+      passwordInput.exists() ||
+        wrapper.text().toLowerCase().includes("password")
+    ).toBe(true);
   });
 
-  it('has password confirmation field', () => {
+  it("has password confirmation field", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const text = wrapper.text().toLowerCase();
-    expect(text.includes('confirm') || wrapper.findAll('input[type="password"]').length >= 2).toBe(true);
+    expect(
+      text.includes("confirm") ||
+        wrapper.findAll('input[type="password"]').length >= 2
+    ).toBe(true);
   });
 
-  it('has register button', () => {
+  it("has register button", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const submitButton = wrapper.find('button[type="submit"]') || wrapper.findAll('button').find(btn => 
-      btn.text().toLowerCase().includes('register') || btn.text().toLowerCase().includes('sign up')
+    const submitButton =
+      wrapper.find('button[type="submit"]') ||
+      wrapper
+        .findAll("button")
+        .find(
+          (btn) =>
+            btn.text().toLowerCase().includes("register") ||
+            btn.text().toLowerCase().includes("sign up")
+        );
+    expect(submitButton?.exists() || wrapper.findAll("button").length > 0).toBe(
+      true
     );
-    expect(submitButton?.exists() || wrapper.findAll('button').length > 0).toBe(true);
   });
 
-  it('has link to login page', () => {
+  it("has link to login page", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const links = wrapper.findAll('a');
-    const hasLoginLink = links.some(link => 
-      link.text().toLowerCase().includes('login') || 
-      link.text().toLowerCase().includes('sign in')
+    const links = wrapper.findAll("a");
+    const hasLoginLink = links.some(
+      (link) =>
+        link.text().toLowerCase().includes("login") ||
+        link.text().toLowerCase().includes("sign in")
     );
-    
-    expect(hasLoginLink || wrapper.text().toLowerCase().includes('login')).toBe(true);
+
+    expect(hasLoginLink || wrapper.text().toLowerCase().includes("login")).toBe(
+      true
+    );
   });
 
-  it('allows input in name field', async () => {
+  it("allows input in name field", async () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const nameInput = wrapper.find('input[name="name"]') || wrapper.find('input[type="text"]');
+    const nameInput =
+      wrapper.find('input[name="name"]') || wrapper.find('input[type="text"]');
     if (nameInput.exists()) {
-      await nameInput.setValue('John Doe');
-      expect(nameInput.element.value).toBe('John Doe');
+      await nameInput.setValue("John Doe");
+      expect(nameInput.element.value).toBe("John Doe");
     }
   });
 
-  it('allows input in email field', async () => {
+  it("allows input in email field", async () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const emailInput = wrapper.find('input[name="email"]') || wrapper.find('input[type="email"]');
+    const emailInput =
+      wrapper.find('input[name="email"]') ||
+      wrapper.find('input[type="email"]');
     if (emailInput.exists()) {
-      await emailInput.setValue('john@example.com');
-      expect(emailInput.element.value).toBe('john@example.com');
+      await emailInput.setValue("john@example.com");
+      expect(emailInput.element.value).toBe("john@example.com");
     }
   });
 
-  it('allows input in password field', async () => {
+  it("allows input in password field", async () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const passwordInput = wrapper.find('input[name="password"]') || wrapper.find('input[type="password"]');
+    const passwordInput =
+      wrapper.find('input[name="password"]') ||
+      wrapper.find('input[type="password"]');
     if (passwordInput.exists()) {
-      await passwordInput.setValue('password123');
-      expect(passwordInput.element.value).toBe('password123');
+      await passwordInput.setValue("password123");
+      expect(passwordInput.element.value).toBe("password123");
     }
   });
 
-  it('renders form without errors', () => {
+  it("renders form without errors", () => {
     expect(() => {
       mount(RegisterView, {
         global: {
           plugins: [createTestRouter()],
-          stubs: {
-            'i': true,
-          },
+          stubs: {},
         },
       });
     }).not.toThrow();
   });
 
-  it('displays registration instructions or requirements', () => {
+  it("displays registration instructions or requirements", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
@@ -209,33 +218,29 @@ describe('RegisterView.vue', () => {
     expect(text.length > 50).toBe(true);
   });
 
-  it('has proper form layout', () => {
+  it("has proper form layout", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
-    const form = wrapper.find('form');
-    expect(form.exists() || wrapper.findAll('input').length > 0).toBe(true);
+    const form = wrapper.find("form");
+    expect(form.exists() || wrapper.findAll("input").length > 0).toBe(true);
   });
 
-  it('displays all required fields', () => {
+  it("displays all required fields", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          'i': true,
-        },
+        stubs: {},
       },
     });
 
     const text = wrapper.text().toLowerCase();
-    expect(text.includes('name')).toBe(true);
-    expect(text.includes('email')).toBe(true);
-    expect(text.includes('password')).toBe(true);
+    expect(text.includes("name")).toBe(true);
+    expect(text.includes("email")).toBe(true);
+    expect(text.includes("password")).toBe(true);
   });
 });

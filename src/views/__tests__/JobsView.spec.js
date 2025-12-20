@@ -1,45 +1,46 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { mount, flushPromises } from '@vue/test-utils';
-import JobsView from '../JobsView.vue';
-import { createRouter, createMemoryHistory } from 'vue-router';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { mount, flushPromises } from "@vue/test-utils";
+import JobsView from "../JobsView.vue";
+import { createRouter, createMemoryHistory } from "vue-router";
 
 // Mock the API
-vi.mock('../../services/api.js', () => ({
+vi.mock("../../services/api.js", () => ({
   jobsAPI: {
     getAllJobs: vi.fn(() =>
       Promise.resolve([
         {
           id: 1,
-          title: 'Senior Vue Developer',
-          type: 'Full-Time',
-          description: 'Experienced Vue.js developer needed for exciting project',
-          salary: '$100K - $120K',
-          location: 'San Francisco, CA',
-          company_name: 'Tech Corp',
-          company_description: 'Leading tech company',
-          contact_email: 'hr@techcorp.com',
+          title: "Senior Vue Developer",
+          type: "Full-Time",
+          description:
+            "Experienced Vue.js developer needed for exciting project",
+          salary: "$100K - $120K",
+          location: "San Francisco, CA",
+          company_name: "Tech Corp",
+          company_description: "Leading tech company",
+          contact_email: "hr@techcorp.com",
         },
         {
           id: 2,
-          title: 'Junior Vue Developer',
-          type: 'Remote',
-          description: 'Entry-level Vue.js position',
-          salary: '$60K - $80K',
-          location: 'Remote',
-          company_name: 'StartUp Inc',
-          company_description: 'Growing startup',
-          contact_email: 'jobs@startup.com',
+          title: "Junior Vue Developer",
+          type: "Remote",
+          description: "Entry-level Vue.js position",
+          salary: "$60K - $80K",
+          location: "Remote",
+          company_name: "StartUp Inc",
+          company_description: "Growing startup",
+          contact_email: "jobs@startup.com",
         },
         {
           id: 3,
-          title: 'Vue.js Frontend Engineer',
-          type: 'Part-Time',
-          description: 'Part-time frontend engineering role',
-          salary: '$50K - $70K',
-          location: 'New York, NY',
-          company_name: 'Design Studio',
-          company_description: 'Creative design studio',
-          contact_email: 'careers@design.com',
+          title: "Vue.js Frontend Engineer",
+          type: "Part-Time",
+          description: "Part-time frontend engineering role",
+          salary: "$50K - $70K",
+          location: "New York, NY",
+          company_name: "Design Studio",
+          company_description: "Creative design studio",
+          contact_email: "careers@design.com",
         },
       ])
     ),
@@ -47,92 +48,81 @@ vi.mock('../../services/api.js', () => ({
 }));
 
 // Mock useSEO composable
-vi.mock('../../composables/useSEO.js', () => ({
+vi.mock("../../composables/useSEO.js", () => ({
   useSEO: vi.fn(),
 }));
 
-describe('JobsView.vue', () => {
+describe("JobsView.vue", () => {
   const createTestRouter = () => {
     return createRouter({
       history: createMemoryHistory(),
-      routes: [
-        { path: '/jobs', component: { template: '<div>Jobs</div>' } },
-      ],
+      routes: [{ path: "/jobs", component: { template: "<div>Jobs</div>" } }],
     });
   };
 
-  it('renders the jobs view', () => {
+  it("renders the jobs view", () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
 
     expect(wrapper.exists()).toBe(true);
-    expect(wrapper.text()).toContain('Browse Jobs');
+    expect(wrapper.text()).toContain("Browse Jobs");
   });
 
-  it('displays loading state initially', () => {
+  it("displays loading state initially", () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          JobCard: true,
-          'i': true,
-        },
       },
     });
-
-    expect(wrapper.text()).toContain('Loading jobs...');
+    expect(wrapper.findComponent({ name: "JobSkeleton" }).exists()).toBe(true);
   });
 
-  it('displays jobs after loading', async () => {
+  it("displays jobs after loading", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
 
     await flushPromises();
 
-    expect(wrapper.text()).not.toContain('Loading jobs...');
-    expect(wrapper.findComponent({ name: 'JobCard' }).exists() || wrapper.text()).toBeTruthy();
+    expect(wrapper.findComponent({ name: "JobSkeleton" }).exists()).toBe(false);
+    expect(wrapper.vm.jobs.length).toBeGreaterThan(0);
   });
 
-  it('has search input field', () => {
+  it("has search input field", () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
 
     const searchInput = wrapper.find('input[name="searchJob"]');
     expect(searchInput.exists()).toBe(true);
-    expect(searchInput.attributes('placeholder')).toContain('Filter jobs');
+    expect(searchInput.attributes("placeholder")).toContain("Filter jobs");
   });
 
-  it('filters jobs by title', async () => {
+  it("filters jobs by title", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: {
             template: '<div class="job-card">{{ job.title }}</div>',
-            props: ['job'],
+            props: ["job"],
           },
-          'i': true,
         },
       },
     });
@@ -140,25 +130,24 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('Senior');
+    await searchInput.setValue("Senior");
     await wrapper.vm.$nextTick();
 
     // Check if filtering works
     const filtered = wrapper.vm.filteredJobs;
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.some(job => job.title.includes('Senior'))).toBe(true);
+    expect(filtered.some((job) => job.title.includes("Senior"))).toBe(true);
   });
 
-  it('filters jobs by location', async () => {
+  it("filters jobs by location", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: {
             template: '<div class="job-card">{{ job.title }}</div>',
-            props: ['job'],
+            props: ["job"],
           },
-          'i': true,
         },
       },
     });
@@ -166,24 +155,23 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('Remote');
+    await searchInput.setValue("Remote");
     await wrapper.vm.$nextTick();
 
     const filtered = wrapper.vm.filteredJobs;
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.some(job => job.location.includes('Remote'))).toBe(true);
+    expect(filtered.some((job) => job.location.includes("Remote"))).toBe(true);
   });
 
-  it('filters jobs by company name', async () => {
+  it("filters jobs by company name", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: {
             template: '<div class="job-card">{{ job.title }}</div>',
-            props: ['job'],
+            props: ["job"],
           },
-          'i': true,
         },
       },
     });
@@ -191,24 +179,25 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('Tech Corp');
+    await searchInput.setValue("Tech Corp");
     await wrapper.vm.$nextTick();
 
     const filtered = wrapper.vm.filteredJobs;
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.some(job => job.company_name.includes('Tech Corp'))).toBe(true);
+    expect(filtered.some((job) => job.company_name.includes("Tech Corp"))).toBe(
+      true
+    );
   });
 
-  it('filters jobs by type', async () => {
+  it("filters jobs by type", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: {
             template: '<div class="job-card">{{ job.title }}</div>',
-            props: ['job'],
+            props: ["job"],
           },
-          'i': true,
         },
       },
     });
@@ -216,21 +205,20 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('Full-Time');
+    await searchInput.setValue("Full-Time");
     await wrapper.vm.$nextTick();
 
     const filtered = wrapper.vm.filteredJobs;
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.some(job => job.type === 'Full-Time')).toBe(true);
+    expect(filtered.some((job) => job.type === "Full-Time")).toBe(true);
   });
 
-  it('shows all jobs when search is empty', async () => {
+  it("shows all jobs when search is empty", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
@@ -238,19 +226,18 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('');
+    await searchInput.setValue("");
     await wrapper.vm.$nextTick();
 
     expect(wrapper.vm.filteredJobs.length).toBe(3);
   });
 
-  it('shows no results message when search returns empty', async () => {
+  it("shows no results message when search returns empty", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
@@ -258,19 +245,18 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('NonExistentJob12345');
+    await searchInput.setValue("NonExistentJob12345");
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.text()).toContain('No jobs found');
+    expect(wrapper.text()).toContain("No jobs found");
   });
 
-  it('renders job list after loading completes', async () => {
+  it("renders job list after loading completes", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
@@ -278,17 +264,16 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     // Verify that jobs have been loaded (not loading anymore)
-    expect(wrapper.text()).not.toContain('Loading jobs...');
+    expect(wrapper.findComponent({ name: "JobSkeleton" }).exists()).toBe(false);
     expect(wrapper.vm.jobs.length).toBeGreaterThan(0);
   });
 
-  it('handles case-insensitive search', async () => {
+  it("handles case-insensitive search", async () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
@@ -296,27 +281,28 @@ describe('JobsView.vue', () => {
     await flushPromises();
 
     const searchInput = wrapper.find('input[name="searchJob"]');
-    await searchInput.setValue('SENIOR');
+    await searchInput.setValue("SENIOR");
     await wrapper.vm.$nextTick();
 
     const filtered = wrapper.vm.filteredJobs;
     expect(filtered.length).toBeGreaterThan(0);
-    expect(filtered.some(job => job.title.toLowerCase().includes('senior'))).toBe(true);
+    expect(
+      filtered.some((job) => job.title.toLowerCase().includes("senior"))
+    ).toBe(true);
   });
 
-  it('has proper layout structure', () => {
+  it("has proper layout structure", () => {
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],
         stubs: {
           JobCard: true,
-          'i': true,
         },
       },
     });
 
     expect(wrapper.find('input[name="searchJob"]').exists()).toBe(true);
-    expect(wrapper.text()).toContain('Browse Jobs');
-    expect(wrapper.find('.grid').exists() || true).toBe(true);
+    expect(wrapper.text()).toContain("Browse Jobs");
+    expect(wrapper.find(".grid").exists() || true).toBe(true);
   });
 });
