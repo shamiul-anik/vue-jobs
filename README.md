@@ -343,9 +343,9 @@ npm run test:coverage
 
 ### Test Coverage
 
-The project includes comprehensive test coverage with **192 tests** across **19 test files** covering:
+The project includes comprehensive test coverage with **194 tests** across **19 test files** covering:
 
-**Frontend Views (92 tests):**
+**Frontend Views (94 tests):**
 
 - ✅ HomeView - Landing page rendering and navigation
 - ✅ JobsView - Job listing, search, and filtering
