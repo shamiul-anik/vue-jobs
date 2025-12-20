@@ -1,12 +1,16 @@
 <template>
   <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-md relative hover:shadow-xl transition-shadow cursor-pointer hover:scale-105 hover:transition-all duration-500 hover:duration-500">
-    <div class="p-6">
+    <div class="p-4 md:p-6">
       <div class="mb-2">
-        <div class="inline-block bg-green-200 px-2 py-1 rounded-xl text-md text-gray-600">
+        <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">
           <i :class="[typeIcon, 'text-md px-0.5']"></i>
           {{ job.type }}
         </div>
+
         <h3 class="text-xl font-bold mt-2">{{ job.title }}</h3>
+        <div class="text-slate-500 text-sm my-1">
+          Posted on {{ formattedCreatedAt }}
+        </div>
         <div class="border border-gray-100 mt-3"></div>
       </div>
 
@@ -55,6 +59,7 @@ const props = defineProps({
   }
 })
 
+// Icon for Job Type
 const typeIcon = computed(() => {
   switch (props.job.type) {
     case 'Full-Time':
@@ -69,6 +74,30 @@ const typeIcon = computed(() => {
       return 'fa-solid fa-briefcase'
   }
 })
+
+// Formatted Created At
+const formattedCreatedAt = computed(() => {
+  // Force UTC by appending "Z"
+  const raw = props.job.created_at
+  const d = new Date(raw.endsWith("Z") ? raw : raw + "Z")
+
+  const datePart = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Tokyo"
+  })
+
+  const timePart = d.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Tokyo"
+  })
+
+  return `${datePart} at ${timePart.toLowerCase()}`
+})
+
 
 const truncateDescription = (description) => {
   if (!description) return ''

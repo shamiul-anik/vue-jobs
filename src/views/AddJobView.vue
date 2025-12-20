@@ -5,8 +5,8 @@
         <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
           Add Job
         </h2>
-        <div class="bg-white px-6 py-8 mb-4 shadow-lg rounded-lg border-2 border-gray-200 m-4 md:m-0">
-          
+        <div class="bg-white px-4 md:px-8 py-4 md:py-8 mb-4 shadow-lg rounded-lg border-2 border-gray-200 m-4 md:m-0">
+
           <!-- Validation Errors Alert -->
           <div v-if="validationErrors.length > 0" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
             <p class="font-bold">Please correct the following errors:</p>
@@ -20,30 +20,31 @@
           <form @submit.prevent="handleSubmit">
             <!-- <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2> -->
 
-            <div class="mb-4">
-              <label for="type" class="block text-gray-700 font-bold mb-2">Job Type</label>
-              <select
-                v-model="formData.type"
-                id="type"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
-                required
-              >
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Remote">Remote</option>
-                <option value="Internship">Internship</option>
-              </select>
-            </div>
+            <h3 class="text-2xl font-semibold">Job Details</h3>
+            <div class="border border-gray-100 mt-2 mb-4"></div>
 
             <div class="mb-4">
               <label class="block text-gray-700 font-bold mb-2">Job Title</label>
               <input
                 v-model="formData.title"
                 type="text"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 placeholder="e.g. Senior Vue Developer"
-                required
-              />
+                required />
+            </div>
+
+            <div class="mb-4">
+              <label for="type" class="block text-gray-700 font-bold mb-2">Job Type</label>
+              <select
+                v-model="formData.type"
+                id="type"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                required>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Remote">Remote</option>
+                <option value="Internship">Internship</option>
+              </select>
             </div>
 
             <div class="mb-4">
@@ -53,8 +54,7 @@
                 id="description"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 rows="4"
-                placeholder="Add any job duties, expectations, requirements, etc"
-              ></textarea>
+                placeholder="Add any job duties, expectations, requirements, required technical skills etc."></textarea>
             </div>
 
             <div class="mb-4">
@@ -63,8 +63,7 @@
                 v-model="formData.salary"
                 id="salary"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
-                required
-              >
+                required>
                 <option value="Under $50K">Under $50K</option>
                 <option value="$50K - $60K">$50K - $60K</option>
                 <option value="$60K - $70K">$60K - $70K</option>
@@ -79,18 +78,8 @@
               </select>
             </div>
 
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2">Location</label>
-              <input
-                v-model="formData.location"
-                type="text"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-                placeholder="Company Location"
-                required
-              />
-            </div>
-
-            <h3 class="text-2xl mb-5">Company Info</h3>
+            <h3 class="text-2xl font-semibold mt-8">Company Information</h3>
+            <div class="border border-gray-100 mt-2 mb-4"></div>
 
             <div class="mb-4">
               <label for="company" class="block text-gray-700 font-bold mb-2">Company Name</label>
@@ -99,8 +88,7 @@
                 type="text"
                 id="company"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
-                placeholder="Company Name"
-              />
+                placeholder="Company Name" />
             </div>
 
             <div class="mb-4">
@@ -112,8 +100,17 @@
                 id="company_description"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
                 rows="4"
-                placeholder="What does your company do?"
-              ></textarea>
+                placeholder="What does your company do?"></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2">Location</label>
+              <input
+                v-model="formData.location"
+                type="text"
+                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                placeholder="Company Location"
+                required />
             </div>
 
             <div class="mb-4">
@@ -125,12 +122,11 @@
                 type="email"
                 id="contact_email"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
-                placeholder="Email address for applicants"
-                required
-              />
+                placeholder="Company Email Address"
+                required />
             </div>
 
-            <div class="mb-4">
+            <div class="mb-6 md:mb-8">
               <label for="contact_phone" class="block text-gray-700 font-bold mb-2">
                 Contact Phone
               </label>
@@ -139,16 +135,17 @@
                 type="tel"
                 id="contact_phone"
                 class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
-                placeholder="Optional phone for applicants"
-              />
+                placeholder="Company Phone Number" />
             </div>
 
-            <div>
+            <div class="flex items-center justify-end mb-3">
               <button
                 type="submit"
                 :disabled="submitting"
-                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline disabled:opacity-50 cursor-pointer"
-              >
+                class="group w-100 md:w-auto md:inline-flex md:items-center gap-2 
+                      border border-green-800 bg-green-600 hover:bg-green-700 text-white
+                      px-8 md:px-12 py-2 md:py-2 rounded-lg text-lg font-bold
+                      transition-all duration-300 cursor-pointer">
                 <i class="fas fa-plus-circle mr-1"></i>
                 {{ submitting ? 'Adding Job...' : 'Add Job' }}
               </button>
@@ -165,8 +162,7 @@
       :variant="modalConfig.variant"
       :title="modalConfig.title"
       :message="modalConfig.message"
-      @close="handleModalClose"
-    />
+      @close="handleModalClose" />
   </div>
 </template>
 

@@ -1,76 +1,99 @@
 <template>
   <div>
     <section class="bg-green-50">
-      <div class="container m-auto py-10 px-6">
-        <div v-if="loading" class="text-center">
+      <div class="container max-w-5xl mx-auto py-10 px-6">
+        <div v-if="loading" class="text-center" aria-live="polite">
           <p class="text-xl">Loading job details...</p>
         </div>
-        
+
         <div v-else-if="error" class="text-center">
           <p class="text-xl text-red-500">{{ error }}</p>
-          <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block">
-            Back to Jobs
-          </RouterLink>
-        </div>
-        
-        <div v-else>
+
           <RouterLink
             to="/jobs"
-            class="bg-slate-600 hover:bg-slate-700 text-white mb-6 px-4 py-2 rounded-lg"
-          >
-            <i class="fas fa-arrow-left mr-1"></i> Back to Job Listings
+            class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium transition-all">
+            <i class="fas fa-arrow-left text-sm transition-transform group-hover:-translate-x-1"></i>
+            Back to Browse Jobs
           </RouterLink>
 
-          <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-md relative hover:shadow-xl transition-shadow cursor-pointer p-8 mt-6">
-          <div class="mb-4">
-            <div class="inline-block bg-green-200 px-3 py-1 rounded-xl text-md text-gray-600">
+        </div>
+
+        <div v-else>
+
+          <RouterLink
+            to="/jobs"
+            class="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 font-medium transition-all">
+            <i class="fas fa-arrow-left text-sm transition-transform group-hover:-translate-x-1"></i>
+            Back to Browse Jobs
+          </RouterLink>
+
+          <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-md relative hover:shadow-xl transition-shadow cursor-pointer p-4 md:p-8 mt-6">
+
+            <div class="mb-2 inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-green-100 text-green-700 text-sm font-medium">
               <i :class="[typeIcon, 'text-md px-0.5']"></i>
               {{ job.type }}
             </div>
-          </div>
-            <h1 class="text-3xl font-bold mb-4">{{ job.title }}</h1>
-            
-            <div class="text-red-600 mb-4 flex items-center">
-              <i class="fa-solid fa-location-dot mr-1"></i>
-              <p class="text-red-600">{{ job.location }}</p>
+
+            <div class="text-slate-500 my-2">
+              Posted on {{ formattedCreatedAt }}
             </div>
 
-            <h3 class="text-green-500 text-lg font-bold mb-6">Salary: {{ job.salary }} / Year</h3>
+            <h1 class="text-2xl md:text-3xl font-bold">{{ job.title }}</h1>
+            <hr class="border-gray-200 my-3">
+
+            <div class="text-xl font-semibold text-green-600 mb-6">
+              <i class="fa-solid fa-money-bill-wave mr-2"></i>
+              {{ job.salary }} / Year
+            </div>
 
             <div class="mb-6">
-              <h3 class="text-xl font-bold mb-2">Job Description</h3>
+              <h3 class="text-xl font-bold">Job Description</h3>
+              <hr class="border-gray-200 my-2">
               <p class="whitespace-pre-line">{{ job.description }}</p>
             </div>
 
             <div v-if="job.company_name" class="mb-6">
-              <h3 class="text-xl font-bold mb-2">Company Information</h3>
+              <h3 class="text-xl font-bold">Company Information</h3>
+              <hr class="border-gray-200 my-2">
               <p class="font-semibold">{{ job.company_name }}</p>
+              <div class="text-red-600 flex items-center my-1">
+                <i class="fa-solid fa-location-dot mr-2"></i>
+                <p>{{ job.location }}</p>
+              </div>
               <p class="mt-1 whitespace-pre-line">{{ job.company_description }}</p>
             </div>
 
             <div class="mb-6">
-              <h3 class="text-xl font-bold mb-2">Contact Information</h3>
-              <p><strong>Email:</strong> {{ job.contact_email }}</p>
-              <p v-if="job.contact_phone"><strong>Phone:</strong> {{ job.contact_phone }}</p>
+              <h3 class="text-xl font-bold">Contact Information</h3>
+              <hr class="border-gray-200 my-2">
+              <div class="flex items-center gap-2 text-md">
+                <i class="fa-solid fa-envelope text-green-600"></i>
+                {{ job.contact_email }}
+              </div>
+              <div v-if="job.contact_phone" class="flex items-center gap-2 text-md mt-1">
+                <i class="fa-solid fa-phone text-green-600"></i>
+                {{ job.contact_phone }}
+              </div>
             </div>
 
-            <div v-if="isAdmin" class="flex justify-end gap-4">
+            <hr class="border-gray-200 my-6">
+
+            <div v-if="isAdmin" class="flex justify-end gap-3">
               <RouterLink
                 :to="`/edit-job/${job.id}`"
-                class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg"
-              >
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
                 <i class="fas fa-edit mr-1"></i>
                 Edit Job
               </RouterLink>
               <button
                 @click="handleDelete"
-                class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg cursor-pointer"
-              >
+                class="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
                 <i class="fas fa-trash-alt mr-1"></i>
                 Delete Job
               </button>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -87,8 +110,7 @@
     :cancel-text="modalConfig.cancelText"
     @confirm="handleModalConfirm"
     @cancel="handleModalCancel"
-    @close="handleModalClose"
-  />
+    @close="handleModalClose" />
 </template>
 
 <script setup>
@@ -110,6 +132,7 @@ const isAdmin = computed(() => {
   return user.value && user.value.role === 'admin'
 })
 
+// Icon for Job Type
 const typeIcon = computed(() => {
   switch (job.value.type) {
     case 'Full-Time':
@@ -124,6 +147,30 @@ const typeIcon = computed(() => {
       return 'fa-solid fa-briefcase'
   }
 })
+
+// Formatted Created At
+const formattedCreatedAt = computed(() => {
+  // Force UTC by appending "Z"
+  const raw = job.value.created_at
+  const d = new Date(raw.endsWith("Z") ? raw : raw + "Z")
+
+  const datePart = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Tokyo"
+  })
+
+  const timePart = d.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Tokyo"
+  })
+
+  return `${datePart} at ${timePart.toLowerCase()}`
+})
+
 
 // SEO state
 const seoData = ref({

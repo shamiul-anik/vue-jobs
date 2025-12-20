@@ -8,7 +8,7 @@
             Elevate Your Vue Career
             <!-- Your Next Vue Adventure Starts Here -->
           </h1>
-          <p class="my-4 text-xl text-white">
+          <p class="my-4 text-lg md:text-xl text-white">
             Explore premium opportunities in the Vue.js ecosystem and land your dream role.
             <!-- Find the perfect fit for your skills and needs, whether it's remote, full-time, or contract. -->
           </p>
@@ -35,8 +35,7 @@
             <RouterLink
               to="/jobs"
               class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
-              aria-label="Browse all available Vue.js jobs"
-            >
+              aria-label="Browse all available Vue.js jobs">
               <i class="fas fa-briefcase mr-1"></i>
               Browse Jobs
             </RouterLink>
@@ -49,8 +48,7 @@
             <RouterLink
               to="/add-job"
               class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
-              aria-label="Post a new job listing"
-            >
+              aria-label="Post a new job listing">
               <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
@@ -65,29 +63,30 @@
         <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
           Browse Jobs
         </h2>
-        
+
         <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <JobSkeleton v-for="i in 3" :key="i" />
         </div>
-        
+
         <div v-else-if="error" class="text-center">
           <p class="text-xl text-red-500">{{ error }}</p>
         </div>
-        
+
         <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <JobCard v-for="job in recentJobs" :key="job.id" :job="job" />
         </div>
       </div>
     </section>
 
-    <section class="m-auto max-w-lg my-10 px-6">
+    <section class="max-w-lg m-auto flex justify-center items-center my-8 px-6">
       <RouterLink
         to="/jobs"
-        class="block bg-green-600 text-white text-center py-4 px-6 rounded-xl hover:bg-green-700"
-        aria-label="View all available jobs"
-      >
-        <i class="fas fa-arrow-right mr-1"></i>
+        class="group inline-flex items-center gap-2 
+         border border-green-800 bg-green-600 hover:bg-green-700 text-white
+         px-8 md:px-12 py-2 md:py-4 rounded-lg text-lg font-bold
+         transition-all duration-300">
         View All Jobs
+        <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
       </RouterLink>
     </section>
   </div>
