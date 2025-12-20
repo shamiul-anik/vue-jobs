@@ -18,9 +18,9 @@
           </div>
 
           <form @submit.prevent="handleSubmit">
-            <!-- <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2> -->
 
             <div class="flex flex-col md:flex-row gap-8">
+              <!-- Left Column: Job Details -->
               <div class="w-full md:w-1/2">
                 <h3 class="text-2xl font-semibold">Job Details</h3>
                 <div class="divider"></div>
@@ -81,6 +81,7 @@
                 </div>
               </div>
 
+              <!-- Right Column: Company Information -->
               <div class="w-full md:w-1/2">
                 <h3 class="text-2xl font-semibold">Company Information</h3>
                 <div class="divider"></div>

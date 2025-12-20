@@ -42,8 +42,8 @@
           </div>
 
           <form @submit.prevent="handleSubmit">
-
             <div class="flex flex-col md:flex-row gap-8">
+              <!-- Left Column: Job Details -->
               <div class="w-full md:w-1/2">
                 <h3 class="text-2xl font-semibold">Job Details</h3>
                 <div class="divider"></div>
@@ -104,6 +104,7 @@
                 </div>
               </div>
 
+              <!-- Right Column: Company Information -->
               <div class="w-full md:w-1/2">
                 <h3 class="text-2xl font-semibold">Company Information</h3>
                 <div class="divider"></div>
@@ -183,23 +184,6 @@
                 {{ submitting ? 'Updating...' : 'Update Job' }}
               </button>
             </div>
-
-            <!-- <div class="flex justify-end gap-4">
-              <RouterLink
-                :to="`/jobs/${route.params.id}`"
-                class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full text-center">
-                <i class="fas fa-times mr-1"></i>
-                Cancel
-              </RouterLink>
-              <button
-                type="submit"
-                :disabled="submitting"
-                class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline disabled:opacity-50 cursor-pointer">
-                <i class="fas fa-edit mr-1"></i>
-                {{ submitting ? 'Updating...' : 'Update Job' }}
-              </button> 
-            </div>-->
-
           </form>
         </div>
       </div>

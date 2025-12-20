@@ -60,7 +60,7 @@ async function migrate() {
     process.exit(1);
   }
 
-  console.log(`🚀 Starting production-level migration:`);
+  console.log(`🚀 Starting Migration: `);
   console.log(`Source: ${absoluteSourcePath}`);
   console.log(`Destination: ${destPath}\n`);
 
@@ -71,7 +71,7 @@ async function migrate() {
 
   try {
     for (const table of tables) {
-      console.log(`⏳ Processing table: '${table}'...`);
+      console.log(`⏳ Processing Table: '${table}'...`);
 
       const rows = await sourceDb.all(`SELECT * FROM ${table}`).catch((err) => {
         if (err.message.includes("no such table")) {
