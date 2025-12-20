@@ -24,9 +24,9 @@
     </section>
 
     <!-- Developers and Employers -->
-    <section class="py-4">
+    <section class="pt-0 md:pt-8 pb-4 md:pb-8">
       <div class="container-xl lg:container m-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg p-4 md:p-0">
           <div class="bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold">For Developers</h2>
             <p class="mt-2 mb-4">

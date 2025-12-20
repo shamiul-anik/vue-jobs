@@ -171,6 +171,21 @@ This script:
 - Skips duplicates automatically.
 - Ensures data integrity using database transactions.
 
+### 🛡️ Database Backup
+
+Reliably back up your database even when running in WAL mode:
+
+```bash
+npm run db:backup
+```
+
+This utility:
+
+- **Flushes WAL Data**: Ensures all "in-flight" changes are merged into the backup.
+- **Timestamped Filenames**: Saves as `YYYY_MM_DD_HH_MM_SS_database.db`.
+- **Organized Storage**: All backups are kept in `db/db_backup/`.
+- **Automatic Backups**: The server runs this backup process automatically every **60 minutes** while running (kept in 60 minutes to verify functionality, plan to change this to 12/24 hours).
+
 ### 📊 Error Monitoring ([PostHog](https://us.posthog.com/))
 
 The application uses **[PostHog](https://us.posthog.com/)** for real-time error monitoring and session replays.
@@ -211,6 +226,7 @@ vue-jobs/
 │   ├── jobs.js              # API routes for jobs
 │   └── users.js             # API routes for authentication (Login/Register)
 ├── scripts/
+│   ├── backup-db.js         # Reliable WAL-aware backup utility
 │   ├── benchmark-db.js      # Database benchmarking script
 │   ├── load-test.js         # API load testing script
 │   └── migrate-from-db.js   # Production-level migration utility
@@ -343,9 +359,9 @@ npm run test:coverage
 
 ### Test Coverage
 
-The project includes **164 tests** across **15 test files** covering:
+The project includes comprehensive test coverage with **194 tests** across **19 test files** covering:
 
-**Frontend Views (92 tests):**
+**Frontend Views (94 tests):**
 
 - ✅ HomeView - Landing page rendering and navigation
 - ✅ JobsView - Job listing, search, and filtering
@@ -356,19 +372,22 @@ The project includes **164 tests** across **15 test files** covering:
 - ✅ LoginView - User login form
 - ✅ NotFoundView - 404 error page
 
-**Components (11 tests):**
+**Components (24 tests):**
 
 - ✅ Navbar - Navigation component
 - ✅ JobCard - Job listing card
 - ✅ Modal - Reusable modal dialog
+- ✅ Pagination - Page navigation logic
+- ✅ JobSkeleton - Loading state placeholders
 
 **Services (10 tests):**
 
 - ✅ API Service - REST API integration and error handling
 
-**Composables (5 tests):**
+**Composables (10 tests):**
 
 - ✅ useAuth - Authentication state management
+- ✅ useSEO - Dynamic meta tags and SEO
 
 **Backend Routes (46 tests):**
 
@@ -440,27 +459,27 @@ npm run load-test
 **API Operations (1000 items):**
 
 ```
-Filter by title:          0.424ms      ✅ Excellent
-Filter by type:           0.146ms      ✅ Excellent
-Sort by date:             2.943ms      ✅ Good
-Sort by title:            19.172ms     ✅ Good
-Pagination (20 items):    0.030ms      ✅ Excellent
-Multi-filter search:      0.156ms      ✅ Excellent
-JSON serialization:       2.608ms      ✅ Good
-Throughput:               32M+ ops/sec ✅ High
-Memory (100k items):      1.74MB       ✅ Low
+Filter by title:          0.371ms      ✅ Excellent
+Filter by type:           0.183ms      ✅ Excellent
+Sort by date:             3.526ms      ✅ Good
+Sort by title:            23.166ms     ✅ Good
+Pagination (20 items):    0.032ms      ✅ Excellent
+Multi-filter search:      0.162ms      ✅ Excellent
+JSON serialization:       4.970ms      ✅ Good
+Throughput:               20M+ ops/sec ✅ High
+Memory (100k items):      1.32MB       ✅ Low
 ```
 
 ### Performance Targets
 
 | Metric           | Target | Status           |
 | ---------------- | ------ | ---------------- |
-| Filter           | <1ms   | ✅ PASS (0.4ms)  |
-| Sort             | <20ms  | ✅ PASS (19.1ms) |
-| Pagination       | <1ms   | ✅ PASS (0.03ms) |
+| Filter           | <1ms   | ✅ PASS (0.3ms)  |
+| Sort             | <25ms  | ✅ PASS (23.1ms) |
+| Pagination       | <20ms  | ✅ PASS (0.03ms) |
 | API Response     | <100ms | ✅ PASS          |
 | Component Render | <5ms   | ✅ PASS          |
-| Memory           | <2MB   | ✅ PASS (1.74MB) |
+| Memory           | <2MB   | ✅ PASS (1.32MB) |
 
 ### Key Features
 

@@ -56,7 +56,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
+                class="custom-show-hide-password">
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -69,8 +69,8 @@
                 id="remember-me"
                 v-model="formData.rememberMe"
                 type="checkbox"
-                class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" />
-              <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                class="custom-checkbox" />
+              <label for="remember-me" class="custom-checkbox-label">
                 Remember me
               </label>
             </div>

@@ -7,6 +7,7 @@ import jobsRouter from "./routes/jobs.js";
 import usersRouter from "./routes/users.js";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import { performBackup } from "./scripts/backup-db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,7 +53,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 // API Routes
 app.use("/api/jobs", jobsRouter);
 app.use("/api/users", usersRouter);
@@ -66,4 +66,17 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log(`API available at http://localhost:${PORT}/api/jobs`);
+
+  // Start automatic database backup every 60 minutes (for testing/confirmation)
+  // To change to 24 hours later: 24 * 60 * 60 * 1000
+  const BACKUP_INTERVAL = 60 * 60 * 1000;
+  setInterval(async () => {
+    try {
+      await performBackup();
+    } catch (err) {
+      console.error("❌ Automatic backup failed:", err.message);
+    }
+  }, BACKUP_INTERVAL);
+
+  console.log(`🕒 Automatic backup scheduled every 60 minutes.`);
 });

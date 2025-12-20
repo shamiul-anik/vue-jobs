@@ -16,6 +16,7 @@
     "test:bench:watch": "vitest --bench --watch",
     "db:benchmark": "node scripts/benchmark-db.js",
     "db:import": "node scripts/migrate-from-db.js",
+    "db:backup": "node scripts/backup-db.js",
     "load-test": "node scripts/load-test.js",
     "perf:all": "npm run test:bench && npm run load-test"
   },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="custom-min-height">
     <!-- Filter Jobs -->
     <section class="bg-green-50 py-4">
       <div class="container mx-auto px-4">

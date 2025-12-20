@@ -1,49 +1,61 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto" @click.self="handleBackdropClick">
+      <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4" @click.self="handleBackdropClick">
         <!-- Backdrop -->
-        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-        
+        <div class="fixed inset-0 bg-black/40 backdrop-blur-sm"></div>
+
         <!-- Modal -->
-        <div class="flex min-h-full items-center justify-center p-4">
-          <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6 transform transition-all">
-            <!-- Icon -->
-            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full mb-4" :class="iconBgClass">
-              <i :class="iconClass" class="text-2xl"></i>
-            </div>
-            
-            <!-- Title -->
-            <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">
-              {{ title }}
-            </h3>
-            
-            <!-- Message -->
-            <p class="text-sm text-gray-600 text-center mb-6">
+        <div
+          class="relative bg-white rounded-lg shadow-xl w-full p-6 transform transition-all overflow-hidden"
+          :class="[maxWidthClass]">
+          <!-- Close Button (Top Right) -->
+          <button
+            @click="handleCancel"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+            aria-label="Close modal">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+
+          <!-- Icon -->
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full mb-4" :class="iconBgClass">
+            <i :class="iconClass" class="text-2xl"></i>
+          </div>
+
+          <!-- Title -->
+          <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">
+            {{ title }}
+          </h3>
+
+          <!-- Message / Slot Content -->
+          <div class="mb-6 overflow-y-auto max-h-[60vh] px-2 text-center">
+            <p v-if="message" class="text-sm text-gray-600">
               {{ message }}
             </p>
-            
-            <!-- Actions -->
-            <div class="flex gap-3" :class="type === 'confirm' ? 'justify-between' : 'justify-center'">
-              <button
-                v-if="type === 'confirm'"
-                @click="handleCancel"
-                class="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors cursor-pointer"
-              >
-                {{ cancelText }}
-              </button>
-              <button
-                @click="handleConfirm"
-                class="font-medium rounded-lg transition-colors bg-green-500 hover:bg-green-600 text-white cursor-pointer"
-                :class="[
-                  type === 'confirm' ? 'flex-1 px-4 py-2' : 'px-6 py-2',
-                  confirmButtonClass,
-                  confirmText === 'Delete' ? 'bg-red-500! hover:bg-red-600!' : 'px-6 py-2'
-                ]"
-              >
-                {{ confirmText }}
-              </button>
-            </div>
+            <slot />
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-3" :class="type === 'confirm' ? 'justify-between' : 'justify-center'">
+            <button
+              v-if="type === 'confirm'"
+              @click="handleCancel"
+              class="flex-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors cursor-pointer flex items-center justify-center">
+              <i class="fas fa-times mr-2"></i>
+              {{ cancelText }}
+            </button>
+            <button
+              @click="handleConfirm"
+              class="font-medium rounded-lg transition-colors bg-green-500 hover:bg-green-600 text-white cursor-pointer flex items-center justify-center"
+              :class="[
+                type === 'confirm' ? 'flex-1 px-4 py-2' : 'px-6 py-2',
+                confirmButtonClass,
+                confirmText === 'Delete' ? 'bg-red-500! hover:bg-red-600!' : ''
+              ]">
+              <i v-if="confirmText === 'Delete'" class="fas fa-trash-alt mr-2"></i>
+              <i v-else class="fas fa-check mr-2"></i>
+              {{ confirmText }}
+            </button>
           </div>
         </div>
       </div>
@@ -70,7 +82,7 @@ const props = defineProps({
   },
   message: {
     type: String,
-    required: true
+    default: ''
   },
   confirmText: {
     type: String,
@@ -83,10 +95,25 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'info' // 'info', 'success', 'error', 'warning'
+  },
+  maxWidth: {
+    type: String,
+    default: 'md' // 'sm', 'md', 'lg', 'xl', '2xl'
   }
 })
 
 const emit = defineEmits(['confirm', 'cancel', 'close'])
+
+const maxWidthClass = computed(() => {
+  const classes = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    '2xl': 'max-w-2xl'
+  }
+  return classes[props.maxWidth] || 'max-w-md'
+})
 
 const iconClass = computed(() => {
   const icons = {
@@ -141,7 +168,10 @@ const handleBackdropClick = () => {
 </script>
 
 <style scoped>
-.modal-enter-active,
+.modal-enter-active {
+  transition: opacity 0s;
+}
+
 .modal-leave-active {
   transition: opacity 0.3s ease;
 }
@@ -153,11 +183,12 @@ const handleBackdropClick = () => {
 
 .modal-enter-active .relative,
 .modal-leave-active .relative {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
 }
 
 .modal-enter-from .relative,
 .modal-leave-to .relative {
   transform: scale(0.95);
+  opacity: 0;
 }
 </style>

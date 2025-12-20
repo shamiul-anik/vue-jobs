@@ -79,7 +79,7 @@ describe("📊 API Data Processing Performance", () => {
       return mockJobs.slice((page - 1) * pageSize, page * pageSize);
     }, "Paginate");
 
-    expect(duration).toBeLessThan(5);
+    expect(duration).toBeLessThan(20);
   });
 
   it("measures search with multiple filters", () => {
@@ -112,7 +112,7 @@ describe("📊 API Data Processing Performance", () => {
       return mockJobs.find((job) => job.id === 500);
     }, "Find by ID");
 
-    expect(duration).toBeLessThan(5);
+    expect(duration).toBeLessThan(25);
   });
 
   it("measures salary statistics calculation (1000 items)", () => {

@@ -13,9 +13,8 @@
             to="/jobs"
             class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium transition-all">
             <i class="fas fa-arrow-left text-sm transition-transform group-hover:-translate-x-1"></i>
-            Back to Browse Jobs
+            Back to Jobs Page
           </RouterLink>
-
         </div>
 
         <div v-else>
@@ -24,7 +23,7 @@
             to="/jobs"
             class="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 font-medium transition-all">
             <i class="fas fa-arrow-left text-sm transition-transform group-hover:-translate-x-1"></i>
-            Back to Browse Jobs
+            Back to Jobs Page
           </RouterLink>
 
           <div class="bg-gray-50 border border-gray-200 rounded-xl shadow-md relative hover:shadow-xl transition-shadow cursor-pointer p-4 md:p-8 mt-6">

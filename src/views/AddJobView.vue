@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="bg-green-50">
-      <div class="container m-auto max-w-2xl py-12">
+      <div class="container m-auto max-w-7xl py-12">
         <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
           Add Job
         </h2>
@@ -18,124 +18,131 @@
           </div>
 
           <form @submit.prevent="handleSubmit">
-            <!-- <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2> -->
 
-            <h3 class="text-2xl font-semibold">Job Details</h3>
-            <div class="divider"></div>
+            <div class="flex flex-col md:flex-row gap-8">
+              <!-- Left Column: Job Details -->
+              <div class="w-full md:w-1/2">
+                <h3 class="text-2xl font-semibold">Job Details</h3>
+                <div class="divider"></div>
 
-            <div class="mb-4">
-              <label class="custom-label">Job Title</label>
-              <input
-                v-model="formData.title"
-                type="text"
-                class="custom-input"
-                placeholder="e.g. Senior Vue Developer"
-                required />
-            </div>
+                <div class="mb-4">
+                  <label class="custom-label">Job Title</label>
+                  <input
+                    v-model="formData.title"
+                    type="text"
+                    class="custom-input"
+                    placeholder="e.g. Senior Vue Developer"
+                    required />
+                </div>
 
-            <div class="mb-4">
-              <label for="type" class="custom-label">Job Type</label>
-              <select
-                v-model="formData.type"
-                id="type"
-                class="custom-select"
-                required>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Remote">Remote</option>
-                <option value="Internship">Internship</option>
-              </select>
-            </div>
+                <div class="mb-4">
+                  <label for="type" class="custom-label">Job Type</label>
+                  <select
+                    v-model="formData.type"
+                    id="type"
+                    class="custom-select"
+                    required>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Internship">Internship</option>
+                  </select>
+                </div>
 
-            <div class="mb-4">
-              <label for="description" class="custom-label">Description</label>
-              <textarea
-                v-model="formData.description"
-                id="description"
-                class="custom-textarea"
-                rows="4"
-                placeholder="Add any job duties, expectations, requirements, required technical skills etc."></textarea>
-            </div>
+                <div class="mb-4">
+                  <label for="description" class="custom-label">Description</label>
+                  <textarea
+                    v-model="formData.description"
+                    id="description"
+                    class="custom-textarea min-h-[197px]"
+                    rows="7"
+                    placeholder="Add any job duties, expectations, requirements, required technical skills etc."></textarea>
+                </div>
 
-            <div class="mb-4">
-              <label for="salary" class="custom-label">Salary</label>
-              <select
-                v-model="formData.salary"
-                id="salary"
-                class="custom-select"
-                required>
-                <option value="Under $50K">Under $50K</option>
-                <option value="$50K - $60K">$50K - $60K</option>
-                <option value="$60K - $70K">$60K - $70K</option>
-                <option value="$70K - $80K">$70K - $80K</option>
-                <option value="$80K - $90K">$80K - $90K</option>
-                <option value="$90K - $100K">$90K - $100K</option>
-                <option value="$100K - $125K">$100K - $125K</option>
-                <option value="$125K - $150K">$125K - $150K</option>
-                <option value="$150K - $175K">$150K - $175K</option>
-                <option value="$175K - $200K">$175K - $200K</option>
-                <option value="Over $200K">Over $200K</option>
-              </select>
-            </div>
+                <div class="mb-4">
+                  <label for="salary" class="custom-label">Salary</label>
+                  <select
+                    v-model="formData.salary"
+                    id="salary"
+                    class="custom-select"
+                    required>
+                    <option value="Under $50K">Under $50K</option>
+                    <option value="$50K - $60K">$50K - $60K</option>
+                    <option value="$60K - $70K">$60K - $70K</option>
+                    <option value="$70K - $80K">$70K - $80K</option>
+                    <option value="$80K - $90K">$80K - $90K</option>
+                    <option value="$90K - $100K">$90K - $100K</option>
+                    <option value="$100K - $125K">$100K - $125K</option>
+                    <option value="$125K - $150K">$125K - $150K</option>
+                    <option value="$150K - $175K">$150K - $175K</option>
+                    <option value="$175K - $200K">$175K - $200K</option>
+                    <option value="Over $200K">Over $200K</option>
+                  </select>
+                </div>
+              </div>
 
-            <h3 class="text-2xl font-semibold mt-8">Company Information</h3>
-            <div class="divider"></div>
+              <!-- Right Column: Company Information -->
+              <div class="w-full md:w-1/2">
+                <h3 class="text-2xl font-semibold">Company Information</h3>
+                <div class="divider"></div>
 
-            <div class="mb-4">
-              <label for="company" class="custom-label">Company Name</label>
-              <input
-                v-model="formData.company_name"
-                type="text"
-                id="company"
-                class="custom-input"
-                placeholder="Company Name" />
-            </div>
+                <div class="mb-4">
+                  <label for="company" class="custom-label">Company Name</label>
+                  <input
+                    v-model="formData.company_name"
+                    type="text"
+                    id="company"
+                    class="custom-input"
+                    placeholder="Company Name" />
+                </div>
 
-            <div class="mb-4">
-              <label for="company_description" class="custom-label">
-                Company Description
-              </label>
-              <textarea
-                v-model="formData.company_description"
-                id="company_description"
-                class="custom-textarea"
-                rows="4"
-                placeholder="What does your company do?"></textarea>
-            </div>
+                <div class="mb-4">
+                  <label for="company_description" class="custom-label">
+                    Company Description
+                  </label>
+                  <textarea
+                    v-model="formData.company_description"
+                    id="company_description"
+                    class="custom-textarea"
+                    rows="4"
+                    placeholder="What does your company do?"></textarea>
+                </div>
 
-            <div class="mb-4">
-              <label class="custom-label">Location</label>
-              <input
-                v-model="formData.location"
-                type="text"
-                class="custom-input"
-                placeholder="Company Location"
-                required />
-            </div>
+                <div class="mb-4">
+                  <label class="custom-label">Location</label>
+                  <input
+                    v-model="formData.location"
+                    type="text"
+                    class="custom-input"
+                    placeholder="Company Location"
+                    required />
+                </div>
 
-            <div class="mb-4">
-              <label for="contact_email" class="custom-label">
-                Contact Email
-              </label>
-              <input
-                v-model="formData.contact_email"
-                type="email"
-                id="contact_email"
-                class="custom-input"
-                placeholder="Company Email Address"
-                required />
-            </div>
+                <div class="mb-4">
+                  <label for="contact_email" class="custom-label">
+                    Contact Email
+                  </label>
+                  <input
+                    v-model="formData.contact_email"
+                    type="email"
+                    id="contact_email"
+                    class="custom-input"
+                    placeholder="Company Email Address"
+                    required />
+                </div>
 
-            <div class="mb-6 md:mb-8">
-              <label for="contact_phone" class="custom-label">
-                Contact Phone
-              </label>
-              <input
-                v-model="formData.contact_phone"
-                type="tel"
-                id="contact_phone"
-                class="custom-input"
-                placeholder="Company Phone Number" />
+                <div class="mb-6 md:mb-8">
+                  <label for="contact_phone" class="custom-label">
+                    Contact Phone
+                  </label>
+                  <input
+                    v-model="formData.contact_phone"
+                    type="tel"
+                    id="contact_phone"
+                    class="custom-input"
+                    placeholder="Company Phone Number" />
+                </div>
+              </div>
             </div>
 
             <div class="flex items-center justify-end mb-3">

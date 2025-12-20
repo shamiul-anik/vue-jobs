@@ -234,7 +234,9 @@ describe("RegisterView.vue", () => {
     const wrapper = mount(RegisterView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {},
+        stubs: {
+          Modal: true,
+        },
       },
     });
 
@@ -242,5 +244,41 @@ describe("RegisterView.vue", () => {
     expect(text.includes("name")).toBe(true);
     expect(text.includes("email")).toBe(true);
     expect(text.includes("password")).toBe(true);
+  });
+
+  it("opens Terms and Conditions modal when link is clicked", async () => {
+    const wrapper = mount(RegisterView, {
+      global: {
+        plugins: [createTestRouter()],
+        stubs: {
+          Modal: true,
+        },
+      },
+    });
+
+    const termsButton = wrapper
+      .findAll("button")
+      .find((b) => b.text().includes("Terms and Conditions"));
+    await termsButton.trigger("click");
+
+    expect(wrapper.vm.showTermsModal).toBe(true);
+  });
+
+  it("opens Privacy Policy modal when link is clicked", async () => {
+    const wrapper = mount(RegisterView, {
+      global: {
+        plugins: [createTestRouter()],
+        stubs: {
+          Modal: true,
+        },
+      },
+    });
+
+    const privacyButton = wrapper
+      .findAll("button")
+      .find((b) => b.text().includes("Privacy Policy"));
+    await privacyButton.trigger("click");
+
+    expect(wrapper.vm.showPrivacyModal).toBe(true);
   });
 });

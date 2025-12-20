@@ -270,12 +270,55 @@ describe("EditJobView.vue", () => {
     const wrapper = mount(EditJobView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {},
+        stubs: {
+          Modal: true,
+        },
       },
     });
 
     await flushPromises();
 
     expect(wrapper.exists()).toBe(true);
+  });
+
+  it("triggers confirmation modal on form submission", async () => {
+    const wrapper = mount(EditJobView, {
+      global: {
+        plugins: [createTestRouter()],
+        stubs: {
+          Modal: true,
+        },
+      },
+    });
+
+    await flushPromises();
+
+    await wrapper.find("form").trigger("submit.prevent");
+
+    expect(wrapper.vm.showModal).toBe(true);
+    expect(wrapper.vm.modalConfig.type).toBe("confirm");
+    expect(wrapper.vm.modalConfig.title).toBe("Update Job?");
+  });
+
+  it("triggers confirmation modal on cancel button click", async () => {
+    const wrapper = mount(EditJobView, {
+      global: {
+        plugins: [createTestRouter()],
+        stubs: {
+          Modal: true,
+        },
+      },
+    });
+
+    await flushPromises();
+
+    const cancelBtn = wrapper
+      .findAll("button")
+      .find((b) => b.text().includes("Cancel Editing"));
+    await cancelBtn.trigger("click");
+
+    expect(wrapper.vm.showModal).toBe(true);
+    expect(wrapper.vm.modalConfig.type).toBe("confirm");
+    expect(wrapper.vm.modalConfig.title).toBe("Cancel Editing?");
   });
 });

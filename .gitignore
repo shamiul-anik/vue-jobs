@@ -3,6 +3,7 @@ dist/
 # *.db
 *.db-shm
 *.db-wal
+db/db_backup/
 .DS_Store
 .env
 .env.local
