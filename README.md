@@ -171,6 +171,21 @@ This script:
 - Skips duplicates automatically.
 - Ensures data integrity using database transactions.
 
+### 🛡️ Database Backup
+
+Reliably back up your database even when running in WAL mode:
+
+```bash
+npm run db:backup
+```
+
+This utility:
+
+- **Flushes WAL Data**: Ensures all "in-flight" changes are merged into the backup.
+- **Timestamped Filenames**: Saves as `YYYY_MM_DD_HH_MM_SS_database.db`.
+- **Organized Storage**: All backups are kept in `db/db_backup/`.
+- **Automatic Backups**: The server runs this backup process automatically every **60 minutes** while running (kept in 60 minutes to verify functionality, plan to change this to 12/24 hours).
+
 ### 📊 Error Monitoring ([PostHog](https://us.posthog.com/))
 
 The application uses **[PostHog](https://us.posthog.com/)** for real-time error monitoring and session replays.
@@ -211,6 +226,7 @@ vue-jobs/
 │   ├── jobs.js              # API routes for jobs
 │   └── users.js             # API routes for authentication (Login/Register)
 ├── scripts/
+│   ├── backup-db.js         # Reliable WAL-aware backup utility
 │   ├── benchmark-db.js      # Database benchmarking script
 │   ├── load-test.js         # API load testing script
 │   └── migrate-from-db.js   # Production-level migration utility
