@@ -161,12 +161,13 @@
             </div>
 
             <div class="flex justify-end gap-3">
-              <RouterLink
-                :to="`/jobs/${route.params.id}`"
+              <button
+                type="button"
+                @click="showConfirmCancelModal"
                 class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
                 <i class="fas fa-times mr-1"></i>
                 Cancel Editing
-              </RouterLink>
+              </button>
               <button
                 type="submit"
                 :disabled="submitting"
@@ -205,6 +206,7 @@
     :variant="modalConfig.variant"
     :title="modalConfig.title"
     :message="modalConfig.message"
+    @confirm="handleModalConfirm"
     @close="handleModalClose" />
 </template>
 
@@ -254,29 +256,47 @@ onMounted(async () => {
   }
 })
 
-const handleSubmit = async () => {
-  submitting.value = true
-  validationErrors.value = [] // Clear previous errors
+const handleSubmit = () => {
+  showConfirmModal(
+    'Update Job?',
+    'Are you sure you want to save these changes to the job listing?',
+    'info',
+    async () => {
+      submitting.value = true
+      validationErrors.value = [] // Clear previous errors
 
-  try {
-    await jobsAPI.updateJob(route.params.id, formData.value)
-    showModalAlert('Success!', 'Job updated successfully!', 'success', () => {
-      router.push(`/jobs/${route.params.id}`)
-    })
-  } catch (err) {
-    if (err.data && err.data.errors) {
-      // Handle validation errors from backend
-      validationErrors.value = err.data.errors
-      // Scroll to top to see errors
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      // Generic error
-      showModalAlert('Error', 'Failed to update job. Please try again.', 'error')
-      console.error('Error updating job:', err)
+      try {
+        await jobsAPI.updateJob(route.params.id, formData.value)
+        showModalAlert('Success!', 'Job updated successfully!', 'success', () => {
+          router.push(`/jobs/${route.params.id}`)
+        })
+      } catch (err) {
+        if (err.data && err.data.errors) {
+          // Handle validation errors from backend
+          validationErrors.value = err.data.errors
+          // Scroll to top to see errors
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        } else {
+          // Generic error
+          showModalAlert('Error', 'Failed to update job. Please try again.', 'error')
+          console.error('Error updating job:', err)
+        }
+      } finally {
+        submitting.value = false
+      }
     }
-  } finally {
-    submitting.value = false
-  }
+  )
+}
+
+const showConfirmCancelModal = () => {
+  showConfirmModal(
+    'Cancel Editing?',
+    'Are you sure you want to cancel? Any unsaved changes will be lost.',
+    'warning',
+    () => {
+      router.push(`/jobs/${route.params.id}`)
+    }
+  )
 }
 
 const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
@@ -290,10 +310,25 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const showConfirmModal = (title, message, variant = 'info', onConfirm = null) => {
+  modalConfig.value = {
+    type: 'confirm',
+    variant,
+    title,
+    message,
+    onConfirm
+  }
+  showModal.value = true
+}
+
+const handleModalConfirm = () => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()
   }
+}
+
+const handleModalClose = () => {
+  showModal.value = false
 }
 </script>

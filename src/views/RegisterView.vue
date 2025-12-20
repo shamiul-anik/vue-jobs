@@ -206,6 +206,7 @@
       :variant="modalConfig.variant"
       :title="modalConfig.title"
       :message="modalConfig.message"
+      @confirm="handleModalConfirm"
       @close="handleModalClose" />
   </div>
 </template>
@@ -312,11 +313,15 @@ const showModalAlert = (title, message, variant = 'info', onConfirm = null) => {
   showModal.value = true
 }
 
-const handleModalClose = () => {
+const handleModalConfirm = () => {
   showModal.value = false
   if (modalConfig.value.onConfirm) {
     modalConfig.value.onConfirm()
   }
+}
+
+const handleModalClose = () => {
+  showModal.value = false
 }
 </script>
 
