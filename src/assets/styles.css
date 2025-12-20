@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Layout Shifting Issue Fix - Scrollbar */
 html {
   scrollbar-gutter: stable;
   /* Modern browsers */
@@ -7,11 +8,7 @@ html {
   scrollbar-color: #16a34a #f0fdf4;
 }
 
-/* Chrome, Edge, and Safari */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
+/* Scrollbar Color Scheme Update - Chrome, Edge, and Safari */
 ::-webkit-scrollbar-track {
   background: #f0fdf4;
   border-radius: 10px;
