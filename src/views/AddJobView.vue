@@ -5,7 +5,7 @@
         <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
           Add Job
         </h2>
-        <div class="bg-white px-4 md:px-8 py-4 md:py-8 mb-4 shadow-lg rounded-lg border-2 border-gray-200 m-4 md:m-0">
+        <div class="bg-white px-4 md:px-8 py-4 md:py-8 mb-4 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl border-2 border-gray-200 m-4 md:m-0">
 
           <!-- Validation Errors Alert -->
           <div v-if="validationErrors.length > 0" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
@@ -21,24 +21,24 @@
             <!-- <h2 class="text-3xl text-center font-semibold mb-6">Add Job</h2> -->
 
             <h3 class="text-2xl font-semibold">Job Details</h3>
-            <div class="border border-gray-100 mt-2 mb-4"></div>
+            <div class="divider"></div>
 
             <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2">Job Title</label>
+              <label class="custom-label">Job Title</label>
               <input
                 v-model="formData.title"
                 type="text"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-input"
                 placeholder="e.g. Senior Vue Developer"
                 required />
             </div>
 
             <div class="mb-4">
-              <label for="type" class="block text-gray-700 font-bold mb-2">Job Type</label>
+              <label for="type" class="custom-label">Job Type</label>
               <select
                 v-model="formData.type"
                 id="type"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-select"
                 required>
                 <option value="Full-Time">Full-Time</option>
                 <option value="Part-Time">Part-Time</option>
@@ -48,21 +48,21 @@
             </div>
 
             <div class="mb-4">
-              <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
+              <label for="description" class="custom-label">Description</label>
               <textarea
                 v-model="formData.description"
                 id="description"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-textarea"
                 rows="4"
                 placeholder="Add any job duties, expectations, requirements, required technical skills etc."></textarea>
             </div>
 
             <div class="mb-4">
-              <label for="salary" class="block text-gray-700 font-bold mb-2">Salary</label>
+              <label for="salary" class="custom-label">Salary</label>
               <select
                 v-model="formData.salary"
                 id="salary"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-select"
                 required>
                 <option value="Under $50K">Under $50K</option>
                 <option value="$50K - $60K">$50K - $60K</option>
@@ -79,62 +79,62 @@
             </div>
 
             <h3 class="text-2xl font-semibold mt-8">Company Information</h3>
-            <div class="border border-gray-100 mt-2 mb-4"></div>
+            <div class="divider"></div>
 
             <div class="mb-4">
-              <label for="company" class="block text-gray-700 font-bold mb-2">Company Name</label>
+              <label for="company" class="custom-label">Company Name</label>
               <input
                 v-model="formData.company_name"
                 type="text"
                 id="company"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-input"
                 placeholder="Company Name" />
             </div>
 
             <div class="mb-4">
-              <label for="company_description" class="block text-gray-700 font-bold mb-2">
+              <label for="company_description" class="custom-label">
                 Company Description
               </label>
               <textarea
                 v-model="formData.company_description"
                 id="company_description"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-textarea"
                 rows="4"
                 placeholder="What does your company do?"></textarea>
             </div>
 
             <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2">Location</label>
+              <label class="custom-label">Location</label>
               <input
                 v-model="formData.location"
                 type="text"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
+                class="custom-input"
                 placeholder="Company Location"
                 required />
             </div>
 
             <div class="mb-4">
-              <label for="contact_email" class="block text-gray-700 font-bold mb-2">
+              <label for="contact_email" class="custom-label">
                 Contact Email
               </label>
               <input
                 v-model="formData.contact_email"
                 type="email"
                 id="contact_email"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-input"
                 placeholder="Company Email Address"
                 required />
             </div>
 
             <div class="mb-6 md:mb-8">
-              <label for="contact_phone" class="block text-gray-700 font-bold mb-2">
+              <label for="contact_phone" class="custom-label">
                 Contact Phone
               </label>
               <input
                 v-model="formData.contact_phone"
                 type="tel"
                 id="contact_phone"
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 focus:outline-green-500"
+                class="custom-input"
                 placeholder="Company Phone Number" />
             </div>
 

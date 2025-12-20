@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-green-50">
+  <div class="custom-min-height flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-green-50">
     <div class="max-w-md w-full">
       <!-- Logo and Title -->
       <div class="text-center mb-8">
         <svg class="mx-auto h-16 w-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" fill="#16A34A" opacity="0.1"/>
-          <circle cx="32" cy="24" r="8" fill="#16A34A"/>
-          <path d="M20 48C20 40.268 25.373 34 32 34C38.627 34 44 40.268 44 48" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
-          <path d="M48 28L52 32L48 36M52 32H40" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="32" r="30" fill="#16A34A" opacity="0.1" />
+          <circle cx="32" cy="24" r="8" fill="#16A34A" />
+          <path d="M20 48C20 40.268 25.373 34 32 34C38.627 34 44 40.268 44 48" stroke="#16A34A" stroke-width="3" stroke-linecap="round" />
+          <path d="M48 28L52 32L48 36M52 32H40" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
           Sign in to Your Account
@@ -18,17 +18,17 @@
       </div>
 
       <!-- Login Form -->
-      <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
-        <form @submit.prevent="handleLogin" class="space-y-6">
+      <div class="bg-white px-4 md:px-8 py-4 md:py-8 mb-4 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl border border-gray-200">
+        <form @submit.prevent="handleLogin" class="space-y-5">
           <!-- Error Message -->
           <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
             <i class="fas fa-exclamation-circle mr-2"></i>
             {{ errorMessage }}
           </div>
-          
+
           <!-- Email Input -->
           <div>
-            <label for="email" class="block text-gray-700 font-bold mb-2">
+            <label for="email" class="custom-label">
               Email Address
             </label>
             <input
@@ -36,14 +36,13 @@
               v-model="formData.email"
               type="email"
               required
-              class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-              placeholder="you@example.com"
-            />
+              class="custom-input"
+              placeholder="you@example.com" />
           </div>
 
           <!-- Password Input -->
           <div>
-            <label for="password" class="block text-gray-700 font-bold mb-2">
+            <label for="password" class="custom-label">
               Password
             </label>
             <div class="relative">
@@ -52,14 +51,12 @@
                 v-model="formData.password"
                 :type="showPassword ? 'text' : 'password'"
                 required
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-                placeholder="Enter your password"
-              />
+                class="custom-input"
+                placeholder="Enter your password" />
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
-              >
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -72,8 +69,7 @@
                 id="remember-me"
                 v-model="formData.rememberMe"
                 type="checkbox"
-                class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-              />
+                class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" />
               <label for="remember-me" class="ml-2 block text-sm text-gray-700">
                 Remember me
               </label>
@@ -91,8 +87,7 @@
             <button
               type="submit"
               :disabled="loading"
-              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
               <span class="flex items-center">
                 <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
                 <i v-else class="fas fa-sign-in-alt mr-2"></i>
@@ -113,8 +108,8 @@
             </div>
           </div> -->
 
-          <!-- Social Login Buttons -->
-          <!-- <div class="mt-6 grid grid-cols-2 gap-3">
+        <!-- Social Login Buttons -->
+        <!-- <div class="mt-6 grid grid-cols-2 gap-3">
             <button
               type="button"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
@@ -151,8 +146,7 @@
       :variant="modalConfig.variant"
       :title="modalConfig.title"
       :message="modalConfig.message"
-      @close="handleModalClose"
-    />
+      @close="handleModalClose" />
   </div>
 </template>
 

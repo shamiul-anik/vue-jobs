@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-green-50">
+  <div class="custom-min-height flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-green-50">
     <div class="max-w-md w-full">
       <!-- Logo and Title -->
       <div class="text-center mb-8">
         <svg class="mx-auto h-16 w-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="30" fill="#16A34A" opacity="0.1"/>
-          <circle cx="28" cy="24" r="8" fill="#16A34A"/>
-          <path d="M16 48C16 40.268 21.373 34 28 34C34.627 34 40 40.268 40 48" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="46" cy="20" r="10" fill="white" stroke="#16A34A" stroke-width="2"/>
-          <path d="M46 16V24M42 20H50" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="30" fill="#16A34A" opacity="0.1" />
+          <circle cx="28" cy="24" r="8" fill="#16A34A" />
+          <path d="M16 48C16 40.268 21.373 34 28 34C34.627 34 40 40.268 40 48" stroke="#16A34A" stroke-width="3" stroke-linecap="round" />
+          <circle cx="46" cy="20" r="10" fill="white" stroke="#16A34A" stroke-width="2" />
+          <path d="M46 16V24M42 20H50" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" />
         </svg>
         <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
           Create Your Account
@@ -16,8 +16,8 @@
       </div>
 
       <!-- Sign Up Form -->
-      <div class="bg-white py-8 px-6 shadow-md rounded-lg border border-gray-200">
-        <form @submit.prevent="handleRegister" class="space-y-6">
+      <div class="bg-white px-4 md:px-8 py-4 md:py-8 mb-4 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl border border-gray-200">
+        <form @submit.prevent="handleRegister" class="space-y-5">
           <!-- Error Message -->
           <div v-if="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-2">
             <i class="fas fa-exclamation-circle mr-2"></i>
@@ -26,7 +26,7 @@
 
           <!-- Full Name Input -->
           <div>
-            <label for="name" class="block text-gray-700 font-bold mb-2">
+            <label for="name" class="custom-label">
               Full Name
             </label>
             <input
@@ -34,14 +34,13 @@
               v-model="formData.name"
               type="text"
               required
-              class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-              placeholder="John Doe"
-            />
+              class="custom-input"
+              placeholder="John Doe" />
           </div>
 
           <!-- Email Input -->
           <div>
-            <label for="email" class="block text-gray-700 font-bold mb-2">
+            <label for="email" class="custom-label">
               Email Address
             </label>
             <input
@@ -49,14 +48,13 @@
               v-model="formData.email"
               type="email"
               required
-              class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-              placeholder="you@example.com"
-            />
+              class="custom-input"
+              placeholder="you@example.com" />
           </div>
 
           <!-- Password Input -->
           <div>
-            <label for="password" class="block text-gray-700 font-bold mb-2">
+            <label for="password" class="custom-label">
               Password
             </label>
             <div class="relative">
@@ -65,14 +63,12 @@
                 v-model="formData.password"
                 :type="showPassword ? 'text' : 'password'"
                 required
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-                placeholder="Create a password"
-              />
+                class="custom-input"
+                placeholder="Create a password" />
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
-              >
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -80,7 +76,7 @@
 
           <!-- Confirm Password Input -->
           <div>
-            <label for="confirmPassword" class="block text-gray-700 font-bold mb-2">
+            <label for="confirmPassword" class="custom-label">
               Confirm Password
             </label>
             <div class="relative">
@@ -89,14 +85,12 @@
                 v-model="formData.confirmPassword"
                 :type="showConfirmPassword ? 'text' : 'password'"
                 required
-                class="border bg-white border-gray-300 rounded-lg w-full py-2 px-3 mb-2 focus:outline-green-500"
-                placeholder="Confirm your password"
-              />
+                class="custom-input"
+                placeholder="Confirm your password" />
               <button
                 type="button"
                 @click="showConfirmPassword = !showConfirmPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
-              >
+                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
                 <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -109,23 +103,21 @@
               v-model="formData.agreeToTerms"
               type="checkbox"
               required
-              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1"
-            />
+              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1" />
             <label for="terms" class="ml-2 block text-sm text-gray-700">
-              I agree to the 
+              I agree to the
               <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our terms and conditions">Terms and Conditions</a>
-              and 
+              and
               <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our privacy policy">Privacy Policy</a>
             </label>
           </div>
-   
+
           <!-- Submit Button -->
           <div>
             <button
               type="submit"
               :disabled="loading"
-              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-            >
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
               <span class="flex items-center">
                 <i v-if="loading" class="fas fa-spinner fa-spin mr-2"></i>
                 <i v-else class="fas fa-user-plus mr-2"></i>
@@ -154,8 +146,7 @@
       :variant="modalConfig.variant"
       :title="modalConfig.title"
       :message="modalConfig.message"
-      @close="handleModalClose"
-    />
+      @close="handleModalClose" />
   </div>
 </template>
 
