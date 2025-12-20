@@ -78,5 +78,5 @@ app.listen(PORT, () => {
     }
   }, BACKUP_INTERVAL);
 
-  console.log(`🕒 Automatic backup scheduled every 5 minutes.`);
+  console.log(`🕒 Automatic backup scheduled every 60 minutes.`);
 });
