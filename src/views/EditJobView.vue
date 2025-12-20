@@ -11,10 +11,21 @@
           <p class="text-xl">Loading job data...</p>
         </div>
 
-        <div v-else-if="error" class="text-center">
+        <!-- <div v-else-if="error" class="text-center">
           <p class="text-xl text-red-500">{{ error }}</p>
           <RouterLink to="/jobs" class="text-green-500 hover:underline mt-4 inline-block" aria-label="Return to all jobs">
             Back to Jobs
+          </RouterLink>
+        </div> -->
+
+        <div v-else-if="error" class="text-center">
+          <p class="text-xl text-red-500">{{ error }}</p>
+
+          <RouterLink
+            to="/jobs"
+            class="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium transition-all">
+            <i class="fas fa-arrow-left text-sm transition-transform group-hover:-translate-x-1"></i>
+            Back to Jobs Page
           </RouterLink>
         </div>
 

@@ -68,7 +68,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
+                class="custom-show-hide-password">
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -90,7 +90,7 @@
               <button
                 type="button"
                 @click="showConfirmPassword = !showConfirmPassword"
-                class="absolute inset-y-4 right-2 top-2 pr-3 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
+                class="custom-show-hide-password">
                 <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -103,8 +103,8 @@
               v-model="formData.agreeToTerms"
               type="checkbox"
               required
-              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1" />
-            <label for="terms" class="ml-2 block text-sm text-gray-700">
+              class="custom-checkbox" />
+            <label for="terms" class="custom-checkbox-label">
               I agree to the
               <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our terms and conditions">Terms and Conditions</a>
               and
