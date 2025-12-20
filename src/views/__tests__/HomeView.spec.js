@@ -32,6 +32,12 @@ describe("HomeView.vue", () => {
       routes: [
         { path: "/", component: { template: "<div>Home</div>" } },
         { path: "/jobs", component: { template: "<div>Jobs</div>" } },
+        { path: "/jobs/:id", component: { template: "<div>Job</div>" } },
+        { path: "/add-job", component: { template: "<div>Add Job</div>" } },
+        {
+          path: "/edit-job/:id",
+          component: { template: "<div>Edit Job</div>" },
+        },
         { path: "/login", component: { template: "<div>Login</div>" } },
         { path: "/register", component: { template: "<div>Register</div>" } },
       ],
@@ -42,9 +48,7 @@ describe("HomeView.vue", () => {
     const wrapper = mount(HomeView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          i: true,
-        },
+        stubs: {},
       },
     });
 
@@ -125,9 +129,7 @@ describe("HomeView.vue", () => {
       mount(HomeView, {
         global: {
           plugins: [createTestRouter()],
-          stubs: {
-            i: true,
-          },
+          stubs: {},
         },
       });
     }).not.toThrow();

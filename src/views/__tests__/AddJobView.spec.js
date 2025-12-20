@@ -22,6 +22,7 @@ describe("AddJobView.vue", () => {
     return createRouter({
       history: createMemoryHistory(),
       routes: [
+        { path: "/", component: { template: "<div>Home</div>" } },
         { path: "/add-job", component: { template: "<div>Add Job</div>" } },
         { path: "/jobs", component: { template: "<div>Jobs</div>" } },
       ],
@@ -210,9 +211,7 @@ describe("AddJobView.vue", () => {
       mount(AddJobView, {
         global: {
           plugins: [createTestRouter()],
-          stubs: {
-            i: true,
-          },
+          stubs: {},
         },
       });
     }).not.toThrow();

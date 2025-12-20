@@ -49,7 +49,6 @@ describe("JobCard.vue", () => {
         plugins: [createTestRouter()],
         stubs: {
           RouterLink: false,
-          i: true,
         },
       },
     });
@@ -64,7 +63,6 @@ describe("JobCard.vue", () => {
         plugins: [createTestRouter()],
         stubs: {
           RouterLink: false,
-          i: true,
         },
       },
     });
@@ -79,7 +77,6 @@ describe("JobCard.vue", () => {
         plugins: [createTestRouter()],
         stubs: {
           RouterLink: false,
-          i: true,
         },
       },
     });
@@ -94,7 +91,6 @@ describe("JobCard.vue", () => {
         plugins: [createTestRouter()],
         stubs: {
           RouterLink: false,
-          i: true,
         },
       },
     });
@@ -120,7 +116,6 @@ describe("JobCard.vue", () => {
           plugins: [createTestRouter()],
           stubs: {
             RouterLink: false,
-            i: true,
           },
         },
       });

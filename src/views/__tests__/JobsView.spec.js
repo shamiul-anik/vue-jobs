@@ -56,7 +56,11 @@ describe("JobsView.vue", () => {
   const createTestRouter = () => {
     return createRouter({
       history: createMemoryHistory(),
-      routes: [{ path: "/jobs", component: { template: "<div>Jobs</div>" } }],
+      routes: [
+        { path: "/", component: { template: "<div>Home</div>" } },
+        { path: "/jobs", component: { template: "<div>Jobs</div>" } },
+        { path: "/jobs/:id", component: { template: "<div>Job</div>" } },
+      ],
     });
   };
 

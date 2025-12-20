@@ -33,8 +33,14 @@ describe("JobView.vue", () => {
     return createRouter({
       history: createMemoryHistory(),
       routes: [
+        { path: "/", component: { template: "<div>Home</div>" } },
         { path: "/jobs/:id", component: { template: "<div>Job</div>" } },
         { path: "/jobs", component: { template: "<div>Jobs</div>" } },
+        { path: "/add-job", component: { template: "<div>Add Job</div>" } },
+        {
+          path: "/edit-job/:id",
+          component: { template: "<div>Edit Job</div>" },
+        },
       ],
     });
   };
@@ -181,9 +187,7 @@ describe("JobView.vue", () => {
       mount(JobView, {
         global: {
           plugins: [createTestRouter()],
-          stubs: {
-            i: true,
-          },
+          stubs: {},
         },
       });
     }).not.toThrow();
@@ -193,9 +197,7 @@ describe("JobView.vue", () => {
     const wrapper = mount(JobView, {
       global: {
         plugins: [createTestRouter()],
-        stubs: {
-          i: true,
-        },
+        stubs: {},
       },
     });
 

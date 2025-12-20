@@ -39,6 +39,7 @@ describe("EditJobView.vue", () => {
           path: "/edit-job/:id",
           component: { template: "<div>Edit Job</div>" },
         },
+        { path: "/", component: { template: "<div>Home</div>" } },
         { path: "/jobs/:id", component: { template: "<div>Job</div>" } },
         { path: "/jobs", component: { template: "<div>Jobs</div>" } },
       ],

@@ -1,5 +1,5 @@
-import { vi, beforeEach } from 'vitest';
-import { createMemoryHistory, createRouter } from 'vue-router';
+import { vi, beforeEach } from "vitest";
+import { createMemoryHistory, createRouter } from "vue-router";
 
 // Mock localStorage with a proper implementation
 const localStorageMock = (() => {
@@ -26,8 +26,12 @@ export const createTestRouter = () => {
   return createRouter({
     history: createMemoryHistory(),
     routes: [
-      { path: '/', component: { template: '<div>Home</div>' } },
-      { path: '/jobs', component: { template: '<div>Jobs</div>' } },
+      { path: "/", component: { template: "<div>Home</div>" } },
+      { path: "/jobs", component: { template: "<div>Jobs</div>" } },
+      { path: "/jobs/:id", component: { template: "<div>Job</div>" } },
+      { path: "/add-job", component: { template: "<div>Add Job</div>" } },
+      { path: "/login", component: { template: "<div>Login</div>" } },
+      { path: "/register", component: { template: "<div>Register</div>" } },
     ],
   });
 };
