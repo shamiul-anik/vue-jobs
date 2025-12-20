@@ -164,7 +164,7 @@ function insertSampleData() {
           title: "Senior Vue Developer",
           description:
             "We are seeking a talented Front-End Developer to join our team in Boston, MA. The ideal candidate will have strong skills in HTML, CSS, and JavaScript, with expertise in Vue.js and modern web development practices.",
-          salary: "$70K - $80K / Year",
+          salary: "$70K - $80K",
           location: "Boston, MA",
           company_name: "NewTek Solutions",
           company_description:
@@ -177,7 +177,7 @@ function insertSampleData() {
           title: "Front-End Engineer (Vue)",
           description:
             "Join our team as a Front-End Developer in sunny Miami, FL. We are looking for a motivated individual with a passion for crafting beautiful and functional web applications.",
-          salary: "$70K - $80K / Year",
+          salary: "$70K - $80K",
           location: "Miami, FL",
           company_name: "Veneer Solutions",
           company_description:
@@ -190,7 +190,7 @@ function insertSampleData() {
           title: "Vue.js Developer",
           description:
             "Are you passionate about front-end development? Join our team in vibrant Brooklyn, NY, and work on exciting projects that make a difference.",
-          salary: "$70K - $80K / Year",
+          salary: "$70K - $80K",
           location: "Brooklyn, NY",
           company_name: "Dolor Cloud",
           company_description:
@@ -203,7 +203,7 @@ function insertSampleData() {
           title: "Vue Front-End Developer",
           description:
             "Join our team as a Part-Time Front-End Developer in beautiful Phoenix, AZ. We are looking for a self-motivated individual with a passion for creating engaging user interfaces.",
-          salary: "$60K - $70K / Year",
+          salary: "$60K - $70K",
           location: "Phoenix, AZ",
           company_name: "Alpha Elite",
           company_description:
@@ -216,7 +216,7 @@ function insertSampleData() {
           title: "Full Stack Vue Developer",
           description:
             "Exciting opportunity for a Full-Time Front-End Developer in bustling Atlanta, GA. We are seeking a talented individual with expertise in Vue.js and full-stack development.",
-          salary: "$90K - $100K / Year",
+          salary: "$90K - $100K",
           location: "Atlanta, GA",
           company_name: "Browning Technologies",
           company_description:
@@ -229,7 +229,7 @@ function insertSampleData() {
           title: "Vue Native Developer",
           description:
             "Join our team as a Front-End Developer in beautiful Portland, OR. We are looking for a skilled and enthusiastic individual to help build amazing mobile and web applications.",
-          salary: "$100K - $110K / Year",
+          salary: "$100K - $110K",
           location: "Portland, OR",
           company_name: "Port Solutions Inc.",
           company_description:
