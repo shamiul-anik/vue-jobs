@@ -68,6 +68,10 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 - **Database Migration**:
   - Production-ready script to import data from external SQLite files
   - Transaction-safe with automatic rollbacks
+- **Database Backup**:
+  - Reliable WAL-aware backup utility (`npm run db:backup`)
+  - Automatic timestamped backups every 60 minutes
+  - Secure storage in `db/db_backup/` with Git-ignore protection
 - **Error Monitoring & Analytics**:
   - **PostHog** integration for real-time error tracking
   - **Session Recording** to replay user behavior leading to errors
