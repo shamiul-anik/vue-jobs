@@ -106,9 +106,21 @@
               class="custom-checkbox" />
             <label for="terms" class="custom-checkbox-label">
               I agree to the
-              <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our terms and conditions">Terms and Conditions</a>
+              <button
+                type="button"
+                @click="openTermsModal"
+                class="font-medium text-green-600 hover:text-green-500 cursor-pointer"
+                aria-label="Read our terms and conditions">
+                Terms and Conditions
+              </button>
               and
-              <a href="#" class="font-medium text-green-600 hover:text-green-500" aria-label="Read our privacy policy">Privacy Policy</a>
+              <button
+                type="button"
+                @click="openPrivacyModal"
+                class="font-medium text-green-600 hover:text-green-500 cursor-pointer"
+                aria-label="Read our privacy policy">
+                Privacy Policy
+              </button>
             </label>
           </div>
 
@@ -139,7 +151,55 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Terms and Conditions Modal -->
+    <Modal
+      :show="showTermsModal"
+      title="Terms and Conditions"
+      max-width="2xl"
+      @close="showTermsModal = false">
+      <div class="prose prose-sm max-w-none text-gray-600 text-left">
+        <p class="mb-4">Welcome to Vue Jobs. By using our platform, you agree to the following terms:</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">1. User Accounts</h4>
+        <p class="mb-4">You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">2. Job Postings</h4>
+        <p class="mb-4">All job postings must be accurate and directly related to Vue.js or surrounding web technologies. Misleading or fraudulent listings will be removed immediately.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">3. Intellectual Property</h4>
+        <p class="mb-4">The source code of this project is provided under the MIT License.
+          However, the Vue logo and Vue trademark remain the exclusive property of the Vue team and are protected by international copyright and trademark laws.
+          Usage of the Vue logo does not grant any rights or ownership over the Vue brand, and any use must comply with Vue’s official brand and trademark guidelines.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">4. Limitation of Liability</h4>
+        <p class="mb-4">Vue Jobs shall not be liable for any damages arising out of your use of the platform or the employment interactions facilitated through it.</p>
+      </div>
+    </Modal>
+
+    <!-- Privacy Policy Modal -->
+    <Modal
+      :show="showPrivacyModal"
+      title="Privacy Policy"
+      max-width="2xl"
+      @close="showPrivacyModal = false">
+      <div class="prose prose-sm max-w-none text-gray-600 text-left">
+        <p class="mb-4">Your privacy is important to us. Here is how we handle your data:</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">1. Information We Collect</h4>
+        <p class="mb-4">We collect information provided by you during registration, including your name, email address, and job preferences.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">2. How We Use Information</h4>
+        <p class="mb-4">We use your data to provide job matching services, send platform notifications, and improve the overall user experience.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">3. Data Security</h4>
+        <p class="mb-4">We implement industry-standard security measures to protect your personal information from unauthorized access or disclosure.</p>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">4. Your Rights</h4>
+        <p class="mb-4">You have the right to access, update, or request the deletion of your personal data at any time via your account settings.</p>
+      </div>
+    </Modal>
+
+    <!-- Generic Modal (Alerts) -->
     <Modal
       :show="showModal"
       :type="modalConfig.type"
@@ -163,12 +223,23 @@ const errorMessage = ref('')
 
 // Modal state
 const showModal = ref(false)
+const showTermsModal = ref(false)
+const showPrivacyModal = ref(false)
+
 const modalConfig = ref({
   type: 'alert',
   variant: 'success',
   title: '',
   message: ''
 })
+
+const openTermsModal = () => {
+  showTermsModal.value = true
+}
+
+const openPrivacyModal = () => {
+  showPrivacyModal.value = true
+}
 
 const formData = ref({
   name: '',
