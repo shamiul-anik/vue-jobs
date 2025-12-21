@@ -18,7 +18,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 
 ## 📖 Table of Contents
 
-- [🚀 Features](#-features)
+  - [🚀 Features](#-features)
 - [📋 Prerequisites](#-prerequisites)
 - [🛠️ Installation](#-installation)
 - [🏃 Running the Application](#-running-the-application)
@@ -92,14 +92,12 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - Automatic timestamped backups every 60 minutes
   - Secure storage in `db/db_backup/` with Git-ignore protection
 - **Error Monitoring & Analytics**:
-
   - **PostHog** integration for real-time error tracking
   - **Session Recording** to replay user behavior leading to errors
-
 - **Experimental Features & Future Plans**:
   This project serves as a playground for experimenting with various technologies aiming to simulate a real-world, production-ready web application.
-- **TypeScript**: TypeScript is currently in the testing phase and experimented on the `feature/typescript` branch only. It might be included in the main branch in the future based on the project's need and complexity.
-- **Bun**: Experimental support for [Bun](https://bun.sh/) is available on the `feature/bun` branch.
+  - **TypeScript**: TypeScript is currently in the testing phase and experimented on the `feature/typescript` branch only. It might be included in the main branch in the future based on the project's need and complexity.
+  - **Bun**: Experimental support for [Bun](https://bun.sh/) is available on the `feature/bun` branch.
 
 ## 📋 Prerequisites
 
