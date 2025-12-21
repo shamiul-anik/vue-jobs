@@ -18,7 +18,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 
 ## 📖 Table of Contents
 
-  - [🚀 Features](#-features)
+- [🚀 Features](#-features)
 - [📋 Prerequisites](#-prerequisites)
 - [🛠️ Installation](#-installation)
 - [🏃 Running the Application](#-running-the-application)
