@@ -14,6 +14,29 @@ Implemented full CRUD functionality, job search and filtering, and a responsive 
 Applied security best practices including Helmet.js, rate limiting, CORS, and input validation.
 Focused on code readability, maintainability, and scalability, with SEO and accessibility considerations.
 
+**Experimental Features & Future Plans**:
+This project serves as a playground for experimenting with various technologies aiming to simulate a real-world, production-ready web application.
+- **TypeScript**: TypeScript is currently in the testing phase and experimented on the `feature/typescript` branch only. It might be included in the main branch in the future based on the project's need and complexity.
+- **Bun**: Experimental support for [Bun](https://bun.sh/) is available on the `feature/bun` branch.
+
+---
+
+## 📖 Table of Contents
+
+- [🚀 Features](#-features)
+- [📋 Prerequisites](#-prerequisites)
+- [🛠️ Installation](#️-installation)
+- [🏃 Running the Application](#-running-the-application)
+- [🎨 Technology Stack](#-technology-stack)
+- [💾 Database Management](#-database-management)
+- [📊 Performance Analysis](#-performance-analysis)
+- [🧪 Testing](#-testing)
+- [🛡️ Error Monitoring](#️-error-monitoring)
+- [📁 Project Structure](#-project-structure)
+- [🔌 API Endpoints](#-api-endpoints)
+
+---
+
 ## 🚀 Features
 
 - **Vue 3** with Composition API
@@ -86,7 +109,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 1. **Clone or navigate to the project directory:**
 
    ```bash
-   cd \vue-jobs
+   cd /vue-jobs
    ```
 
 2. **Install dependencies:**
