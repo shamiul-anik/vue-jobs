@@ -18,17 +18,17 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 
 ## 📖 Table of Contents
 
-  - [🚀 Features](#-features)
-- [📋 Prerequisites](#-prerequisites)
-- [🛠️ Installation](#-installation)
-- [🏃 Running the Application](#-running-the-application)
-- [🎨 Technology Stack](#-technology-stack)
-- [💾 Database Migration](#-database-migration)
-- [�️ Database Backup](#-database-backup)
-- [� Error Monitoring](#-error-monitoring)
-- [📁 Project Structure](#-project-structure)
-- [🔌 API Endpoints](#-api-endpoints)
-- [🧪 Testing](#-testing)
+  - [🚀 Features](#️-features)
+- [📋 Prerequisites](#️-prerequisites)
+- [🛠️ Installation](#️-installation)
+- [🏃 Running the Application](#️-running-the-application)
+- [🎨 Technology Stack](#️-technology-stack)
+- [💾 Database Migration](#️-database-migration)
+- [🛡️ Database Backup](#️-database-backup)
+- [📊 Error Monitoring](#️-error-monitoring)
+- [📁 Project Structure](#️-project-structure)
+- [🔌 API Endpoints](#️-api-endpoints)
+- [🧪 Testing](#️-testing)
 - [⚡ Performance Testing](#-performance-testing)
 
 ---
