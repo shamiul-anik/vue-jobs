@@ -14,26 +14,22 @@ Implemented full CRUD functionality, job search and filtering, and a responsive 
 Applied security best practices including Helmet.js, rate limiting, CORS, and input validation.
 Focused on code readability, maintainability, and scalability, with SEO and accessibility considerations.
 
-**Experimental Features & Future Plans**:
-This project serves as a playground for experimenting with various technologies aiming to simulate a real-world, production-ready web application.
-- **TypeScript**: TypeScript is currently in the testing phase and experimented on the `feature/typescript` branch only. It might be included in the main branch in the future based on the project's need and complexity.
-- **Bun**: Experimental support for [Bun](https://bun.sh/) is available on the `feature/bun` branch.
-
 ---
 
 ## 📖 Table of Contents
 
-- [🚀 Features](#-features)
-- [📋 Prerequisites](#-prerequisites)
-- [🛠️ Installation](#️-installation)
-- [🏃 Running the Application](#-running-the-application)
-- [🎨 Technology Stack](#-technology-stack)
-- [💾 Database Management](#-database-management)
-- [📊 Performance Analysis](#-performance-analysis)
-- [🧪 Testing](#-testing)
-- [🛡️ Error Monitoring](#️-error-monitoring)
-- [📁 Project Structure](#-project-structure)
-- [🔌 API Endpoints](#-api-endpoints)
+- [🚀 Features](#features)
+- [📋 Prerequisites](#prerequisites)
+- [🛠️ Installation](#installation)
+- [🏃 Running the Application](#running-the-application)
+- [🎨 Technology Stack](#technology-stack)
+- [💾 Database Migration](#database-migration)
+- [🛡️ Database Backup](#database-backup)
+- [🧪 Testing](#testing)
+- [⚡ Performance Testing](#performance-testing)
+- [� Error Monitoring](#error-monitoring)
+- [📁 Project Structure](#project-structure)
+- [🔌 API Endpoints](#api-endpoints)
 
 ---
 
@@ -98,6 +94,10 @@ This project serves as a playground for experimenting with various technologies 
 - **Error Monitoring & Analytics**:
   - **PostHog** integration for real-time error tracking
   - **Session Recording** to replay user behavior leading to errors
+- **Experimental Features & Future Plans**:
+  This project serves as a playground for experimenting with various technologies aiming to simulate a real-world, production-ready web application.
+- **TypeScript**: TypeScript is currently in the testing phase and experimented on the `feature/typescript` branch only. It might be included in the main branch in the future based on the project's need and complexity.
+- **Bun**: Experimental support for [Bun](https://bun.sh/) is available on the `feature/bun` branch.
 
 ## 📋 Prerequisites
 
@@ -213,7 +213,7 @@ This utility:
 - **Organized Storage**: All backups are kept in `db/db_backup/`.
 - **Automatic Backups**: The server runs this backup process automatically every **60 minutes** while running (kept in 60 minutes to verify functionality, plan to change this to 12/24 hours).
 
-### 📊 Error Monitoring ([PostHog](https://us.posthog.com/))
+### 📊 Error Monitoring
 
 The application uses **[PostHog](https://us.posthog.com/)** for real-time error monitoring and session replays.
 
