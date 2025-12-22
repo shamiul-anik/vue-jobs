@@ -24,7 +24,7 @@
           Browse Jobs
         </h2>
 
-        <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-2">
           <div class="flex items-center justify-center md:justify-start space-x-2">
             <label for="itemsPerPage" class="custom-label mb-0! min-w-32!">Items Per Page</label>
             <select
@@ -88,7 +88,7 @@ const totalJobs = ref(0)
 
 // Pagination state
 const currentPage = ref(1)
-const itemsPerPage = ref(6)
+const itemsPerPage = ref(Number(localStorage.getItem('vue_jobs_items_per_page')) || 6)
 
 const fetchJobs = async () => {
   loading.value = true
@@ -146,8 +146,9 @@ watch(searchQuery, () => {
   // For now, keeping it simple as per user request.
 })
 
-// Refetch jobs when items per page changes
-watch(itemsPerPage, () => {
+// Refetch jobs when items per page changes and save to localStorage
+watch(itemsPerPage, (newVal) => {
+  localStorage.setItem('vue_jobs_items_per_page', newVal)
   currentPage.value = 1
   fetchJobs()
 })
