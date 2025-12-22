@@ -24,11 +24,12 @@
           Browse Jobs
         </h2>
 
-        <div class="flex-col border border-red-500 md:flex-row items-center justify-between">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-6">
           <div class="flex items-center justify-center md:justify-start space-x-2">
             <label for="itemsPerPage" class="custom-label mb-0! min-w-32!">Items Per Page</label>
             <select
               id="itemsPerPage"
+              v-model.number="itemsPerPage"
               class="custom-select pl-4! pr-8! py-2! text-sm! max-w-20"
               required>
               <option value="6">6</option>
@@ -87,13 +88,13 @@ const totalJobs = ref(0)
 
 // Pagination state
 const currentPage = ref(1)
-const itemsPerPage = 3
+const itemsPerPage = ref(6)
 
 const fetchJobs = async () => {
   loading.value = true
   try {
     const data = await jobsAPI.getAllJobs({
-      limit: itemsPerPage,
+      limit: itemsPerPage.value,
       page: currentPage.value
       // We could add 'q' param here if we moved search to server
     })
@@ -127,7 +128,7 @@ const filteredJobs = computed(() => {
   )
 })
 
-const totalPages = computed(() => Math.ceil(totalJobs.value / itemsPerPage))
+const totalPages = computed(() => Math.ceil(totalJobs.value / itemsPerPage.value))
 
 const handlePageChange = async (page) => {
   currentPage.value = page
@@ -143,6 +144,12 @@ watch(searchQuery, () => {
   currentPage.value = 1
   // If searching, we might want to fetch all or use a search API
   // For now, keeping it simple as per user request.
+})
+
+// Refetch jobs when items per page changes
+watch(itemsPerPage, () => {
+  currentPage.value = 1
+  fetchJobs()
 })
 
 // SEO Configuration

@@ -95,8 +95,3 @@ html {
 .custom-show-hide-password {
   @apply absolute inset-y-4 right-1 top-4 pr-2 flex items-center text-gray-600 hover:text-green-600 transition-all duration-300 cursor-pointer;
 }
-
-.flex-row {
-  display: flex !important;
-  flex-direction: row !important;
-}
