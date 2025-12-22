@@ -30,6 +30,18 @@ html {
 }
 
 /* Custom Transition */
+/* Default Transition */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+/* Transition Bounce */
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
@@ -82,4 +94,9 @@ html {
 /* Custom Show/Hide Password */
 .custom-show-hide-password {
   @apply absolute inset-y-4 right-1 top-4 pr-2 flex items-center text-gray-600 hover:text-green-600 transition-all duration-300 cursor-pointer;
+}
+
+.flex-row {
+  display: flex !important;
+  flex-direction: row !important;
 }

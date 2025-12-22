@@ -2,9 +2,7 @@
   <main>
     <Navbar />
     <Loader v-if="isLoading" />
-    <Transition v-else name="bounce">
-      <RouterView />
-    </Transition>
+    <RouterView v-else />
   </main>
 </template>
 

@@ -24,30 +24,48 @@
           Browse Jobs
         </h2>
 
-        <div v-if="loading" class="min-h-[693px] grid grid-cols-1 md:grid-cols-3 gap-6">
-          <JobSkeleton v-for="i in 6" :key="i" />
-        </div>
-
-        <div v-else-if="error" class="text-center">
-          <p class="text-xl text-red-500">{{ error }}</p>
-        </div>
-
-        <div v-else-if="filteredJobs.length === 0" class="text-center">
-          <p class="text-xl">No jobs found matching your search.</p>
-        </div>
-        
-        <div v-else class="min-h-[693px]">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <JobCard v-for="job in filteredJobs" :key="job.id" :job="job" />
+        <div class="flex-col border border-red-500 md:flex-row items-center justify-between">
+          <div class="flex items-center justify-center md:justify-start space-x-2">
+            <label for="itemsPerPage" class="custom-label mb-0! min-w-32!">Items Per Page</label>
+            <select
+              id="itemsPerPage"
+              class="custom-select pl-4! pr-8! py-2! text-sm! max-w-20"
+              required>
+              <option value="6">6</option>
+              <option value="12">12</option>
+              <option value="30">30</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
           </div>
+          <!-- Pagination -->
+          <Pagination
+            v-if="totalPages > 1"
+            :current-page="currentPage"
+            :total-pages="totalPages"
+            @change-page="handlePageChange" />
         </div>
 
-        <!-- Pagination -->
-        <Pagination
-          v-if="totalPages > 1"
-          :current-page="currentPage"
-          :total-pages="totalPages"
-          @change-page="handlePageChange" />
+        <Transition>
+          <div v-if="loading" class="min-h-[693px] grid grid-cols-1 md:grid-cols-3 gap-6">
+            <JobSkeleton v-for="i in 6" :key="i" />
+          </div>
+
+          <div v-else-if="error" class="text-center">
+            <p class="text-xl text-red-500">{{ error }}</p>
+          </div>
+
+          <div v-else-if="filteredJobs.length === 0" class="text-center">
+            <p class="text-xl text-red-600">No jobs found matching your search!</p>
+          </div>
+
+          <div v-else class="min-h-[693px]">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <JobCard v-for="job in filteredJobs" :key="job.id" :job="job" />
+            </div>
+          </div>
+        </Transition>
+
       </div>
     </section>
   </div>
@@ -69,7 +87,7 @@ const totalJobs = ref(0)
 
 // Pagination state
 const currentPage = ref(1)
-const itemsPerPage = 6
+const itemsPerPage = 3
 
 const fetchJobs = async () => {
   loading.value = true
@@ -100,6 +118,7 @@ const filteredJobs = computed(() => {
   if (!searchQuery.value) return jobs.value
 
   const query = searchQuery.value.toLowerCase()
+
   return jobs.value.filter(job =>
     job.title.toLowerCase().includes(query) ||
     job.location.toLowerCase().includes(query) ||

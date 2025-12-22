@@ -1,11 +1,10 @@
 <template>
-  <nav class="flex items-center justify-center space-x-2 my-8" aria-label="Pagination">
+  <div class="flex items-center justify-center space-x-2 my-4 md:my-8" aria-label="Pagination">
     <!-- Previous Button -->
     <button
       @click="$emit('change-page', currentPage - 1)"
       :disabled="currentPage === 1"
-      class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
-    >
+      class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer">
       <i class="fas fa-chevron-left mr-2"></i>
       Previous
     </button>
@@ -21,14 +20,12 @@
             currentPage === page
               ? 'bg-green-600 border-green-600 text-white'
               : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-          ]"
-        >
+          ]">
           {{ page }}
         </button>
         <span
           v-else
-          class="px-4 py-2 text-sm font-medium text-gray-700"
-        >
+          class="px-4 py-2 text-sm font-medium text-gray-700">
           ...
         </span>
       </template>
@@ -40,15 +37,11 @@
     </span>
 
     <!-- Next Button -->
-    <button
-      @click="$emit('change-page', currentPage + 1)"
-      :disabled="currentPage === totalPages"
-      class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
-    >
+    <button @click="$emit('change-page', currentPage + 1)" :disabled="currentPage === totalPages" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer">
       Next
       <i class="fas fa-chevron-right ml-2"></i>
     </button>
-  </nav>
+  </div>
 </template>
 
 <script setup>
@@ -70,7 +63,7 @@ defineEmits(['change-page'])
 const visiblePages = computed(() => {
   const pages = []
   const maxVisible = 5
-  
+
   if (props.totalPages <= maxVisible) {
     for (let i = 1; i <= props.totalPages; i++) {
       pages.push(i)
@@ -85,7 +78,7 @@ const visiblePages = computed(() => {
       pages.push(1, '...', props.currentPage - 1, props.currentPage, props.currentPage + 1, '...', props.totalPages)
     }
   }
-  
+
   return pages
 })
 </script>
