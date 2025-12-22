@@ -12,15 +12,6 @@ import { performBackup } from "./scripts/backup-db.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// const express = require("express");
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
-// const path = require("path");
-// const jobsRouter = require("./routes/jobs");
-// const usersRouter = require("./routes/users");
-// const helmet = require("helmet");
-// const rateLimit = require("express-rate-limit");
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -69,7 +60,7 @@ app.listen(PORT, () => {
 
   // Start automatic database backup every 60 minutes (for testing/confirmation)
   // To change to 24 hours later: 24 * 60 * 60 * 1000
-  const BACKUP_INTERVAL = 60 * 60 * 1000;
+  const BACKUP_INTERVAL = 24 * 60 * 60 * 1000;
   setInterval(async () => {
     try {
       await performBackup();

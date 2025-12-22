@@ -7,17 +7,51 @@ const router = express.Router();
 
 // const db = require("../db/database.js");
 
-
-// GET all jobs
+// GET all jobs with optional pagination
 router.get("/", (req, res) => {
-  const query = "SELECT * FROM jobs ORDER BY created_at DESC";
+  const limit = parseInt(req.query.limit) || null;
+  const page = parseInt(req.query.page) || 1;
+  const offset = limit ? (page - 1) * limit : 0;
 
-  db.all(query, [], (err, rows) => {
+  // Query to get total count
+  const countQuery = "SELECT COUNT(*) as total FROM jobs";
+
+  // Query to get paginated jobs
+  let jobsQuery = "SELECT * FROM jobs ORDER BY created_at DESC";
+  let params = [];
+
+  if (limit) {
+    jobsQuery += " LIMIT ? OFFSET ?";
+    params.push(limit, offset);
+  }
+
+  db.get(countQuery, [], (err, countRow) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json(rows);
+
+    const total = countRow.total;
+
+    db.all(jobsQuery, params, (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+
+      // If no limit, return array for backward compatibility or the full object
+      if (!limit && !req.query.page) {
+        res.json(rows);
+      } else {
+        res.json({
+          jobs: rows,
+          total: total,
+          limit: limit,
+          page: page,
+          totalPages: limit ? Math.ceil(total / limit) : 1,
+        });
+      }
+    });
   });
 });
 
@@ -38,7 +72,6 @@ router.get("/:id", (req, res) => {
     res.json(row);
   });
 });
-
 
 // Validation Rules
 const jobValidationRules = [

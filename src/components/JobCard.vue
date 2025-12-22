@@ -8,9 +8,7 @@
         </div>
 
         <h3 class="text-xl font-bold mt-2">{{ job.title }}</h3>
-        <div class="text-slate-500 text-sm my-1">
-          Posted on {{ formattedCreatedAt }}
-        </div>
+        <div class="text-slate-500 text-sm my-1">Posted on {{ formattedCreatedAt }}</div>
         <div class="border border-gray-100 mt-3"></div>
       </div>
 
@@ -20,9 +18,7 @@
 
       <div class="border border-gray-100 mt-3"></div>
 
-      <h3 class="text-green-600 font-semibold my-2">
-        Salary: {{ job.salary }} / Year
-      </h3>
+      <h3 class="text-green-600 font-semibold my-2">Salary: {{ job.salary }} / Year</h3>
 
       <div class="border border-gray-100 mb-3"></div>
 
@@ -34,75 +30,70 @@
 
         <RouterLink
           :to="`/jobs/${job.id}`"
-          class="group inline-flex items-center gap-2 h-9 
-         border border-green-500 text-green-600
-         px-5 py-2 rounded-lg text-sm font-medium
-         transition-all duration-300
-         hover:bg-green-500 hover:text-white">
+          class="group inline-flex items-center gap-2 h-9 border border-green-500 text-green-600 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-green-500 hover:text-white"
+        >
           Read More
           <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
         </RouterLink>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { computed } from "vue";
+import { RouterLink } from "vue-router";
 
 const props = defineProps({
   job: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 // Icon for Job Type
 const typeIcon = computed(() => {
   switch (props.job.type) {
-    case 'Full-Time':
-      return 'fa-solid fa-briefcase'
-    case 'Part-Time':
-      return 'fa-solid fa-clock'
-    case 'Remote':
-      return 'fa-solid fa-house-laptop'
-    case 'Internship':
-      return 'fa-solid fa-graduation-cap'
+    case "Full-Time":
+      return "fa-solid fa-briefcase";
+    case "Part-Time":
+      return "fa-solid fa-clock";
+    case "Remote":
+      return "fa-solid fa-house-laptop";
+    case "Internship":
+      return "fa-solid fa-graduation-cap";
     default:
-      return 'fa-solid fa-briefcase'
+      return "fa-solid fa-briefcase";
   }
-})
+});
 
 // Formatted Created At
 const formattedCreatedAt = computed(() => {
   // Force UTC by appending "Z"
-  const raw = props.job.created_at
-  if (!raw) return 'Unknown date'
-  
-  const d = new Date(raw.endsWith("Z") ? raw : raw + "Z")
+  const raw = props.job.created_at;
+  if (!raw) return "Unknown date";
+
+  const d = new Date(raw.endsWith("Z") ? raw : raw + "Z");
 
   const datePart = d.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
-    timeZone: "Asia/Tokyo"
-  })
+    timeZone: "Asia/Tokyo",
+  });
 
   const timePart = d.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,
-    timeZone: "Asia/Tokyo"
-  })
+    timeZone: "Asia/Tokyo",
+  });
 
-  return `${datePart} at ${timePart.toLowerCase()}`
-})
-
+  return `${datePart} at ${timePart.toLowerCase()}`;
+});
 
 const truncateDescription = (description) => {
-  if (!description) return ''
-  return description.length > 90 ? description.substring(0, 90) + '...' : description
-}
+  if (!description) return "";
+  return description.length > 90 ? description.substring(0, 90) + "..." : description;
+};
 </script>

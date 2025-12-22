@@ -12,8 +12,9 @@
             Explore premium opportunities in the Vue.js ecosystem and land your dream role.
             <!-- Find the perfect fit for your skills and needs, whether it's remote, full-time, or contract. -->
           </p>
+          <!-- https://framer.com/m/loadingSpinner-qP3z.js@eNbr5TbkKXpMirsOiFk0 -->
           <!-- Temporary PostHog Test Button -->
-          <!-- <button 
+          <!-- <button
             @click="triggerError"
             class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
           >
@@ -24,31 +25,21 @@
     </section>
 
     <!-- Developers and Employers -->
-    <section class="pt-0 md:pt-8 pb-4 md:pb-8">
+    <section class="pt-0 px-0 md:px-4 md:pt-8 pb-4 md:pb-8">
       <div class="container-xl lg:container m-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg p-4 md:p-0">
           <div class="bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold">For Developers</h2>
-            <p class="mt-2 mb-4">
-              Browse our Vue jobs and start your career today
-            </p>
-            <RouterLink
-              to="/jobs"
-              class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
-              aria-label="Browse all available Vue.js jobs">
+            <p class="mt-2 mb-4">Browse our Vue jobs and start your career today</p>
+            <RouterLink to="/jobs" class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700" aria-label="Browse all available Vue.js jobs">
               <i class="fas fa-briefcase mr-1"></i>
               Browse Jobs
             </RouterLink>
           </div>
           <div class="bg-green-100 p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold">For Employers</h2>
-            <p class="mt-2 mb-4">
-              List your job to find the perfect developer for the role
-            </p>
-            <RouterLink
-              to="/add-job"
-              class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
-              aria-label="Post a new job listing">
+            <p class="mt-2 mb-4">List your job to find the perfect developer for the role</p>
+            <RouterLink to="/add-job" class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600" aria-label="Post a new job listing">
               <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
@@ -60,9 +51,7 @@
     <!-- Browse Jobs -->
     <section class="bg-green-50 px-4 py-10">
       <div class="container-xl lg:container m-auto">
-        <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
-          Browse Jobs
-        </h2>
+        <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">Browse Jobs</h2>
 
         <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <JobSkeleton v-for="i in 3" :key="i" />
@@ -73,7 +62,7 @@
         </div>
 
         <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <JobCard v-for="job in recentJobs" :key="job.id" :job="job" />
+          <JobCard v-for="job in jobs" :key="job.id" :job="job" />
         </div>
       </div>
     </section>
@@ -81,10 +70,8 @@
     <section class="max-w-lg m-auto flex justify-center items-center my-8 px-6">
       <RouterLink
         to="/jobs"
-        class="group inline-flex items-center gap-2 
-         border border-green-800 bg-green-600 hover:bg-green-700 text-white
-         px-8 md:px-12 py-2 md:py-4 rounded-lg text-lg font-bold
-         transition-all duration-300">
+        class="group inline-flex items-center gap-2 border border-green-800 bg-green-600 hover:bg-green-700 text-white px-8 md:px-12 py-2 md:py-4 rounded-lg text-lg font-bold transition-all duration-300"
+      >
         View All Jobs
         <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
       </RouterLink>
@@ -93,53 +80,54 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import JobCard from '../components/JobCard.vue'
-import JobSkeleton from '../components/JobSkeleton.vue'
-import { jobsAPI } from '../services/api'
-import { useSEO } from '../composables/useSEO'
+import { ref, onMounted, computed } from "vue";
+import { RouterLink } from "vue-router";
+import JobCard from "../components/JobCard.vue";
+import JobSkeleton from "../components/JobSkeleton.vue";
+import { jobsAPI } from "../services/api";
+import { useSEO } from "../composables/useSEO";
 
-const jobs = ref([])
-const loading = ref(true)
-const error = ref(null)
-
-const recentJobs = computed(() => jobs.value.slice(0, 3))
+const jobs = ref([]);
+const loading = ref(true);
+const error = ref(null);
 
 // SEO Configuration
 useSEO({
-  title: 'Vue Jobs | Find Vue.js Developer Jobs & Opportunities',
-  description: 'Discover the best Vue.js developer jobs and career opportunities. Browse full-time, part-time, and remote positions. Post your Vue job listings and connect with talented developers.',
-  keywords: 'Vue.js jobs, Vue developer jobs, frontend developer, JavaScript jobs, remote Vue jobs, Vue.js careers',
-  canonical: window.location.origin + '/',
-  image: window.location.origin + '/images/logo.png',
+  title: "Vue Jobs | Find Vue.js Developer Jobs & Opportunities",
+  description: "Discover the best Vue.js developer jobs and career opportunities. Browse full-time, part-time, and remote positions. Post your Vue job listings and connect with talented developers.",
+  keywords: "Vue.js jobs, Vue developer jobs, frontend developer, JavaScript jobs, remote Vue jobs, Vue.js careers",
+  canonical: window.location.origin + "/",
+  image: window.location.origin + "/images/logo.png",
   structuredData: {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    'name': 'Vue Jobs',
-    'url': window.location.origin,
-    'description': 'Find Vue.js developer jobs and career opportunities',
-    'potentialAction': {
-      '@type': 'SearchAction',
-      'target': window.location.origin + '/jobs?q={search_term_string}',
-      'query-input': 'required name=search_term_string'
-    }
-  }
-})
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Vue Jobs",
+    url: window.location.origin,
+    description: "Find Vue.js developer jobs and career opportunities",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: window.location.origin + "/jobs?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  },
+});
 
 onMounted(async () => {
   try {
-    jobs.value = await jobsAPI.getAllJobs()
+    const data = await jobsAPI.getAllJobs({ limit: 3 });
+    jobs.value = data.jobs || data;
   } catch (err) {
-    error.value = 'Failed to load jobs. Please try again later.'
-    console.error('Error fetching jobs:', err)
+    error.value = "Failed to load jobs. Please try again later.";
+    console.error("Error fetching jobs:", err);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-})
+});
 
 // PostHog Test Function to Track Error
 const triggerError = () => {
-  throw new Error('PostHog Test Error!')
-}
+  throw new Error("PostHog Test Error!");
+};
 </script>
+
+<style scoped></style>

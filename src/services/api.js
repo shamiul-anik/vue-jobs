@@ -1,9 +1,12 @@
 const API_BASE_URL = "/api/jobs";
 
 export const jobsAPI = {
-  // Get all jobs
-  async getAllJobs() {
-    const response = await fetch(API_BASE_URL);
+  // Get all jobs with optional pagination/limit
+  async getAllJobs(params = {}) {
+    const query = new URLSearchParams(params).toString();
+    const url = query ? `${API_BASE_URL}?${query}` : API_BASE_URL;
+
+    const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch jobs");
     return response.json();
   },
