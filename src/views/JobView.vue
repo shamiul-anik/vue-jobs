@@ -77,14 +77,21 @@
 
             <hr class="border-gray-200 my-6">
 
-            <div v-if="isAdmin" class="flex justify-end gap-3">
-              <RouterLink
+            <div class="flex justify-end gap-3">
+              <RouterLink v-if="isUser"
+                :to="`/job-pdf/${job.id}`"
+                class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
+                <i class="fas fa-file-pdf mr-1"></i>
+                Download PDF
+              </RouterLink>
+
+              <RouterLink v-if="isAdmin"
                 :to="`/edit-job/${job.id}`"
                 class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
                 <i class="fas fa-edit mr-1"></i>
                 Edit Job
               </RouterLink>
-              <button
+              <button v-if="isAdmin"
                 @click="handleDelete"
                 class="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-lg cursor-pointer text-md transition-all duration-300">
                 <i class="fas fa-trash-alt mr-1"></i>
@@ -126,6 +133,10 @@ const { user } = useAuth()
 const job = ref({})
 const loading = ref(true)
 const error = ref(null)
+
+const isUser = computed(() => {
+  return user.value && user.value.role === 'user'
+})
 
 const isAdmin = computed(() => {
   return user.value && user.value.role === 'admin'
