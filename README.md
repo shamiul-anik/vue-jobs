@@ -51,7 +51,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Global Auth State** (Vue Composition API)
   - **Dynamic Navbar** (Login/Logout/Greeting)
 - **Security Enhanced**:
-  - **Helmet.js** for secure HTTP headers
+  - **Helmet.js** for secure HTTP headers (Backend security enhancements)
   - **Rate Limiting** to prevent abuse (100 req/15min)
   - **Input Validation** & Sanitization (express-validator)
   - **CORS** configured for safety
@@ -61,10 +61,11 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Synchronous NORMAL** for faster writes
   - **Indexes** for optimized query performance
 - **Modern UI/UX Features**:
-  - **Loading Skeletons**: Visual placeholders for better perceived performance
-  - **Job Filtering**: Real-time search and filtering across multiple fields
-  - **Responsive Pagination**: Efficiently handle large datasets with a professional UI
-  - **Layout Stability**: Optimized to prevent content shifts (CLS)
+  - **Loading Skeletons**: Visual placeholders with **smooth transition animations**
+  - **Dynamic Search**: Enhanced job filtering and real-time updates
+  - **Responsive Pagination**: Efficiently handle large datasets with a professional UI design, mobile-optimized UI with **items per page state persistence** (Local Storage)
+  - **Layout Stability**: Optimized scrollbars to prevent layout shifts
+  - **Global Loader**: Component-level loader for improved user experience
   - **Custom Scrollbar**: Branded green theme for a premium feel
   - **Font Awesome** icons for visual cues
   - Custom SVG illustrations for Auth pages
@@ -428,6 +429,7 @@ The project includes comprehensive test coverage with **194 tests** across **19 
 - **API Mocking**: vi.mock() for isolating components and services
 - **Patterns**: Consistent mock setup across all test suites
 - **Assertions**: Behavior-based testing (what users experience)
+- **Stability**: Updated test cases with increased timeouts and resolved warnings for consistent execution
 
 ## ⚡ Performance Testing
 

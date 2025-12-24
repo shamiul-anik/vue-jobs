@@ -5,27 +5,39 @@ import db from "../db/database.js";
 
 const router = express.Router();
 
-// const db = require("../db/database.js");
-
 // GET all jobs with optional pagination
 router.get("/", (req, res) => {
   const limit = parseInt(req.query.limit) || null;
   const page = parseInt(req.query.page) || 1;
   const offset = limit ? (page - 1) * limit : 0;
+  const search = req.query.q ? `%${req.query.q}%` : null;
 
   // Query to get total count
-  const countQuery = "SELECT COUNT(*) as total FROM jobs";
+  let countQuery = "SELECT COUNT(*) as total FROM jobs";
+  let countParams = [];
 
   // Query to get paginated jobs
-  let jobsQuery = "SELECT * FROM jobs ORDER BY created_at DESC";
-  let params = [];
+  let jobsQuery = "SELECT * FROM jobs";
+  let jobsParams = [];
+
+  if (search) {
+    const whereClause =
+      " WHERE title LIKE ? OR description LIKE ? OR location LIKE ? OR company_name LIKE ? OR type LIKE ?";
+    countQuery += whereClause;
+    jobsQuery += whereClause;
+    const searchParams = [search, search, search, search, search];
+    countParams.push(...searchParams);
+    jobsParams.push(...searchParams);
+  }
+
+  jobsQuery += " ORDER BY created_at DESC";
 
   if (limit) {
     jobsQuery += " LIMIT ? OFFSET ?";
-    params.push(limit, offset);
+    jobsParams.push(limit, offset);
   }
 
-  db.get(countQuery, [], (err, countRow) => {
+  db.get(countQuery, countParams, (err, countRow) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -33,7 +45,7 @@ router.get("/", (req, res) => {
 
     const total = countRow.total;
 
-    db.all(jobsQuery, params, (err, rows) => {
+    db.all(jobsQuery, jobsParams, (err, rows) => {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
@@ -211,10 +223,10 @@ router.put("/:id", jobValidationRules, validate, (req, res) => {
         return;
       }
       if (this.changes === 0) {
-        res.status(404).json({ error: "Job not found" });
+        res.status(404).json({ error: "Job not found!" });
         return;
       }
-      res.json({ message: "Job updated successfully" });
+      res.json({ message: "Job updated successfully!" });
     }
   );
 });
@@ -230,10 +242,10 @@ router.delete("/:id", (req, res) => {
       return;
     }
     if (this.changes === 0) {
-      res.status(404).json({ error: "Job not found" });
+      res.status(404).json({ error: "Job not found!" });
       return;
     }
-    res.json({ message: "Job deleted successfully" });
+    res.json({ message: "Job deleted successfully!" });
   });
 });
 

@@ -18,10 +18,10 @@ const PORT = process.env.PORT || 3000;
 // Security Middleware
 app.use(helmet());
 
-// Rate Limiting
+// Rate Limiting for Reads
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 500, // Limit each IP to 500 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
 });
 app.use("/api/", limiter);
@@ -30,7 +30,8 @@ app.use("/api/", limiter);
 const writeLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 50,
-  message: "Too many write requests from this IP",
+  message:
+    "Too many write requests from this IP. Please try again after 15 minutes.",
 });
 app.use("/api/jobs", (req, res, next) => {
   if (["POST", "PUT", "DELETE"].includes(req.method)) {
@@ -58,7 +59,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   console.log(`API available at http://localhost:${PORT}/api/jobs`);
 
-  // Start automatic database backup every 60 minutes (for testing/confirmation)
+  // Start automatic database backup every 24 hours (for testing/confirmation)
   // To change to 24 hours later: 24 * 60 * 60 * 1000
   const BACKUP_INTERVAL = 24 * 60 * 60 * 1000;
   setInterval(async () => {
@@ -69,5 +70,5 @@ app.listen(PORT, () => {
     }
   }, BACKUP_INTERVAL);
 
-  console.log(`🕒 Automatic backup scheduled every 60 minutes.`);
+  console.log(`🕒 Automatic backup scheduled every 24 hours.`);
 });

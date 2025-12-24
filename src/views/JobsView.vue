@@ -12,6 +12,9 @@
               type="text"
               class="w-full md:w-3xl p-3 pl-10 border bg-white border-green-500 rounded-lg focus:outline-green-500"
               placeholder="Filter jobs by title, location, or company..." />
+            <i class="fas fa-times absolute text-xl right-4 top-1/2 transform -translate-y-1/2 text-red-500 cursor-pointer"
+              v-show="searchQuery"
+              @click="searchQuery = ''"></i>
           </span>
         </div>
       </div>
@@ -48,7 +51,7 @@
         </div>
 
         <Transition>
-          <div v-if="loading" class="min-h-[693px] grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <JobSkeleton v-for="i in 6" :key="i" />
           </div>
 
@@ -56,14 +59,12 @@
             <p class="text-xl text-red-500">{{ error }}</p>
           </div>
 
-          <div v-else-if="filteredJobs.length === 0" class="text-center">
+          <div v-else-if="jobs.length === 0" class="text-center">
             <p class="text-xl text-red-600">No jobs found matching your search!</p>
           </div>
 
-          <div v-else class="min-h-[693px]">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <JobCard v-for="job in filteredJobs" :key="job.id" :job="job" />
-            </div>
+          <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <JobCard v-for="job in jobs" :key="job.id" :job="job" />
           </div>
         </Transition>
 
@@ -95,8 +96,8 @@ const fetchJobs = async () => {
   try {
     const data = await jobsAPI.getAllJobs({
       limit: itemsPerPage.value,
-      page: currentPage.value
-      // We could add 'q' param here if we moved search to server
+      page: currentPage.value,
+      q: searchQuery.value
     })
 
     if (data.jobs) {
@@ -115,35 +116,21 @@ const fetchJobs = async () => {
   }
 }
 
-const filteredJobs = computed(() => {
-  if (!searchQuery.value) return jobs.value
-
-  const query = searchQuery.value.toLowerCase()
-
-  return jobs.value.filter(job =>
-    job.title.toLowerCase().includes(query) ||
-    job.location.toLowerCase().includes(query) ||
-    (job.company_name && job.company_name.toLowerCase().includes(query)) ||
-    job.type.toLowerCase().includes(query)
-  )
-})
-
-const totalPages = computed(() => Math.ceil(totalJobs.value / itemsPerPage.value))
-
-const handlePageChange = async (page) => {
-  currentPage.value = page
-  await fetchJobs()
-  // Scroll to top of listings when page changes
-  window.scrollTo({ top: 300, behavior: 'smooth' })
-}
+// Watchers
+// Reset to page 1 and fetch new data when search query changes
+// Ref for tracking debounce timeout
+const searchTimeout = ref(null)
 
 // Reset to page 1 and potentially fetch all/filtered when search query changes
 // Note: This is still client-side filtering on the current page.
 // In a true server-side setup, we'd fetch filtered results from server.
 watch(searchQuery, () => {
-  currentPage.value = 1
-  // If searching, we might want to fetch all or use a search API
-  // For now, keeping it simple as per user request.
+  if (searchTimeout.value) clearTimeout(searchTimeout.value)
+
+  searchTimeout.value = setTimeout(() => {
+    currentPage.value = 1
+    fetchJobs()
+  }, 300) // 300ms debounce
 })
 
 // Refetch jobs when items per page changes and save to localStorage
@@ -152,6 +139,16 @@ watch(itemsPerPage, (newVal) => {
   currentPage.value = 1
   fetchJobs()
 })
+
+const totalPages = computed(() => Math.ceil(totalJobs.value / itemsPerPage.value))
+
+const handlePageChange = async (page) => {
+  currentPage.value = page
+  await fetchJobs()
+  // Scroll to top of listings when page changes
+  // window.scrollTo({ top: 300, behavior: 'smooth' })
+}
+
 
 // SEO Configuration
 useSEO({

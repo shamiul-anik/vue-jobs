@@ -1,6 +1,8 @@
 <template>
-  <main>
+  <header>
     <Navbar />
+  </header>
+  <main>
     <Loader v-if="isLoading" />
     <RouterView v-else />
   </main>
