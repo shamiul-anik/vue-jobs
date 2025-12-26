@@ -1,3 +1,5 @@
+import httpClient from "./httpClient";
+
 const API_BASE_URL = "/api/jobs";
 
 export const jobsAPI = {
@@ -5,61 +7,26 @@ export const jobsAPI = {
   async getAllJobs(params = {}) {
     const query = new URLSearchParams(params).toString();
     const url = query ? `${API_BASE_URL}?${query}` : API_BASE_URL;
-
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch jobs");
-    return response.json();
+    return httpClient.get(url);
   },
 
   // Get single job by ID
   async getJob(id) {
-    const response = await fetch(`${API_BASE_URL}/${id}`);
-    if (!response.ok) throw new Error("Failed to fetch job");
-    return response.json();
+    return httpClient.get(`${API_BASE_URL}/${id}`);
   },
 
   // Create new job
   async createJob(jobData) {
-    const response = await fetch(API_BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jobData),
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      const error = new Error("Failed to create job");
-      error.data = errorData;
-      throw error;
-    }
-    return response.json();
+    return httpClient.post(API_BASE_URL, jobData);
   },
 
   // Update job
   async updateJob(id, jobData) {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(jobData),
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      const error = new Error("Failed to update job");
-      error.data = errorData;
-      throw error;
-    }
-    return response.json();
+    return httpClient.put(`${API_BASE_URL}/${id}`, jobData);
   },
 
   // Delete job
   async deleteJob(id) {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Failed to delete job");
-    return response.json();
+    return httpClient.delete(`${API_BASE_URL}/${id}`);
   },
 };

@@ -178,7 +178,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
+import { useJobs } from '../composables/useJobs'
 
+const { clearCache } = useJobs()
 const router = useRouter()
 const submitting = ref(false)
 const validationErrors = ref([])
@@ -210,6 +212,7 @@ const handleSubmit = async () => {
 
   try {
     const result = await jobsAPI.createJob(formData.value)
+    clearCache() // Invalidate cache
     showModalAlert('Success!', 'Job added successfully!', 'success', () => {
       router.push(`/jobs/${result.id}`)
     })

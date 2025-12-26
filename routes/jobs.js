@@ -2,6 +2,7 @@ import express from "express";
 // const { body, param, validationResult } = require("express-validator");
 import { body, param, validationResult } from "express-validator";
 import db from "../db/database.js";
+import { verifyToken, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -138,27 +139,14 @@ const validate = (req, res, next) => {
 };
 
 // POST create new job
-router.post("/", jobValidationRules, validate, (req, res) => {
-  const {
-    type,
-    title,
-    description,
-    salary,
-    location,
-    company_name,
-    company_description,
-    contact_email,
-    contact_phone,
-  } = req.body;
-
-  const query = `
-    INSERT INTO jobs (type, title, description, salary, location, company_name, company_description, contact_email, contact_phone)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  db.run(
-    query,
-    [
+router.post(
+  "/",
+  verifyToken,
+  requireAdmin,
+  jobValidationRules,
+  validate,
+  (req, res) => {
+    const {
       type,
       title,
       description,
@@ -168,71 +156,98 @@ router.post("/", jobValidationRules, validate, (req, res) => {
       company_description,
       contact_email,
       contact_phone,
-    ],
-    function (err) {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
+    } = req.body;
+
+    const query = `
+    INSERT INTO jobs (type, title, description, salary, location, company_name, company_description, contact_email, contact_phone)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+    db.run(
+      query,
+      [
+        type,
+        title,
+        description,
+        salary,
+        location,
+        company_name,
+        company_description,
+        contact_email,
+        contact_phone,
+      ],
+      function (err) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+        res
+          .status(201)
+          .json({ id: this.lastID, message: "Job created successfully" });
       }
-      res
-        .status(201)
-        .json({ id: this.lastID, message: "Job created successfully" });
-    }
-  );
-});
+    );
+  }
+);
 
 // PUT update job
-router.put("/:id", jobValidationRules, validate, (req, res) => {
-  const { id } = req.params;
-  const {
-    type,
-    title,
-    description,
-    salary,
-    location,
-    company_name,
-    company_description,
-    contact_email,
-    contact_phone,
-  } = req.body;
+router.put(
+  "/:id",
+  verifyToken,
+  requireAdmin,
+  jobValidationRules,
+  validate,
+  (req, res) => {
+    const { id } = req.params;
+    const {
+      type,
+      title,
+      description,
+      salary,
+      location,
+      company_name,
+      company_description,
+      contact_email,
+      contact_phone,
+    } = req.body;
 
-  const query = `
+    const query = `
     UPDATE jobs 
     SET type = ?, title = ?, description = ?, salary = ?, location = ?, 
         company_name = ?, company_description = ?, contact_email = ?, contact_phone = ?
     WHERE id = ?
   `;
 
-  db.run(
-    query,
-    [
-      type,
-      title,
-      description,
-      salary,
-      location,
-      company_name,
-      company_description,
-      contact_email,
-      contact_phone,
-      id,
-    ],
-    function (err) {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
+    db.run(
+      query,
+      [
+        type,
+        title,
+        description,
+        salary,
+        location,
+        company_name,
+        company_description,
+        contact_email,
+        contact_phone,
+        id,
+      ],
+      function (err) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+        if (this.changes === 0) {
+          res.status(404).json({ error: "Job not found!" });
+          return;
+        }
+        res.json({ message: "Job updated successfully!" });
       }
-      if (this.changes === 0) {
-        res.status(404).json({ error: "Job not found!" });
-        return;
-      }
-      res.json({ message: "Job updated successfully!" });
-    }
-  );
-});
+    );
+  }
+);
 
 // DELETE job
-router.delete("/:id", (req, res) => {
+router.delete("/:id", verifyToken, requireAdmin, (req, res) => {
   const { id } = req.params;
   const query = "DELETE FROM jobs WHERE id = ?";
 

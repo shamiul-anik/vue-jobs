@@ -3,12 +3,10 @@
     <!-- Hero -->
     <section class="bg-green-700 py-20 mb-4">
       <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
-      >
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <div class="text-center">
           <h1
-            class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl"
-          >
+            class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
             Elevate Your Vue Career
             <!-- Your Next Vue Adventure Starts Here -->
           </h1>
@@ -33,8 +31,7 @@
     <section class="pt-0 px-0 md:px md:pt-8 pb-4 md:pb-8">
       <div class="container-xl lg:container m-auto">
         <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg p-4 md:p-0"
-        >
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg p-4 md:p-0">
           <div class="bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold">For Developers</h2>
             <p class="mt-2 mb-4">
@@ -43,8 +40,7 @@
             <RouterLink
               to="/jobs"
               class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700"
-              aria-label="Browse all available Vue.js jobs"
-            >
+              aria-label="Browse all available Vue.js jobs">
               <i class="fas fa-briefcase mr-1"></i>
               Browse Jobs
             </RouterLink>
@@ -57,8 +53,7 @@
             <RouterLink
               to="/add-job"
               class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600"
-              aria-label="Post a new job listing"
-            >
+              aria-label="Post a new job listing">
               <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
@@ -93,28 +88,24 @@
     <section class="max-w-lg m-auto flex justify-center items-center my-8 px-6">
       <RouterLink
         to="/jobs"
-        class="group inline-flex items-center gap-2 border border-green-800 bg-green-600 hover:bg-green-700 text-white px-8 md:px-12 py-2 md:py-4 rounded-lg text-lg font-bold transition-all duration-300"
-      >
+        class="group inline-flex items-center gap-2 border border-green-800 bg-green-600 hover:bg-green-700 text-white px-8 md:px-12 py-2 md:py-4 rounded-lg text-lg font-bold transition-all duration-300">
         View All Jobs
         <i
-          class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"
-        ></i>
+          class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
       </RouterLink>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { RouterLink } from "vue-router";
 import JobCard from "../components/JobCard.vue";
 import JobSkeleton from "../components/JobSkeleton.vue";
-import { jobsAPI } from "../services/api";
 import { useSEO } from "../composables/useSEO";
+import { useJobs } from "../composables/useJobs";
 
-const jobs = ref([]);
-const loading = ref(true);
-const error = ref(null);
+const { homeJobs: jobs, loading, error, fetchHomeJobs } = useJobs();
 
 // SEO Configuration
 useSEO({
@@ -139,17 +130,7 @@ useSEO({
   },
 });
 
-onMounted(async () => {
-  try {
-    const data = await jobsAPI.getAllJobs({ limit: 3 });
-    jobs.value = data.jobs || data;
-  } catch (err) {
-    error.value = "Failed to load jobs. Please try again later.";
-    console.error("Error fetching jobs:", err);
-  } finally {
-    loading.value = false;
-  }
-});
+onMounted(fetchHomeJobs);
 
 // PostHog Test Function to Track Error
 const triggerError = () => {

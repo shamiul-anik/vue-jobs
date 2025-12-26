@@ -49,6 +49,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/jobs", jobsRouter);
 app.use("/api/users", usersRouter);
 
+// Static files for production
+const distPath = path.join(__dirname, "dist");
+app.use(express.static(distPath));
+
+// Fallback for SPA (Vue Router)
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api/"))
+    return res.status(404).json({ error: "API route not found" });
+  res.sendFile(path.join(distPath, "index.html"));
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

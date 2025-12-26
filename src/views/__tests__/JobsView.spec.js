@@ -3,6 +3,7 @@ import { mount, flushPromises } from "@vue/test-utils";
 import JobsView from "../JobsView.vue";
 import { createRouter, createMemoryHistory } from "vue-router";
 import JobSkeleton from "../../components/JobSkeleton.vue";
+import { useJobs, state as jobsState } from "../../composables/useJobs";
 
 // Mock the API
 vi.mock("../../services/api.js", () => {
@@ -65,13 +66,15 @@ vi.mock("../../services/api.js", () => {
   };
 });
 
-// Mock useSEO composable
 vi.mock("../../composables/useSEO.js", () => ({
   useSEO: vi.fn(),
 }));
 
+const { clearCache } = useJobs();
+
 describe("JobsView.vue", () => {
   beforeEach(() => {
+    clearCache();
     vi.useFakeTimers();
   });
 
@@ -106,6 +109,7 @@ describe("JobsView.vue", () => {
   });
 
   it("displays loading state initially", () => {
+    jobsState.loading = true; // Force loading state
     const wrapper = mount(JobsView, {
       global: {
         plugins: [createTestRouter()],

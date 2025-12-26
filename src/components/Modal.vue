@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4" @click.self="handleBackdropClick">
+      <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
         <!-- Backdrop -->
         <div class="fixed inset-0 bg-black/40 backdrop-blur-sm"></div>
 
@@ -160,20 +160,18 @@ const handleCancel = () => {
   emit('close')
 }
 
-const handleBackdropClick = () => {
-  if (props.type !== 'confirm') {
-    emit('close')
-  }
-}
+// const handleBackdropClick = () => {
+//   if (props.type !== 'confirm') {
+//     emit('close')
+//   }
+// }
 </script>
 
 <style scoped>
-.modal-enter-active {
-  transition: opacity 0s;
-}
-
+/* Backdrop transitions */
+.modal-enter-active,
 .modal-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease-out;
 }
 
 .modal-enter-from,
@@ -181,14 +179,22 @@ const handleBackdropClick = () => {
   opacity: 0;
 }
 
-.modal-enter-active .relative,
-.modal-leave-active .relative {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+/* Modal content transitions */
+.modal-enter-active .relative {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
 }
 
-.modal-enter-from .relative,
+.modal-leave-active .relative {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.15s ease-in;
+}
+
+.modal-enter-from .relative {
+  transform: scale(0.96) translateY(-8px);
+  opacity: 0;
+}
+
 .modal-leave-to .relative {
-  transform: scale(0.95);
+  transform: scale(0.98) translateY(4px);
   opacity: 0;
 }
 </style>

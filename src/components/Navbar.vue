@@ -16,8 +16,7 @@
               to="/"
               class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
               :class="{ 'bg-green-900': $route.path === '/' }"
-              aria-label="Home page"
-            >
+              aria-label="Home page">
               <i class="fas fa-home mr-1"></i>
               Home
             </RouterLink>
@@ -25,18 +24,16 @@
               to="/jobs"
               class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
               :class="{ 'bg-green-900': $route.path === '/jobs' }"
-              aria-label="Browse all jobs"
-            >
+              aria-label="Browse all jobs">
               <i class="fas fa-briefcase mr-1"></i>
               Jobs
             </RouterLink>
             <RouterLink
-              v-if="isAuthenticated"
+              v-if="isAuthenticated && isAdmin"
               to="/add-job"
               class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
               :class="{ 'bg-green-900': $route.path === '/add-job' }"
-              aria-label="Post a new job"
-            >
+              aria-label="Post a new job">
               <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
@@ -49,8 +46,7 @@
                 to="/login"
                 class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
                 :class="{ 'bg-green-900': $route.path === '/login' }"
-                aria-label="Sign in to your account"
-              >
+                aria-label="Sign in to your account">
                 <i class="fas fa-sign-in-alt mr-1"></i>
                 Login
               </RouterLink>
@@ -83,8 +79,7 @@
                 to="/login"
                 class="bg-white text-green-800 hover:bg-green-900 hover:text-white rounded-lg px-4 py-2"
                 :class="{ 'bg-green-900': $route.path === '/login' }"
-                aria-label="Sign in to your account"
-              >
+                aria-label="Sign in to your account">
                 <i class="fas fa-sign-in-alt mr-1"></i>
                 Login
               </RouterLink>
@@ -100,31 +95,15 @@
 
           <!-- Navigation Menu -->
           <div class="flex justify-center space-x-1 px-2">
-            <RouterLink
-              to="/"
-              class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-              :class="{ 'bg-green-900': $route.path === '/' }"
-              aria-label="Home page"
-            >
+            <RouterLink to="/" class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2" :class="{ 'bg-green-900': $route.path === '/' }" aria-label="Home page">
               <i class="fas fa-home mr-1"></i>
               Home
             </RouterLink>
-            <RouterLink
-              to="/jobs"
-              class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-              :class="{ 'bg-green-900': $route.path === '/jobs' }"
-              aria-label="Browse all jobs"
-            >
+            <RouterLink to="/jobs" class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2" :class="{ 'bg-green-900': $route.path === '/jobs' }" aria-label="Browse all jobs">
               <i class="fas fa-briefcase mr-1"></i>
               Jobs
             </RouterLink>
-            <RouterLink
-              v-if="isAuthenticated"
-              to="/add-job"
-              class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-              :class="{ 'bg-green-900': $route.path === '/add-job' }"
-              aria-label="Post a new job"
-            >
+            <RouterLink v-if="isAuthenticated && isAdmin" to="/add-job" class="min-w-28 justify-center text-center text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2" :class="{ 'bg-green-900': $route.path === '/add-job' }" aria-label="Post a new job">
               <i class="fas fa-plus-circle mr-1"></i>
               Add Job
             </RouterLink>
@@ -136,11 +115,16 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useAuth } from "../composables/useAuth";
 
 const { isAuthenticated, user, logout } = useAuth();
 const router = useRouter();
+
+const isAdmin = computed(() => {
+  return user.value && user.value.role === 'admin'
+})
 
 const handleLogout = () => {
   logout();

@@ -26,8 +26,11 @@
         <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
           Browse Jobs
         </h2>
+        <div class="text-center text-green-600 text-lg font-medium">
+          Total Posted Jobs Found: {{ totalJobs }}. (Showing {{ jobs.length }} Jobs)
+        </div>
 
-        <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+        <div class="flex flex-col md:flex-row gap-3 items-center justify-between my-6">
           <div class="flex items-center justify-center md:justify-start space-x-2">
             <label for="itemsPerPage" class="custom-label mb-0! min-w-32!">Items Per Page</label>
             <select
@@ -42,6 +45,7 @@
               <option value="100">100</option>
             </select>
           </div>
+
           <!-- Pagination -->
           <Pagination
             v-if="totalPages > 1"
@@ -78,42 +82,22 @@ import { ref, onMounted, computed, watch } from 'vue'
 import JobCard from '../components/JobCard.vue'
 import JobSkeleton from '../components/JobSkeleton.vue'
 import Pagination from '../components/Pagination.vue'
-import { jobsAPI } from '../services/api'
 import { useSEO } from '../composables/useSEO'
+import { useJobs } from '../composables/useJobs'
 
-const jobs = ref([])
-const loading = ref(true)
-const error = ref(null)
+const { allJobs: jobs, totalJobs, loading, error, fetchAllJobs } = useJobs()
 const searchQuery = ref('')
-const totalJobs = ref(0)
 
 // Pagination state
 const currentPage = ref(1)
 const itemsPerPage = ref(Number(localStorage.getItem('vue_jobs_items_per_page')) || 6)
 
-const fetchJobs = async () => {
-  loading.value = true
-  try {
-    const data = await jobsAPI.getAllJobs({
-      limit: itemsPerPage.value,
-      page: currentPage.value,
-      q: searchQuery.value
-    })
-
-    if (data.jobs) {
-      jobs.value = data.jobs
-      totalJobs.value = data.total
-    } else {
-      // Fallback for cases where API might still return an array
-      jobs.value = data
-      totalJobs.value = data.length
-    }
-  } catch (err) {
-    error.value = 'Failed to load jobs. Please try again later.'
-    console.error('Error fetching jobs:', err)
-  } finally {
-    loading.value = false
-  }
+const fetchJobs = () => {
+  fetchAllJobs({
+    limit: itemsPerPage.value,
+    page: currentPage.value,
+    q: searchQuery.value
+  })
 }
 
 // Watchers

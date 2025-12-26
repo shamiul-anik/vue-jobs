@@ -119,13 +119,13 @@ import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 import { useSEO } from '../composables/useSEO'
 import { useAuth } from '../composables/useAuth'
+import { useJobs } from '../composables/useJobs'
 
 const route = useRoute()
 const router = useRouter()
 const { user } = useAuth()
-const job = ref({})
-const loading = ref(true)
-const error = ref(null)
+const { loading, error, fetchJobById, getJobDetails, clearCache } = useJobs()
+const job = getJobDetails(route.params.id)
 
 const isAdmin = computed(() => {
   return user.value && user.value.role === 'admin'
@@ -152,7 +152,7 @@ const formattedCreatedAt = computed(() => {
   // Force UTC by appending "Z"
   const raw = job.value.created_at
   if (!raw) return 'Unknown date'
-  
+
   const d = new Date(raw.endsWith("Z") ? raw : raw + "Z")
 
   const datePart = d.toLocaleDateString("en-US", {
@@ -196,16 +196,7 @@ const modalConfig = ref({
 })
 let deleteConfirmed = false
 
-onMounted(async () => {
-  try {
-    job.value = await jobsAPI.getJob(route.params.id)
-  } catch (err) {
-    error.value = 'Failed to load job details. The job may not exist.'
-    console.error('Error fetching job:', err)
-  } finally {
-    loading.value = false
-  }
-})
+onMounted(() => fetchJobById(route.params.id))
 
 // Update SEO when job data is loaded
 watch(job, (newJob) => {
@@ -286,6 +277,7 @@ const handleModalConfirm = async () => {
   if (modalConfig.value.type === 'confirm') {
     try {
       await jobsAPI.deleteJob(job.value.id)
+      clearCache() // Invalidate cache after deletion
       showModalAlert('Success!', 'Job deleted successfully!', 'success', () => {
         router.push('/jobs')
       })

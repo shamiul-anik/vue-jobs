@@ -155,6 +155,7 @@ import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
 import { useAuth } from '../composables/useAuth'
+import httpClient from '../services/httpClient'
 
 const router = useRouter()
 const { login } = useAuth()
@@ -182,27 +183,10 @@ const handleLogin = async () => {
   loading.value = true
 
   try {
-
-    const response = await fetch("/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: formData.value.email,
-        password: formData.value.password,
-      }),
+    const data = await httpClient.post("/api/users/login", {
+      email: formData.value.email,
+      password: formData.value.password,
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      if (data.errors) {
-        throw new Error(data.errors.map(e => e.msg).join(", "));
-      } else {
-        throw new Error(data.error || "Login failed");
-      }
-    }
 
     // Store token and user info using auth composable
     login(data.user, data.token);
@@ -236,7 +220,3 @@ const handleModalClose = () => {
   }
 }
 </script>
-
-<style scoped>
-/* Additional custom styles if needed */
-</style>

@@ -64,6 +64,8 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Loading Skeletons**: Visual placeholders with **smooth transition animations**
   - **Dynamic Search**: Enhanced job filtering and real-time updates
   - **Responsive Pagination**: Efficiently handle large datasets with a professional UI design, mobile-optimized UI with **items per page state persistence** (Local Storage)
+  - **Shared State & Caching**: Centralized job state management with intelligent caching to prevent redundant API calls across routes
+  - **Standardized API Client**: Custom fetch wrapper with interceptor pattern for auth and error handling
   - **Layout Stability**: Optimized scrollbars to prevent layout shifts
   - **Global Loader**: Component-level loader for improved user experience
   - **Custom Scrollbar**: Branded green theme for a premium feel
@@ -267,6 +269,7 @@ vue-jobs/
 │   │   └── Modal.vue        # Reusable modal component
 │   ├── composables/
 │   │   ├── useAuth.js       # Authentication state management
+│   │   ├── useJobs.js       # Shared jobs state and caching logic
 │   │   └── useSEO.js        # SEO meta tags management
 │   ├── views/
 │   │   ├── HomeView.vue     # Home page
@@ -280,7 +283,8 @@ vue-jobs/
 │   ├── router/
 │   │   └── index.js         # Vue Router configuration
 │   ├── services/
-│   │   └── api.js           # API service layer
+│   │   ├── api.js           # API service layer (Job operations)
+│   │   └── httpClient.js    # Interceptor-based fetch wrapper
 │   ├── App.vue              # Root component
 │   └── main.js              # Vue app entry point
 ├── .dockerignore            # Docker ignore file
@@ -296,22 +300,22 @@ vue-jobs/
 
 ## 🎨 Technology Stack
 
-| Layer              | Technology                 | Version           |
-| ------------------ | -------------------------- | ----------------- |
-| Frontend Framework | Vue.js 3 (Composition API) | v3.5.25           |
-| Build Tool         | Vite                       | v7.2.7            |
-| Routing            | Vue Router 4               | v4.6.4            |
-| State Management   | Reactivity API (useAuth)   | -                 |
-| Styling            | Tailwind CSS               | v4.1.18           |
-| Testing Framework  | Vitest                     | v4.0.16           |
-| Test Utils         | @vue/test-utils            | v2.4.6            |
-| Backend            | Node.js + Express          | v22.20.0 / v5.2.1 |
-| Authentication     | JWT + bcryptjs             | v9.0.3 / v3.0     |
-| Database           | SQLite3                    | v5.1.7            |
-| HTTP Client        | Fetch API                  | Native            |
-| Deployment         | Docker + Docker Compose    | -                 |
-| Web Server         | Nginx                      | Alpine Latest     |
-| Monitoring         | PostHog                    | v1.309.1 (JS SDK) |
+| Layer              | Technology                        | Version           |
+| ------------------ | --------------------------------- | ----------------- |
+| Frontend Framework | Vue.js 3 (Composition API)        | v3.5.25           |
+| Build Tool         | Vite                              | v7.2.7            |
+| Routing            | Vue Router 4                      | v4.6.4            |
+| State Management   | Reactivity API (useAuth, useJobs) | -                 |
+| Styling            | Tailwind CSS                      | v4.1.18           |
+| Testing Framework  | Vitest                            | v4.0.16           |
+| Test Utils         | @vue/test-utils                   | v2.4.6            |
+| Backend            | Node.js + Express                 | v22.20.0 / v5.2.1 |
+| Authentication     | JWT + bcryptjs                    | v9.0.3 / v3.0     |
+| Database           | SQLite3                           | v5.1.7            |
+| HTTP Client        | Custom Fetch (Interceptors)       | v1.0.0            |
+| Deployment         | Docker + Docker Compose           | -                 |
+| Web Server         | Nginx                             | Alpine Latest     |
+| Monitoring         | PostHog                           | v1.309.1 (JS SDK) |
 
 ## 🔌 API Endpoints
 

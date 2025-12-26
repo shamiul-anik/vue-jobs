@@ -206,7 +206,9 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
+import { useJobs } from '../composables/useJobs'
 
+const { clearCache } = useJobs()
 const route = useRoute()
 const router = useRouter()
 const loading = ref(true)
@@ -258,6 +260,7 @@ const handleSubmit = () => {
 
       try {
         await jobsAPI.updateJob(route.params.id, formData.value)
+        clearCache() // Invalidate cache
         showModalAlert('Success!', 'Job updated successfully!', 'success', () => {
           router.push(`/jobs/${route.params.id}`)
         })

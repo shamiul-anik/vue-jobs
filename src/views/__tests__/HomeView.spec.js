@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import HomeView from "../HomeView.vue";
 import { createRouter, createMemoryHistory } from "vue-router";
+import { useJobs } from "../../composables/useJobs";
 
 // Mock the API for HomeView
 vi.mock("../../services/api.js", () => ({
@@ -20,12 +21,17 @@ vi.mock("../../services/api.js", () => ({
   },
 }));
 
-// Mock useSEO composable
 vi.mock("../../composables/useSEO.js", () => ({
   useSEO: vi.fn(() => ({ updateMetaTags: vi.fn() })),
 }));
 
+const { clearCache } = useJobs();
+
 describe("HomeView.vue", () => {
+  beforeEach(() => {
+    clearCache();
+  });
+
   const createTestRouter = () => {
     return createRouter({
       history: createMemoryHistory(),

@@ -6,13 +6,7 @@ import bcrypt from "bcryptjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbPath = path.join(__dirname, "database.db");
-
-// const sqlite3 = require("sqlite3").verbose();
-// const path = require("path");
-// const bcrypt = require("bcryptjs");
-
-// const dbPath = path.join(__dirname, "database.db");
+const dbPath = process.env.DB_PATH || path.join(__dirname, "database.db");
 
 // Create database connection
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -75,6 +69,8 @@ function initializeDatabase() {
           console.error("Error creating users table:", err.message);
         } else {
           console.log("Users table ready");
+          insertAdminUser();
+          insertTestUser();
         }
       }
     );
@@ -87,6 +83,7 @@ function initializeDatabase() {
           console.error("Error creating index:", err.message);
         } else {
           console.log("Index on created_at ready");
+          insertSampleData();
         }
       }
     );

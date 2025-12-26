@@ -215,6 +215,7 @@
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
+import httpClient from '../services/httpClient'
 
 const router = useRouter()
 const loading = ref(false)
@@ -268,28 +269,11 @@ const handleRegister = async () => {
   loading.value = true
 
   try {
-    const response = await fetch("/api/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: formData.value.name,
-        email: formData.value.email,
-        password: formData.value.password,
-      }),
+    const data = await httpClient.post("/api/users/register", {
+      name: formData.value.name,
+      email: formData.value.email,
+      password: formData.value.password,
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      if (data.errors) {
-        // Show validation errors
-        throw new Error(data.errors.map(e => e.msg).join(", "));
-      } else {
-        throw new Error(data.error || "Registration failed");
-      }
-    }
 
     showModalAlert('Success!', 'Account created successfully! Redirecting to login...', 'success', () => {
       router.push('/login')

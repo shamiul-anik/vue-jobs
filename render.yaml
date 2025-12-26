@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: vue-jobs
+    env: node
+    plan: free # Change to starter if you need persistent disk
+    buildCommand: npm install && npm run build
+    startCommand: npm run server
+    envVars:
+      - key: NODE_VERSION
+        value: 22.20.0
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 3000
+      - key: DB_PATH
+        value: /opt/render/project/src/db/database.db
+      - key: VITE_POSTHOG_HOST
+        sync: false # Set this in Render Dashboard UI for security
+      - key: VITE_POSTHOG_KEY
+        sync: false # Set this in Render Dashboard UI for security
+    # If using a paid plan (Starter+), uncomment the lines below for persistence
+    # disk:
+    #   name: sqlite-data
+    #   mountPath: /opt/render/project/src/db_persistent
+    #   sizeGB: 1
+    # envVars:
+    #   - key: DB_PATH
+    #     value: /opt/render/project/src/db_persistent/database.db

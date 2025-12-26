@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center space-x-2 my-4" aria-label="Pagination">
+  <div class="flex items-center justify-center space-x-2" aria-label="Pagination">
     <!-- Previous Button -->
     <button
       @click="$emit('change-page', currentPage - 1)"
