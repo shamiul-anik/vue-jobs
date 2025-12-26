@@ -17,7 +17,32 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security Middleware
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://us.i.posthog.com",
+          "https://us.posthog.com",
+        ],
+        "connect-src": [
+          "'self'",
+          "https://us.i.posthog.com",
+          "https://us.posthog.com",
+        ],
+        "img-src": [
+          "'self'",
+          "data:",
+          "https://us.i.posthog.com",
+          "https://us.posthog.com",
+        ],
+      },
+    },
+  })
+);
 
 // Rate Limiting for Reads
 const limiter = rateLimit({
