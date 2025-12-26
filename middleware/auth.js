@@ -6,9 +6,10 @@ const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_123";
  * Middleware to verify JWT token
  */
 export const verifyToken = (req, res, next) => {
-  // Get token from Authorization header
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+  // Get token from cookie or Authorization header
+  const token =
+    req.cookies.token ||
+    (req.headers.authorization && req.headers.authorization.split(" ")[1]);
 
   if (!token) {
     return res.status(401).json({ error: "No token provided" });

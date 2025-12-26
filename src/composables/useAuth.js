@@ -3,25 +3,31 @@ import { reactive, computed } from "vue";
 // Global state (singleton pattern) so it's shared across components
 const state = reactive({
   user: JSON.parse(localStorage.getItem("user")) || null,
-  token: localStorage.getItem("token") || null,
+  isAuthenticated: !!localStorage.getItem("user"), // Use user presence as initial auth state
 });
 
 export function useAuth() {
-  const login = (userData, token) => {
+  const login = (userData) => {
     state.user = userData;
-    state.token = token;
+    state.isAuthenticated = true;
     localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("token", token);
   };
 
-  const logout = () => {
-    state.user = null;
-    state.token = null;
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+  const logout = async () => {
+    try {
+      // Call server to clear cookie
+      const httpClient = (await import("../services/httpClient")).default;
+      await httpClient.post("/users/logout");
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      state.user = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem("user");
+    }
   };
 
-  const isAuthenticated = computed(() => !!state.token);
+  const isAuthenticated = computed(() => state.isAuthenticated);
   const user = computed(() => state.user);
 
   return {

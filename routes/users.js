@@ -72,7 +72,6 @@ router.post("/register", registerValidationRules, validate, (req, res) => {
   });
 });
 
-
 // POST /login
 router.post(
   "/login",
@@ -103,9 +102,15 @@ router.post(
         { expiresIn: "6h" }
       );
 
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Only use secure in production (HTTPS) [dev mode only supports HTTP]
+        sameSite: "strict",
+        maxAge: 6 * 60 * 60 * 1000, // 6 hours matches JWT expiresIn
+      });
+
       res.json({
         message: "Login successful",
-        token,
         user: {
           id: user.id,
           name: user.name,
@@ -116,6 +121,12 @@ router.post(
     });
   }
 );
+
+// POST /logout
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully!" });
+});
 
 // module.exports = router;
 export default router;

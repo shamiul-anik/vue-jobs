@@ -188,8 +188,8 @@ const handleLogin = async () => {
       password: formData.value.password,
     });
 
-    // Store token and user info using auth composable
-    login(data.user, data.token);
+    // Store user info using auth composable (token is handled via HttpOnly cookie)
+    login(data.user);
 
     showModalAlert('Success!', 'Login successful! Redirecting to dashboard...', 'success', () => {
       router.push('/')

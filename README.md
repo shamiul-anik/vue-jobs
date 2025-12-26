@@ -46,15 +46,16 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 - Responsive design
 - **User Authentication**:
   - **Register & Login** functionality
-  - **JWT (JSON Web Token)** for secure session management
+  - **HttpOnly Cookies** for secure JWT session management (Protected against XSS)
   - **Password Hashing** with bcryptjs
   - **Global Auth State** (Vue Composition API)
   - **Dynamic Navbar** (Login/Logout/Greeting)
 - **Security Enhanced**:
+  - **HttpOnly Cookies**: Prevents client-side JavaScript from accessing session tokens
   - **Helmet.js** for secure HTTP headers (Backend security enhancements)
   - **Rate Limiting** to prevent abuse (100 req/15min)
   - **Input Validation** & Sanitization (express-validator)
-  - **CORS** configured for safety
+  - **CORS** configured for safety with credential support
   - **Protected Routes** (Frontend checks)
 - **Database Optimizations**:
   - **WAL Mode** enabled for better concurrency
@@ -254,7 +255,7 @@ vue-jobs/
 │   └── images/              # Static images
 ├── routes/
 │   ├── jobs.js              # API routes for jobs
-│   └── users.js             # API routes for authentication (Login/Register)
+│   └── users.js             # API routes for authentication (Login/Register/Logout)
 ├── scripts/
 │   ├── backup-db.js         # Reliable WAL-aware backup utility
 │   ├── benchmark-db.js      # Database benchmarking script
@@ -268,7 +269,7 @@ vue-jobs/
 │   │   ├── JobCard.vue      # Job card component
 │   │   └── Modal.vue        # Reusable modal component
 │   ├── composables/
-│   │   ├── useAuth.js       # Authentication state management
+│   │   ├── useAuth.js       # Authentication & session state management
 │   │   ├── useJobs.js       # Shared jobs state and caching logic
 │   │   └── useSEO.js        # SEO meta tags management
 │   ├── views/
@@ -310,7 +311,7 @@ vue-jobs/
 | Testing Framework  | Vitest                            | v4.0.16           |
 | Test Utils         | @vue/test-utils                   | v2.4.6            |
 | Backend            | Node.js + Express                 | v22.20.0 / v5.2.1 |
-| Authentication     | JWT + bcryptjs                    | v9.0.3 / v3.0     |
+| Authentication     | HttpOnly Cookies + JWT + bcryptjs | v9.0.3 / v3.0     |
 | Database           | SQLite3                           | v5.1.7            |
 | HTTP Client        | Custom Fetch (Interceptors)       | v1.0.0            |
 | Deployment         | Docker + Docker Compose           | -                 |
@@ -319,13 +320,14 @@ vue-jobs/
 
 ## 🔌 API Endpoints
 
-| Method | Endpoint      | Description          |
-| ------ | ------------- | -------------------- |
-| GET    | /api/jobs     | Get all jobs         |
-| GET    | /api/jobs/:id | Get single job by ID |
-| POST   | /api/jobs     | Create new job       |
-| PUT    | /api/jobs/:id | Update job           |
-| DELETE | /api/jobs/:id | Delete job           |
+| Method | Endpoint          | Description          |
+| ------ | ----------------- | -------------------- |
+| GET    | /api/jobs         | Get all jobs         |
+| GET    | /api/jobs/:id     | Get single job by ID |
+| POST   | /api/jobs         | Create new job       |
+| PUT    | /api/jobs/:id     | Update job           |
+| DELETE | /api/jobs/:id     | Delete job           |
+| POST   | /api/users/logout | Clear auth cookie    |
 
 ## 💾 Database Schema
 

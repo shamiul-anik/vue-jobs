@@ -20,12 +20,7 @@ class HttpClient {
       ...customHeaders,
     };
 
-    // Auto-inject auth token if available
-    const token = localStorage.getItem("token");
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
-
+    // Headers no longer need manual token injection for HttpOnly cookies
     return headers;
   }
 
@@ -52,8 +47,7 @@ class HttpClient {
     // Handle specific status codes
     switch (response.status) {
       case 401:
-        // Unauthorized - clear auth and redirect to login
-        localStorage.removeItem("token");
+        // Unauthorized - clear user info and redirect to login
         localStorage.removeItem("user");
         if (window.location.pathname !== "/login") {
           window.location.href = "/login";
@@ -97,6 +91,7 @@ class HttpClient {
     const config = {
       ...options,
       headers: this._getHeaders(options.headers),
+      credentials: "include", // Required for cookies
     };
 
     try {

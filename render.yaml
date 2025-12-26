@@ -12,6 +12,8 @@ services:
         generateValue: true
       - key: PORT
         value: 3000
+      - key: NODE_ENV
+        value: production
       - key: DB_PATH
         value: /opt/render/project/src/db/database.db
       - key: VITE_POSTHOG_HOST

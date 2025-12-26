@@ -7,6 +7,7 @@ import jobsRouter from "./routes/jobs.js";
 import usersRouter from "./routes/users.js";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
 import { performBackup } from "./scripts/backup-db.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -41,7 +42,13 @@ app.use("/api/jobs", (req, res, next) => {
 });
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:3000"], // Allow dev servers
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -54,7 +61,7 @@ const distPath = path.join(__dirname, "dist");
 app.use(express.static(distPath));
 
 // Fallback for SPA (Vue Router)
-app.get("*", (req, res) => {
+app.get("*path", (req, res) => {
   if (req.path.startsWith("/api/"))
     return res.status(404).json({ error: "API route not found" });
   res.sendFile(path.join(distPath, "index.html"));
