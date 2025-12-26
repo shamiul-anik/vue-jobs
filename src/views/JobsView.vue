@@ -55,7 +55,8 @@
         </div>
 
         <Transition>
-          <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Show skeleton when loading OR during the very first mount before initialization -->
+          <div v-if="loading || (!initialized && jobs.length === 0)" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <JobSkeleton v-for="i in 6" :key="i" />
           </div>
 
@@ -92,12 +93,15 @@ const searchQuery = ref('')
 const currentPage = ref(1)
 const itemsPerPage = ref(Number(localStorage.getItem('vue_jobs_items_per_page')) || 6)
 
-const fetchJobs = () => {
-  fetchAllJobs({
+const initialized = ref(false)
+
+const fetchJobs = async () => {
+  await fetchAllJobs({
     limit: itemsPerPage.value,
     page: currentPage.value,
     q: searchQuery.value
   })
+  initialized.value = true
 }
 
 // Watchers

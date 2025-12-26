@@ -2,7 +2,7 @@
   <div>
     <section class="bg-green-50">
       <div class="container max-w-5xl mx-auto py-10 px-6">
-        <div v-if="loading" class="text-center" aria-live="polite">
+        <div v-if="loading || (!initialized && !job.title)" class="text-center" aria-live="polite">
           <p class="text-xl">Loading job details...</p>
         </div>
 
@@ -196,7 +196,14 @@ const modalConfig = ref({
 })
 let deleteConfirmed = false
 
-onMounted(() => fetchJobById(route.params.id))
+const initialized = ref(false)
+
+const getJob = async () => {
+  await fetchJobById(route.params.id)
+  initialized.value = true
+}
+
+onMounted(getJob)
 
 // Update SEO when job data is loaded
 watch(job, (newJob) => {

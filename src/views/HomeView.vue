@@ -70,7 +70,8 @@
         </h2>
 
         <Transition>
-          <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Show skeleton when loading OR during the very first mount before initialization -->
+          <div v-if="loading || (!initialized && jobs.length === 0)" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <JobSkeleton v-for="i in 3" :key="i" />
           </div>
 
@@ -98,7 +99,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { RouterLink } from "vue-router";
 import JobCard from "../components/JobCard.vue";
 import JobSkeleton from "../components/JobSkeleton.vue";
@@ -130,7 +131,14 @@ useSEO({
   },
 });
 
-onMounted(fetchHomeJobs);
+const initialized = ref(false)
+
+const getHomeJobs = async () => {
+  await fetchHomeJobs()
+  initialized.value = true
+}
+
+onMounted(getHomeJobs)
 
 // PostHog Test Function to Track Error
 const triggerError = () => {
