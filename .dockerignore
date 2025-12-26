@@ -1,11 +1,13 @@
 node_modules
 dist
 .git
+.github
 .gitignore
 *.db
 *.db-shm
 *.db-wal
 docker-compose.yml
+Dockerfile*
 README.md
 .env
 .env.local
@@ -19,3 +21,9 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+backup
+performance
+# scripts is needed by server.js
+render.yaml
+vitest.config.js
+vitest.setup.js
