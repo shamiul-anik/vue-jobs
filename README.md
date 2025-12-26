@@ -16,6 +16,18 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 
 ---
 
+## 🌐 Live Demo
+
+**Link**: [https://vue-jobs-41cn.onrender.com](https://vue-jobs-41cn.onrender.com)
+
+> [!NOTE]
+> This application is currently hosted on **Render's Free Tier** for demonstration purposes.
+>
+> - **Performance**: You may experience a "cold start" (slower initial load) if the instance has been idle.
+> - **Optimized Core**: While the hosting environment is limited, the application code is highly optimized for performance and will respond significantly faster on a production-grade server.
+
+---
+
 ## 📖 Table of Contents
 
 - [🚀 Features](#-features)
