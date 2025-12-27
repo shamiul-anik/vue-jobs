@@ -203,14 +203,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute, useRouter, RouterLink } from 'vue-router'
+import { useRouter, useRoute, RouterLink } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 import { useJobs } from '../composables/useJobs'
+import { jobSchema } from '../schemas/job'
 
 const { clearCache } = useJobs()
-const route = useRoute()
 const router = useRouter()
+const route = useRoute()
+
 const loading = ref(true)
 const error = ref(null)
 const submitting = ref(false)
@@ -219,8 +221,8 @@ const validationErrors = ref([])
 // Modal state
 const showModal = ref(false)
 const modalConfig = ref({
-  type: 'alert',
-  variant: 'success',
+  type: 'confirm',
+  variant: 'info',
   title: '',
   message: ''
 })
@@ -249,15 +251,33 @@ onMounted(async () => {
   }
 })
 
+const validateForm = () => {
+  const result = jobSchema.safeParse(formData.value)
+  if (!result.success) {
+    const errors = result.error.errors || result.error.issues || [];
+    validationErrors.value = errors.map(err => ({
+      msg: err.message
+    }));
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return false
+  }
+  return true
+}
+
 const handleSubmit = () => {
+  validationErrors.value = [] // Clear previous errors
+
+  // Frontend Validation
+  if (!validateForm()) {
+    return
+  }
+
   showConfirmModal(
     'Update Job?',
     'Are you sure you want to save these changes to the job listing?',
     'info',
     async () => {
       submitting.value = true
-      validationErrors.value = [] // Clear previous errors
-
       try {
         await jobsAPI.updateJob(route.params.id, formData.value)
         clearCache() // Invalidate cache
@@ -266,12 +286,10 @@ const handleSubmit = () => {
         })
       } catch (err) {
         if (err.data && err.data.errors) {
-          // Handle validation errors from backend
+          // Handle backend validation errors
           validationErrors.value = err.data.errors
-          // Scroll to top to see errors
           window.scrollTo({ top: 0, behavior: 'smooth' })
         } else {
-          // Generic error
           showModalAlert('Error', 'Failed to update job. Please try again.', 'error')
           console.error('Error updating job:', err)
         }

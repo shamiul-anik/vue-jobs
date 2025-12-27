@@ -42,6 +42,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 - [🔌 API Endpoints](#-api-endpoints)
 - [🧪 Testing](#-testing)
 - [⚡ Performance Testing](#-performance-testing)
+- [✅ Validation Strategy](#-validation-strategy)
 
 ---
 
@@ -69,6 +70,10 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Input Validation** & Sanitization (express-validator)
   - **CORS** configured for safety with credential support
   - **Protected Routes** (Frontend checks)
+- **Validation Strategy (Dual-Layer)**:
+  - **Frontend**: **Zod** schemas provide instant, user-friendly feedback without server round trips.
+  - **Backend**: **express-validator** ensures data integrity and security, acting as the final gatekeeper.
+  - **Synchronization**: Rules (e.g., character limits) are strictly synchronized between frontend schemas and backend logic.
 - **Database Optimizations**:
   - **WAL Mode** enabled for better concurrency
   - **Synchronous NORMAL** for faster writes
@@ -280,7 +285,11 @@ vue-jobs/
 │   ├── components/
 │   │   ├── Navbar.vue       # Navigation component
 │   │   ├── JobCard.vue      # Job card component
-│   │   └── Modal.vue        # Reusable modal component
+│   │   ├── Modal.vue        # Reusable modal component
+│   │   ├── Footer.vue       # Site footer
+│   │   ├── Contact.vue      # Contact form component
+│   │   ├── Pagination.vue   # Pagination controls
+│   │   └── JobSkeleton.vue  # Loading state component
 │   ├── composables/
 │   │   ├── useAuth.js       # Authentication & session state management
 │   │   ├── useJobs.js       # Shared jobs state and caching logic
@@ -296,6 +305,10 @@ vue-jobs/
 │   │   └── NotFoundView.vue # 404 page
 │   ├── router/
 │   │   └── index.js         # Vue Router configuration
+│   ├── schemas/
+│   │   ├── auth.js          # Authentication validation schemas
+│   │   ├── contact.js       # Contact form validation schema
+│   │   └── job.js           # Job validation schema
 │   ├── services/
 │   │   ├── api.js           # API service layer (Job operations)
 │   │   └── httpClient.js    # Interceptor-based fetch wrapper
@@ -314,22 +327,24 @@ vue-jobs/
 
 ## 🎨 Technology Stack
 
-| Layer              | Technology                        | Version           |
-| ------------------ | --------------------------------- | ----------------- |
-| Frontend Framework | Vue.js 3 (Composition API)        | v3.5.25           |
-| Build Tool         | Vite                              | v7.2.7            |
-| Routing            | Vue Router 4                      | v4.6.4            |
-| State Management   | Reactivity API (useAuth, useJobs) | -                 |
-| Styling            | Tailwind CSS                      | v4.1.18           |
-| Testing Framework  | Vitest                            | v4.0.16           |
-| Test Utils         | @vue/test-utils                   | v2.4.6            |
-| Backend            | Node.js + Express                 | v22.20.0 / v5.2.1 |
-| Authentication     | HttpOnly Cookies + JWT + bcryptjs | v9.0.3 / v3.0     |
-| Database           | SQLite3                           | v5.1.7            |
-| HTTP Client        | Custom Fetch (Interceptors)       | v1.0.0            |
-| Deployment         | Docker + Docker Compose           | -                 |
-| Web Server         | Nginx                             | Alpine Latest     |
-| Monitoring         | PostHog                           | v1.309.1 (JS SDK) |
+| Layer               | Technology                        | Version           |
+| ------------------- | --------------------------------- | ----------------- |
+| Frontend Framework  | Vue.js 3 (Composition API)        | v3.5.25           |
+| Build Tool          | Vite                              | v7.2.7            |
+| Routing             | Vue Router 4                      | v4.6.4            |
+| State Management    | Reactivity API (useAuth, useJobs) | -                 |
+| Styling             | Tailwind CSS                      | v4.1.18           |
+| Testing Framework   | Vitest                            | v4.0.16           |
+| Test Utils          | @vue/test-utils                   | v2.4.6            |
+| Backend             | Node.js + Express                 | v22.20.0 / v5.2.1 |
+| Validation (Client) | Zod                               | v4.2.1            |
+| Validation (Server) | express-validator                 | v7.2.0            |
+| Authentication      | HttpOnly Cookies + JWT + bcryptjs | v9.0.3 / v3.0     |
+| Database            | SQLite3                           | v5.1.7            |
+| HTTP Client         | Custom Fetch (Interceptors)       | v1.0.0            |
+| Deployment          | Docker + Docker Compose           | -                 |
+| Web Server          | Nginx                             | Alpine Latest     |
+| Monitoring          | PostHog                           | v1.309.1 (JS SDK) |
 
 ## 🔌 API Endpoints
 
@@ -570,6 +585,29 @@ npm run preview
 ## 📝 Sample Data
 
 The database automatically populates with 6 sample job listings on first run. You can add, edit, or delete these as needed.
+
+# ✅ Validation Strategy
+
+The application implements a **Dual-Layer Validation** strategy to ensure both User Experience (UX) and Security.
+
+### 1. Frontend Validation (Zod)
+
+- **Library**: `zod`
+- **Location**: `src/schemas/`
+- **Purpose**: Provides instant feedback to users, preventing invalid requests from ever reaching the server.
+- **Implementation**: Zod schemas (`job.js`, `auth.js`, `contact.js`) define the shape and constraints of data.
+- **Safety**: Uses a robust error access pattern (`errors || issues || []`) to prevent crashes across Zod versions.
+
+### 2. Backend Validation (express-validator)
+
+- **Library**: `express-validator`
+- **Location**: `routes/` middleware
+- **Purpose**: Acts as the authoritative gatekeeper, protecting the database from malicious or malformed data.
+- **Implementation**: Middleware chains define rules (e.g., `body('email').isEmail()`) that run before controller logic.
+
+### Synchronization
+
+To ensure consistency, validation rules such as character limits (e.g., Job Title: 3-50 chars) are kept synchronized between the Frontend Zod schemas and Backend validator chains.
 
 # 📊 Database Performance Analysis
 

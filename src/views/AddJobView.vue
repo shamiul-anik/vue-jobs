@@ -179,6 +179,7 @@ import { useRouter } from 'vue-router'
 import { jobsAPI } from '../services/api'
 import Modal from '../components/Modal.vue'
 import { useJobs } from '../composables/useJobs'
+import { jobSchema } from '../schemas/job'
 
 const { clearCache } = useJobs()
 const router = useRouter()
@@ -206,9 +207,30 @@ const formData = ref({
   contact_phone: ''
 })
 
+const validateForm = () => {
+  const result = jobSchema.safeParse(formData.value)
+  if (!result.success) {
+    console.log('Validation failed:', result); // Debug log
+    const errors = result.error.errors || result.error.issues || [];
+    // Map Zod errors to the format expected by the template
+    validationErrors.value = errors.map(err => ({
+      msg: err.message
+    }))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return false
+  }
+  return true
+}
+
 const handleSubmit = async () => {
-  submitting.value = true
   validationErrors.value = [] // Clear previous errors
+
+  // Frontend Validation
+  if (!validateForm()) {
+    return
+  }
+
+  submitting.value = true
 
   try {
     const result = await jobsAPI.createJob(formData.value)

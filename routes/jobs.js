@@ -94,8 +94,8 @@ const jobValidationRules = [
     .withMessage("Invalid job type"),
   body("title")
     .trim()
-    .isLength({ min: 3, max: 100 })
-    .withMessage("Title must be between 3 and 100 characters")
+    .isLength({ min: 3, max: 50 })
+    .withMessage("Title must be between 3 and 50 characters")
     .escape(),
   body("description")
     .trim()
@@ -104,18 +104,20 @@ const jobValidationRules = [
     .escape(),
   body("salary")
     .trim()
+    .notEmpty()
+    .withMessage("Salary is required")
     .isLength({ max: 50 })
     .withMessage("Salary must be less than 50 characters")
     .escape(),
   body("location")
     .trim()
-    .isLength({ min: 2, max: 100 })
-    .withMessage("Location must be between 2 and 100 characters")
+    .isLength({ min: 2, max: 60 })
+    .withMessage("Location must be between 2 and 60 characters")
     .escape(),
   body("company_name")
     .trim()
-    .isLength({ min: 2, max: 100 })
-    .withMessage("Company name must be between 2 and 100 characters")
+    .isLength({ min: 3, max: 50 })
+    .withMessage("Company name must be between 3 and 50 characters")
     .escape(),
   body("contact_email")
     .trim()

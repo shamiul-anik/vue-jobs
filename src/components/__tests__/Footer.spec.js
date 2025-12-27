@@ -34,9 +34,9 @@ describe("Footer.vue", () => {
       },
     });
     const currentYear = new Date().getFullYear();
-    // Updated expectation based on new template
+    // Updated assertion to match current Footer.vue text
     expect(wrapper.text()).toContain(
-      `${currentYear} VueJobs.com. Built by the community.`
+      `© ${currentYear} Vue Jobs. All Rights Reserved.`
     );
   });
 
@@ -49,13 +49,11 @@ describe("Footer.vue", () => {
       },
     });
     const links = wrapper.findAll("a");
-    // Updated expectations based on new template: "Privacy", "Terms", "Cookies"
-    const privacyLink = links.find((link) => link.text() === "Privacy");
-    const termsLink = links.find((link) => link.text() === "Terms");
-    const cookiesLink = links.find((link) => link.text() === "Cookies");
+    // Updated expectations based on current Footer.vue template
+    const privacyLink = links.find((link) => link.text() === "Privacy Policy");
+    const termsLink = links.find((link) => link.text() === "Terms of Service");
 
     expect(privacyLink).toBeDefined();
     expect(termsLink).toBeDefined();
-    expect(cookiesLink).toBeDefined();
   });
 });

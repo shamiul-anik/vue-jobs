@@ -24,9 +24,13 @@ describe("Contact.vue", () => {
     vi.useFakeTimers();
     const wrapper = mount(Contact);
 
-    // Fill out form to avoid built-in HTML validation issues if possible,
-    // though shallow mount or `prevent` often bypasses browser validation.
-    // However, jsdom doesn't fully enforce HTML5 validation, so we can just submit.
+    // Fill out form with valid data
+    await wrapper.find('input[type="text"]').setValue("John Doe");
+    await wrapper.find('input[type="email"]').setValue("john@example.com");
+    await wrapper.find("select").setValue("Job Inquiry");
+    await wrapper
+      .find("textarea")
+      .setValue("This is a message longer than 10 characters.");
 
     await wrapper.find("form").trigger("submit.prevent");
 
@@ -41,6 +45,14 @@ describe("Contact.vue", () => {
   it("shows success message after simulation", async () => {
     vi.useFakeTimers();
     const wrapper = mount(Contact);
+
+    // Fill out form with valid data
+    await wrapper.find('input[type="text"]').setValue("John Doe");
+    await wrapper.find('input[type="email"]').setValue("john@example.com");
+    await wrapper.find("select").setValue("Job Inquiry");
+    await wrapper
+      .find("textarea")
+      .setValue("This is a message longer than 10 characters.");
 
     await wrapper.find("form").trigger("submit.prevent");
 

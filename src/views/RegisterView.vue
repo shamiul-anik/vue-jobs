@@ -216,6 +216,7 @@ import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
 import httpClient from '../services/httpClient'
+import { registerSchema } from '../schemas/auth'
 
 const router = useRouter()
 const loading = ref(false)
@@ -254,15 +255,12 @@ const formData = ref({
 const handleRegister = async () => {
   errorMessage.value = ''
 
-  // Validate passwords match
-  if (formData.value.password !== formData.value.confirmPassword) {
-    errorMessage.value = 'Passwords do not match'
-    return
-  }
+  // Zod Validation
+  const result = registerSchema.safeParse(formData.value)
 
-  // Validate password length
-  if (formData.value.password.length < 6) {
-    errorMessage.value = 'Password must be at least 6 characters long'
+  if (!result.success) {
+    const issues = result.error.errors || result.error.issues || [];
+    errorMessage.value = issues[0]?.message || 'Invalid input'
     return
   }
 

@@ -156,6 +156,7 @@ import { useRouter, RouterLink } from 'vue-router'
 import Modal from '../components/Modal.vue'
 import { useAuth } from '../composables/useAuth'
 import httpClient from '../services/httpClient'
+import { loginSchema } from '../schemas/auth'
 
 const router = useRouter()
 const { login } = useAuth()
@@ -180,6 +181,19 @@ const formData = ref({
 
 const handleLogin = async () => {
   errorMessage.value = ''
+
+  // Zod Validation
+  const result = loginSchema.safeParse({
+    email: formData.value.email,
+    password: formData.value.password
+  })
+
+  if (!result.success) {
+    const issues = result.error.errors || result.error.issues || [];
+    errorMessage.value = issues[0]?.message || 'Invalid input'
+    return
+  }
+
   loading.value = true
 
   try {

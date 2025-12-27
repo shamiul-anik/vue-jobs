@@ -7,19 +7,13 @@ import jwt from "jsonwebtoken";
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_123"; // Fallback for dev
 
-// const express = require("express");
-// const router = express.Router();
-// const db = require("../db/database");
-// const bcrypt = require("bcryptjs");
-// const { body, validationResult } = require("express-validator");
-// const jwt = require("jsonwebtoken");
 
 // Validation Rules for Registration
 const registerValidationRules = [
   body("name")
     .trim()
-    .isLength({ min: 2 })
-    .withMessage("Name must be at least 2 characters long")
+    .isLength({ min: 3, max: 50 })
+    .withMessage("Name must be between 3 and 50 characters")
     .escape(),
   body("email")
     .trim()

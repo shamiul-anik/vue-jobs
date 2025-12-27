@@ -28,6 +28,17 @@
 
         <!-- Contact Form -->
         <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-xl text-gray-900">
+
+          <!-- Validation Errors Alert -->
+          <div v-if="validationErrors.length > 0" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 text-sm" role="alert">
+            <p class="font-bold">Please fix the following:</p>
+            <ul class="list-disc ml-5 mt-1">
+              <li v-for="(error, index) in validationErrors" :key="index">
+                {{ error.msg }}
+              </li>
+            </ul>
+          </div>
+
           <form @submit.prevent="submitForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
@@ -98,6 +109,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import { contactSchema } from '../schemas/contact';
 
 // Form Logic
 const form = reactive({
@@ -108,8 +120,27 @@ const form = reactive({
 });
 
 const status = ref('idle'); // idle, sending, success
+const validationErrors = ref([]);
+
+const validateForm = () => {
+  const result = contactSchema.safeParse(form);
+  if (!result.success) {
+    const issues = result.error.errors || result.error.issues || [];
+    validationErrors.value = issues.map(err => ({
+      msg: err.message
+    }));
+    return false;
+  }
+  return true;
+};
 
 const submitForm = () => {
+  validationErrors.value = [];
+
+  if (!validateForm()) {
+    return;
+  }
+
   status.value = 'sending';
 
   // Simulate API call

@@ -35,11 +35,11 @@
     "express-rate-limit": "^8.2.1",
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
-    "html2pdf.js": "^0.12.1",
     "jsonwebtoken": "^9.0.3",
     "posthog-js": "^1.309.1",
     "sqlite3": "^5.1.7",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
