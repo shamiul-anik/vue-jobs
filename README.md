@@ -406,7 +406,7 @@ npm run test:coverage
 
 ### Test Coverage
 
-The project includes comprehensive test coverage with **194 tests** across **19 test files** covering:
+The project includes comprehensive test coverage with **206 tests** across **22 test files** covering:
 
 **Frontend Views (94 tests):**
 
@@ -419,21 +419,24 @@ The project includes comprehensive test coverage with **194 tests** across **19 
 - ✅ LoginView - User login form
 - ✅ NotFoundView - 404 error page
 
-**Components (24 tests):**
+**Components (36 tests):**
 
 - ✅ Navbar - Navigation component
 - ✅ JobCard - Job listing card
 - ✅ Modal - Reusable modal dialog
 - ✅ Pagination - Page navigation logic
 - ✅ JobSkeleton - Loading state placeholders
+- ✅ Footer - Copyright, links, and rendering
+- ✅ Contact - Form states and validation
 
 **Services (10 tests):**
 
 - ✅ API Service - REST API integration and error handling
 
-**Composables (10 tests):**
+**Composables (20 tests):**
 
 - ✅ useAuth - Authentication state management
+- ✅ useJobs - Job data fetching, caching, and error handling
 - ✅ useSEO - Dynamic meta tags and SEO
 
 **Backend Routes (46 tests):**
