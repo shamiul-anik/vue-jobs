@@ -84,6 +84,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Custom Scrollbar**: Branded green theme for a premium feel
   - **Font Awesome** icons for visual cues
   - Custom SVG illustrations for Auth pages
+  <!-- - **Interactive Contact Page**: Functional form UI with validation and email simulation -->
   - **Accessibility** (ARIA labels, semantic HTML)
 - **Frontend Validation**:
   - Real-time error feedback for forms
@@ -99,7 +100,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
   - **Docker** containerization for Backend & Frontend
   - **Nginx** reverse proxy and static file serving
   - **Docker Compose** orchestration
-  - **Multi-stage builds** for optimized images
+  - **Multi-stage builds** for highly optimized, small-footprint images (npm ci, production-only deps)
 - **Database Migration**:
   - Production-ready script to import data from external SQLite files
   - Transaction-safe with automatic rollbacks
