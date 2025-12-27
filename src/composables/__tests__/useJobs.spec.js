@@ -80,6 +80,9 @@ describe("useJobs Composable", () => {
   });
 
   it("handles errors correctly", async () => {
+    // Spy on console.error to suppress the expected error log
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
     const errorMsg = "Network Error";
     jobsAPI.getAllJobs.mockRejectedValue(new Error(errorMsg));
 
@@ -89,5 +92,8 @@ describe("useJobs Composable", () => {
 
     expect(state.loading).toBe(false);
     expect(error.value).toBe("Failed to load featured jobs.");
+    expect(consoleSpy).toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
   });
 });
