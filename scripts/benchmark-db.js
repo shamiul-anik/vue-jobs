@@ -8,12 +8,6 @@ const __dirname = path.dirname(__filename);
 
 const DB_PATH = path.join(__dirname, "..", "db", "benchmark.db");
 
-// const sqlite3 = require("sqlite3").verbose();
-// const path = require("path");
-// const fs = require("fs");
-
-// const DB_PATH = path.join(__dirname, "..", "db", "benchmark.db");
-
 
 // Remove existing benchmark db
 if (fs.existsSync(DB_PATH)) {
@@ -75,8 +69,11 @@ db.serialize(() => {
 
           // Cleanup
           readStmt.finalize();
-          db.close();
-          fs.unlinkSync(DB_PATH);
+          db.close((err) => {
+            if (fs.existsSync(DB_PATH)) {
+              fs.unlinkSync(DB_PATH);
+            }
+          });
         }
       });
     }

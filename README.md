@@ -497,13 +497,21 @@ The project includes a **comprehensive performance testing suite** with multiple
 ```bash
 # Performance benchmark tests (15 tests, all passing ✅)
 npm run test -- src/services/__tests__/api.perf.spec.js --run
+```
 
+```bash
 # Database performance benchmark
 npm run db:benchmark
+```
+![Database Benchmark Results](backup/verification_screenshots/db_benchmark.png)
 
+
+```bash
 # API load testing (requires server running in another terminal)
 npm run load-test
 ```
+![API Load Testing Results](backup/verification_screenshots/api_load_testing.png)
+
 
 ### Performance Documentation
 
