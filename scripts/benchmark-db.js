@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 
 const DB_PATH = path.join(__dirname, "..", "db", "benchmark.db");
 
-
 // Remove existing benchmark db
 if (fs.existsSync(DB_PATH)) {
   fs.unlinkSync(DB_PATH);
