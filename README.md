@@ -503,15 +503,15 @@ npm run test -- src/services/__tests__/api.perf.spec.js --run
 # Database performance benchmark
 npm run db:benchmark
 ```
-![Database Benchmark Results](backup/verification_screenshots/db_benchmark.png)
 
+![Database Benchmark Results](backup/verification_screenshots/db_benchmark.png)
 
 ```bash
 # API load testing (requires server running in another terminal)
 npm run load-test
 ```
-![API Load Testing Results](backup/verification_screenshots/api_load_testing.png)
 
+![API Load Testing Results](backup/verification_screenshots/api_load_testing.png)
 
 ### Performance Documentation
 
@@ -589,8 +589,8 @@ Memory (100k items):      1.32MB       ✅ Low
 
 ```json
 {
-  "test:bench": "vitest --bench",
-  "test:bench:watch": "vitest --bench --watch",
+  "test:bench": "vitest bench",
+  "test:bench:watch": "vitest bench --watch",
   "load-test": "node scripts/load-test.js",
   "perf:all": "npm run test:bench && npm run load-test"
 }
