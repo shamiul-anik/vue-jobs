@@ -104,6 +104,10 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 - **Deployment & DevOps**:
   - **Docker** containerization for Backend & Frontend
   - **Nginx** reverse proxy and static file serving
+  - **Nginx Optimizations**:
+    - **Gzip Compression**: Enabled for HTML, CSS, JS, and JSON to reduce network payload size.
+    - **Browser Caching**: Implemented long-term caching (1 year) for static assets (JS, CSS, images) using Vite's hashed filenames.
+    - **Cache Integrity**: Configured `index.html` with `no-cache` to ensure users always receive the latest application version.
   - **Docker Compose** orchestration
   - **Multi-stage builds** for highly optimized, small-footprint images (npm ci, production-only deps)
 - **Database Migration**:
@@ -191,6 +195,20 @@ docker-compose up
 
 - **Frontend**: `http://localhost:80` (or just `http://localhost`)
 - **Backend API**: `http://localhost:3000`
+
+#### 🔍 Verifying Nginx Optimizations
+
+When running with Docker, we can verify that Gzip and Caching are working:
+
+1.  **Open the site**: Go to `http://localhost`.
+2.  **Open DevTools**: Press `F12` and go to the **Network** tab.
+3.  **Refresh**: Trigger a fresh load (`Ctrl + R`).
+4.  **Check Headers**:
+    - Click on a `.js` or `.css` file (e.g., `index-D7...js`).
+    - **Compression**: Look for `Content-Encoding: gzip` in Response Headers.
+    - **Caching**: Look for `Cache-Control: public, no-transform` and `expires` set to 1 year in the future.
+    - **Instant Updates**: For `index.html`, verify `Cache-Control: no-cache, no-store, must-revalidate` to ensure users always check for the latest build.
+![Nginx Optimization Verification](backup/verification_screenshots/nginx.png)
 
 ### 🔑 Admin Credentials (Auto-Generated)
 
