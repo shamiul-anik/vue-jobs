@@ -66,7 +66,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 - **Security Enhanced**:
   - **HttpOnly Cookies**: Prevents client-side JavaScript from accessing session tokens
   - **Helmet.js** for secure HTTP headers (Backend security enhancements)
-  - **Rate Limiting** to prevent abuse (100 req/15min)
+  - **Rate Limiting** with Redis persistence (survives restarts, works across instances)
   - **Input Validation** & Sanitization (express-validator)
   - **CORS** configured for safety with credential support
   - **Protected Routes** (Frontend checks)
@@ -252,6 +252,51 @@ This ensures users see updated job listings immediately after any write operatio
 | `EXPIRED`  | Cached response was stale, refetched                 |
 | `UPDATING` | Stale response served while refreshing in background |
 
+#### 🔄 Verifying Redis Rate Limiting
+
+Redis is used for persistent rate limiting that survives server restarts and works across distributed instances.
+
+**1. Check Redis Connection Status:**
+
+```bash
+docker compose logs backend | grep -i redis
+# Expected: ✅ Redis connected successfully
+```
+
+**2. Inspect Rate Limit Keys in Redis:**
+
+```bash
+# Open Redis CLI
+docker exec -it vue-jobs-redis-1 redis-cli
+
+# Inside Redis CLI, run these commands:
+KEYS *                    # Show all keys
+KEYS rl:*                 # View all rate limit keys (run after making API requests)
+# Example output: 1) "rl:read:::ffff:172.18.0.1"
+GET rl:read:YOUR_IP       # View a specific rate limit counter (IP = 172.18.0.1 in this case)
+
+```
+
+**3. Monitor Rate Limits in Real-time:**
+
+```bash
+docker exec -it vue-jobs-redis-1 redis-cli MONITOR
+# Shows all Redis commands as they happen
+```
+
+**4. Reset Rate Limits (for testing):**
+
+```bash
+docker exec -it vue-jobs-redis-1 redis-cli FLUSHALL
+```
+
+**Rate Limiting Behavior:**
+
+| Environment         | Storage   | Persistence       |
+| ------------------- | --------- | ----------------- |
+| `npm start` (local) | In-memory | Resets on restart |
+| `docker compose up` | Redis     | Survives restarts |
+
 ### 🔑 Admin Credentials (Auto-Generated)
 
 On the first run, the system automatically creates an Admin user:
@@ -327,6 +372,8 @@ vue-jobs/
 │   ├── benchmark.db         # Database for benchmarking
 │   ├── database.js          # Database connection and initialization
 │   └── database.db          # SQLite database file (auto-generated)
+├── utils/
+│   └── redis.js             # Redis connection utility
 ├── nginx/
 │   ├── nginx.conf           # Main Nginx config (http block with cache zone)
 │   └── default.conf         # Server block config (routing, caching rules)
@@ -402,6 +449,7 @@ vue-jobs/
 | Validation (Server) | express-validator                 | v7.2.0            |
 | Authentication      | HttpOnly Cookies + JWT + bcryptjs | v9.0.3 / v3.0     |
 | Database            | SQLite3                           | v5.1.7            |
+| Cache / Rate Limit  | Redis (ioredis)                   | Alpine Latest     |
 | HTTP Client         | Custom Fetch (Interceptors)       | v1.0.0            |
 | Deployment          | Docker + Docker Compose           | -                 |
 | Web Server          | Nginx                             | Alpine Latest     |

@@ -9,6 +9,8 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import { performBackup } from "./scripts/backup-db.js";
+import redis, { REDIS_ENABLED } from "./utils/redis.js";
+import { RedisStore } from "rate-limit-redis";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,11 +50,26 @@ app.use(
   })
 );
 
+// Rate Limiting Configuration
+// Uses Redis in Docker (persistent), falls back to in-memory for local dev
+const createRateLimitStore = (prefix) => {
+  if (REDIS_ENABLED && redis) {
+    return new RedisStore({
+      sendCommand: (...args) => redis.call(...args),
+      prefix,
+    });
+  }
+  return undefined; // Use default in-memory store
+};
+
 // Rate Limiting for Reads
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 500, // Limit each IP to 500 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
+  standardHeaders: true,
+  legacyHeaders: false,
+  store: createRateLimitStore("rl:read:"),
 });
 app.use("/api/", limiter);
 
@@ -62,6 +79,9 @@ const writeLimiter = rateLimit({
   max: 50,
   message:
     "Too many write requests from this IP. Please try again after 15 minutes.",
+  standardHeaders: true,
+  legacyHeaders: false,
+  store: createRateLimitStore("rl:write:"),
 });
 app.use("/api/jobs", (req, res, next) => {
   if (["POST", "PUT", "DELETE"].includes(req.method)) {

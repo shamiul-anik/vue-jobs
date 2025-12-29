@@ -16,6 +16,7 @@ COPY server.js ./
 COPY routes ./routes
 COPY middleware ./middleware
 COPY scripts ./scripts
+COPY utils ./utils
 
 # Expose API port
 EXPOSE 3000
