@@ -16,6 +16,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust the first proxy (Nginx in Docker)
+// Required for correct IP detection with express-rate-limit and X-Forwarded-For headers
+app.set("trust proxy", 1);
+
 // Security Middleware
 app.use(
   helmet({

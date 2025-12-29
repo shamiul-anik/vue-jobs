@@ -108,6 +108,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
     - **Gzip Compression**: Enabled for HTML, CSS, JS, and JSON to reduce network payload size.
     - **Browser Caching**: Implemented long-term caching (1 year) for static assets (JS, CSS, images) using Vite's hashed filenames.
     - **Cache Integrity**: Configured `index.html` with `no-cache` to ensure users always receive the latest application version.
+    - **API Response Caching**: Nginx-level caching for API GET requests (5-minute TTL) with smart bypass for authenticated users and write operations.
   - **Docker Compose** orchestration
   - **Multi-stage builds** for highly optimized, small-footprint images (npm ci, production-only deps)
 - **Database Migration**:
@@ -203,12 +204,53 @@ When running with Docker, we can verify that Gzip and Caching are working:
 1.  **Open the site**: Go to `http://localhost`.
 2.  **Open DevTools**: Press `F12` and go to the **Network** tab.
 3.  **Refresh**: Trigger a fresh load (`Ctrl + R`).
-4.  **Check Headers**:
-    - Click on a `.js` or `.css` file (e.g., `index-D7...js`).
-    - **Compression**: Look for `Content-Encoding: gzip` in Response Headers.
-    - **Caching**: Look for `Cache-Control: public, no-transform` and `expires` set to 1 year in the future.
-    - **Instant Updates**: For `index.html`, verify `Cache-Control: no-cache, no-store, must-revalidate` to ensure users always check for the latest build.
-![Nginx Optimization Verification](backup/verification_screenshots/nginx.png)
+4.  **Check Headers**: - Click on a `.js` or `.css` file (e.g., `index-D7...js`). - **Compression**: Look for `Content-Encoding: gzip` in Response Headers. - **Caching**: Look for `Cache-Control: public, no-transform` and `expires` set to 1 year in the future. - **Instant Updates**: For `index.html`, verify `Cache-Control: no-cache, no-store, must-revalidate` to ensure users always check for the latest build.
+    ![Nginx Optimization Verification](backup/verification_screenshots/nginx.png)
+
+#### 🚀 Verifying API Response Caching
+
+Nginx caches API responses for improved performance with **automatic cache invalidation**:
+
+```bash
+# First request (MISS - fetched from backend)
+# Note: Windows PowerShell users: use 'curl.exe' instead of 'curl'
+curl -I http://localhost/api/jobs
+# Look for: X-Cache-Status: MISS
+
+# Second request (HIT - served from cache)
+curl -I http://localhost/api/jobs
+# Look for: X-Cache-Status: HIT
+```
+
+**Cache Behavior:**
+
+| Request Type           | Cached? | TTL   | Notes                             |
+| ---------------------- | ------- | ----- | --------------------------------- |
+| `GET /api/jobs`        | ✅ Yes  | 5 min | Cache invalidated after any write |
+| `GET /api/jobs/:id`    | ✅ Yes  | 5 min | Cache invalidated after any write |
+| `POST /api/jobs`       | ❌ No   | -     | Triggers cache invalidation       |
+| `PUT /api/jobs/:id`    | ❌ No   | -     | Triggers cache invalidation       |
+| `DELETE /api/jobs/:id` | ❌ No   | -     | Triggers cache invalidation       |
+| Authenticated requests | ❌ No   | -     | Always bypassed for fresh data    |
+
+**Cache Invalidation:**
+When a job is created, updated, or deleted, the backend sends an `X-Cache-Invalidate` header. Nginx responds by:
+
+1. Bypassing the stale cache on the next GET request
+2. Fetching fresh data from the backend
+3. Updating the cache with the new data
+
+This ensures users see updated job listings immediately after any write operation.
+
+**Cache Status Headers:**
+
+| Status     | Meaning                                              |
+| ---------- | ---------------------------------------------------- |
+| `MISS`     | Response fetched from backend, now cached            |
+| `HIT`      | Response served from Nginx cache                     |
+| `BYPASS`   | Cache skipped (auth user or write operation)         |
+| `EXPIRED`  | Cached response was stale, refetched                 |
+| `UPDATING` | Stale response served while refreshing in background |
 
 ### 🔑 Admin Credentials (Auto-Generated)
 
@@ -286,7 +328,8 @@ vue-jobs/
 │   ├── database.js          # Database connection and initialization
 │   └── database.db          # SQLite database file (auto-generated)
 ├── nginx/
-│   └── default.conf         # Nginx configuration
+│   ├── nginx.conf           # Main Nginx config (http block with cache zone)
+│   └── default.conf         # Server block config (routing, caching rules)
 ├── public/
 │   └── images/              # Static images
 ├── routes/

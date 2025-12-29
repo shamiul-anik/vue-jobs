@@ -183,6 +183,8 @@ router.post(
           res.status(500).json({ error: err.message });
           return;
         }
+        // Signal Nginx to invalidate cache for job listings
+        res.set("X-Cache-Invalidate", "true");
         res
           .status(201)
           .json({ id: this.lastID, message: "Job created successfully" });
@@ -242,6 +244,8 @@ router.put(
           res.status(404).json({ error: "Job not found!" });
           return;
         }
+        // Signal Nginx to invalidate cache for job listings
+        res.set("X-Cache-Invalidate", "true");
         res.json({ message: "Job updated successfully!" });
       }
     );
@@ -262,6 +266,8 @@ router.delete("/:id", verifyToken, requireAdmin, (req, res) => {
       res.status(404).json({ error: "Job not found!" });
       return;
     }
+    // Signal Nginx to invalidate cache for job listings
+    res.set("X-Cache-Invalidate", "true");
     res.json({ message: "Job deleted successfully!" });
   });
 });
