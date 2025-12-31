@@ -136,7 +136,7 @@ Focused on code readability, maintainability, and scalability, with SEO and acce
 1. **Clone or navigate to the project directory:**
 
    ```bash
-   cd /vue-jobs
+   cd \vue-jobs
    ```
 
 2. **Install dependencies:**
